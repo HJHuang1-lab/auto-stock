@@ -172,15 +172,14 @@ import asyncio
 
 async def daily_scheduler():
     """
-    每天下午 3 點 (15:00) 自動觸發所有股票的盤後採集與分析
+    於周一~周五 15:07 自動觸發所有股票的最新盤後採集與分析，且在週五額外執行每週驗收。
     """
     while True:
         now = datetime.datetime.now()
-        # 設定每天的目標時間：下午 3:00 (15:00:00)
-        # 台股 13:30 收盤，14:30 盤後定價結束，15:00 前三大法人買賣超與最新盤後分析新聞會完全出爐
-        target_time = now.replace(hour=15, minute=0, second=0, microsecond=0)
+        # 設定每天的目標時間：下午 3:07 (15:07:00)
+        target_time = now.replace(hour=15, minute=7, second=0, microsecond=0)
         
-        # 如果今天已經過了下午 3 點，目標時間改為明天
+        # 如果今天已經過了 15:07，目標時間改為明天
         if now >= target_time:
             target_time += datetime.timedelta(days=1)
             
@@ -190,33 +189,38 @@ async def daily_scheduler():
         # 異步等待
         await asyncio.sleep(wait_seconds)
         
-        print("⚡ [自動排程] 啟動每日盤後自動分析任務...")
-        
-        # 遍歷所有分類中的所有股票進行 browser-use 實時採集
-        for category, stocks in DEFAULT_CATEGORIES.items():
-            for st in stocks:
-                symbol = st["symbol"]
-                name = st["name"]
-                print(f"🔄 [自動排程] 正在採集與分析 {name} ({symbol})...")
+        # 再次檢查當前時間是否為周一至周五 (Monday=0 to Friday=4)
+        current_day = datetime.datetime.now().weekday()
+        if current_day <= 4:
+            print(f"⚡ [自動排程] 當前時間已到 15:07，且今天是工作日 (星期 {current_day+1})，啟動盤後採集任務...")
+            
+            # 遍歷所有分類中的所有股票進行 browser-use 實時採集
+            for category, stocks in DEFAULT_CATEGORIES.items():
+                for st in stocks:
+                    symbol = st["symbol"]
+                    name = st["name"]
+                    print(f"🔄 [自動排程] 正在採集與分析 {name} ({symbol})...")
+                    try:
+                        await analyze_stock_symbol(symbol)
+                        print(f"✅ [自動排程] {name} ({symbol}) 分析完成。")
+                    except Exception as e:
+                        print(f"❌ [自動排程] {name} ({symbol}) 分析失敗: {e}")
+                    # 每次採集間隔 10 秒，避免被財經網站封鎖 IP
+                    await asyncio.sleep(10)
+                    
+            print("🎉 [自動排程] 每日盤後自動分析任務全部完成！資料庫已更新。")
+            
+            # 如果今天是週五 (weekday 為 4)，在 15:07 執行完分析後，額外執行每週驗收與自我進化機制
+            if current_day == 4:
+                print("📅 [自動排程] 今天是星期五，額外啟動週五收盤總驗收與決策權重自我優化機制...")
                 try:
-                    await analyze_stock_symbol(symbol)
-                    print(f"✅ [自動排程] {name} ({symbol}) 分析完成。")
+                    from weekly_evaluator import run_weekly_verification_and_optimize
+                    run_weekly_verification_and_optimize()
+                    print("✅ [自動排程] 星期五收盤選股驗收與權重自我進化已成功執行！")
                 except Exception as e:
-                    print(f"❌ [自動排程] {name} ({symbol}) 分析失敗: {e}")
-                # 每次採集間隔 10 秒，避免被財經網站封鎖 IP
-                await asyncio.sleep(10)
-                
-        print("🎉 [自動排程] 每日盤後自動分析任務全部完成！資料庫已更新。")
-        
-        # 週五收盤後 15:30 自動發起總驗收與決策模型進化 (星期五 weekday 為 4)
-        if datetime.datetime.now().weekday() == 4:
-            print("📅 [自動排程] 今天是星期五收盤後，自動啟動週五選股驗收與權重自我進化機制...")
-            try:
-                from weekly_evaluator import run_weekly_verification_and_optimize
-                run_weekly_verification_and_optimize()
-                print("✅ [自動排程] 星期五收盤選股驗收與權重自我進化已成功執行！")
-            except Exception as e:
-                print(f"❌ [自動排程] 星期五選股驗收執行失敗: {e}")
+                    print(f"❌ [自動排程] 星期五選股驗收執行失敗: {e}")
+        else:
+            print(f"📅 [自動排程] 今天是星期 {current_day+1} (非工作日)，跳過 15:07 採集排程。")
 
 @app.on_event("startup")
 async def startup_event():
