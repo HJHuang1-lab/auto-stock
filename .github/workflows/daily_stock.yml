@@ -5,57 +5,47 @@ on:
     # 週一至週五 07:07 UTC = 台灣時間 15:07
     - cron: '7 7 * * 1-5'
   workflow_dispatch:
-    # 允許手動觸發（用於測試）
+    # 允許手動在 GitHub 網頁上按按鈕觸發（方便測試）
     inputs:
       force_weekly:
-        description: '強制執行週五驗收（true/false）'
+        description: '強制執行週五驗收 (true/false)'
         required: false
         default: 'false'
 
 jobs:
-  analyze-and-deploy:
-    name: 分析股票 + 部署
-    runs-on: ubuntu-latest
+  update-and-deploy:
+    runs-on: ubuntu-latest   # GitHub 免費提供的 Linux 虛擬機器
     timeout-minutes: 30
 
     steps:
       # ── Step 1：下載程式碼 ──────────────────────────────────
       - name: ⬇️ Checkout 程式碼
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/checkout@v3
 
       # ── Step 2：設定 Python ──────────────────────────────────
-      - name: 🐍 設定 Python 3.11
-        uses: actions/setup-python@v5
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-          cache: 'pip'
 
-      # ── Step 3：安裝依賴 ────────────────────────────────────
-      - name: 📦 安裝 Python 套件
-        run: |
-          pip install --upgrade pip
-          pip install requests yfinance pandas numpy
+      # ── Step 3：安裝 Python 依賴 ────────────────────────────
+      - name: 📦 Install dependencies
+        run: pip install -r requirements.txt
 
-      # ── Step 4：執行資料匯出腳本 ────────────────────────────
-      - name: 📊 執行盤後 AI 分析 + 資料輸出
+      # ── Step 4：執行資料更新腳本 ────────────────────────────
+      - name: 📊 Run data updater script
+        run: python data_exporter.py
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           PYTHONIOENCODING: utf-8
-        run: |
-          python data_exporter.py
 
-      # ── Step 5：週五額外驗收（判斷今天是否為週五）──────────
+      # ── Step 5：週五額外驗收 ────────────────────────────────
       - name: 📅 週五驗收 (如果今天是週五或手動強制)
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          PYTHONIOENCODING: utf-8
         run: |
           DAY=$(date +%u)
           FORCE="${{ github.event.inputs.force_weekly }}"
           if [ "$DAY" = "5" ] || [ "$FORCE" = "true" ]; then
-            echo "📅 今天是週五（或手動觸發）！執行週驗收..."
+            echo "📅 今天是週五！執行週驗收 + AI 自我進化..."
             python -c "
           import sys
           sys.stdout.reconfigure(encoding='utf-8')
@@ -66,40 +56,27 @@ jobs:
           except Exception as e:
               print(f'⚠️ 週驗收錯誤（不影響部署）: {e}')
           "
-            # 重新複製更新後的 JSON
             python data_exporter.py
           else
             echo "📌 今天是星期 $DAY，非週五，跳過週驗收。"
           fi
+        env:
+          PYTHONIOENCODING: utf-8
 
-      # ── Step 6：列出 static/data/ 確認輸出 ──────────────────
-      - name: 🔍 確認輸出的 JSON 檔案
-        run: |
-          echo "=== static/data/ 目錄內容 ==="
-          ls -lh static/data/
-          echo "=== meta.json 內容 ==="
-          cat static/data/meta.json
-
-      # ── Step 7：提交更新後的 JSON 回 repo ────────────────────
-      - name: 💾 Commit 更新的資料到 GitHub
+      # ── Step 6：提交更新後的 JSON 回 repo ────────────────────
+      - name: 💾 Commit 更新的資料
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "GitHub Actions Bot"
           git add static/data/
           git add stock_cache.json optimization_weights.json verification_history.json || true
           git diff --staged --quiet || git commit -m "🤖 [自動更新] $(date +'%Y-%m-%d') 盤後股票 AI 分析資料"
+          git push
 
-      - name: 🚀 Push 到 GitHub
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
-
-      # ── Step 8：部署到 Firebase Hosting ─────────────────────
-      - name: 🔥 部署到 Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          channelId: live
-          projectId: my-stock-ai-dashboard
+      # ── Step 7：部署到 Firebase Hosting ─────────────────────
+      - name: 🔥 Deploy to Firebase
+        run: |
+          npm install -g firebase-tools
+          firebase deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
