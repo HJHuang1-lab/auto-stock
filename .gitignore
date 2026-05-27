@@ -10,3 +10,9 @@ env/
 .system_generated/
 .DS_Store
 Thumbs.db
+
+# 注意：static/data/*.json 不要 ignore！
+# 這些是 GitHub Actions 自動更新的資料檔案，需要被 commit 和部署
+
+# Firebase 暫存目錄
+.firebase/

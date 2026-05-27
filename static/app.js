@@ -7,8 +7,8 @@ let appState = {
     radarChartInstance: null
 };
 
-// API 基礎路徑
-const API_BASE = window.location.origin;
+// 靜態 JSON 資料路徑（GitHub Actions 每日自動更新，部署至 Firebase）
+const DATA_BASE = `${window.location.origin}/data`;
 
 // --- 初始化加載 ---
 document.addEventListener("DOMContentLoaded", async () => {
@@ -18,24 +18,56 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function initApp() {
     try {
-        // 1. 獲取股票分類
-        const catRes = await fetch(`${API_BASE}/api/categories`);
+        // 1. 獲取元數據（最後更新時間）
+        try {
+            const metaRes = await fetch(`${DATA_BASE}/meta.json?t=${Date.now()}`);
+            if (metaRes.ok) {
+                const meta = await metaRes.json();
+                appState.meta = meta;
+                // 更新頁面顯示的更新時間
+                const updateDateEl = document.getElementById("update-date");
+                if (updateDateEl) updateDateEl.textContent = meta.last_updated || meta.update_date || "---";
+            }
+        } catch (e) { console.warn("meta.json 讀取失敗:", e); }
+
+        // 2. 獲取股票分類
+        const catRes = await fetch(`${DATA_BASE}/categories.json?t=${Date.now()}`);
+        if (!catRes.ok) throw new Error(`categories.json 讀取失敗 (${catRes.status})`);
         appState.categories = await catRes.json();
         
-        // 2. 獲取所有快取的股票分析資料
-        const stockRes = await fetch(`${API_BASE}/api/stocks`);
+        // 3. 獲取所有股票分析資料
+        const stockRes = await fetch(`${DATA_BASE}/stock_cache.json?t=${Date.now()}`);
+        if (!stockRes.ok) throw new Error(`stock_cache.json 讀取失敗 (${stockRes.status})`);
         appState.stocksData = await stockRes.json();
         
-        // 3. 渲染分類菜單
+        // 4. 渲染分類菜單
         renderCategoryMenu();
         
-        // 4. 渲染主頁面 (預設為半導體分類)
+        // 5. 渲染主頁面 (預設為半導體分類)
         switchCategory(appState.activeCategory);
         
     } catch (error) {
         console.error("❌ 初始化 App 時發生錯誤:", error);
-        alert("無法連線至後端 FastAPI 伺服器，請確認後端是否已啟動！");
+        showErrorBanner(`資料載入失敗：${error.message}。資料由 GitHub Actions 每日 15:07 自動更新。`);
     }
+}
+
+function showErrorBanner(msg) {
+    // 顯示一個優雅的錯誤橫幅，而非 alert
+    let banner = document.getElementById("error-banner");
+    if (!banner) {
+        banner = document.createElement("div");
+        banner.id = "error-banner";
+        banner.style.cssText = `
+            position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: white; padding: 14px 24px; text-align: center;
+            font-size: 14px; font-weight: 600; box-shadow: 0 4px 20px rgba(255,65,108,0.4);
+        `;
+        document.body.prepend(banner);
+    }
+    banner.textContent = `⚠️ ${msg}`;
+    setTimeout(() => { if (banner) banner.remove(); }, 8000);
 }
 
 // --- 介面渲染 (Rendering) ---
@@ -427,75 +459,67 @@ function setupEventListeners() {
         // 開啟實時採集監控終端
         openTerminalModal(symbol, name);
 
-        try {
-            const response = await fetch(`${API_BASE}/api/add-stock?symbol=${symbol}&category=${category}&name=${name}`, {
-                method: "POST"
-            });
-            const result = await response.json();
-            
-            if (result.status === "success") {
-                // 模擬並等待終端動畫播放完畢
-                await simulateTerminalProgress(symbol, name, true);
-                
-                // 更新本機狀態
-                appState.categories[category].push({ symbol, name });
-                appState.stocksData[symbol] = result.data;
-                
-                // 切換並更新板塊
-                switchCategory(category);
-                selectStock(symbol);
-            } else {
-                throw new Error(result.message);
-            }
-        } catch (error) {
-            appendTerminalLog(`[ERROR] 實時爬取失敗: ${error.message}`, "error");
-            appendTerminalLog(`[SYSTEM] 自動降級並生成基本評估數據...`, "system");
-            await simulateTerminalProgress(symbol, name, false);
-            
-            // 兜底方案：再次請求以確保取得本地 cache 兜底數據
-            const fallbackRes = await fetch(`${API_BASE}/api/stocks`);
-            appState.stocksData = await fallbackRes.json();
-            
-            appState.categories[category].push({ symbol, name });
-            switchCategory(category);
-            selectStock(symbol);
-        }
+        // 雲端靜態模式：新增自選股僅在本機 session 生效
+        // 若需永久保存，請聯繫管理員或等下次 GitHub Actions 更新
+        appendTerminalLog(`[系統] 雲端靜態模式：新增 ${name} (${symbol}) 至本機工作階段...`, "system");
+        await simulateTerminalProgress(symbol, name, false);
+        
+        // 建立基礎評估數據
+        const defaultData = {
+            name, symbol,
+            price: "---", change: "+0.00", change_percent: "0.00%",
+            trend: "neutral", volume: "---", transactions: "---",
+            recommendation_rating: 5.0,
+            radar: { technical: 5, financial: 5, institutional: 5, news_sentiment: 5 },
+            financials: "等待下次 GitHub Actions 排程更新後顯示分析資料。",
+            news: "等待系統自動分析...",
+            conferences: "---",
+            target_price: "---",
+            prediction_reason: "新增股票，將於下次排程（工作日 15:07）自動採集並分析。"
+        };
+        appState.categories[category].push({ symbol, name });
+        appState.stocksData[symbol] = defaultData;
+        switchCategory(category);
+        selectStock(symbol);
     });
 
-    // 4. 即時 browser-use 網頁採集重新分析
+    // 4. 重新整理資料（雲端模式：從靜態 JSON 重新載入）
     const reanalyzeBtn = document.getElementById("btn-reanalyze-stock");
     reanalyzeBtn.addEventListener("click", async () => {
         if (!appState.activeStockSymbol) return;
         const symbol = appState.activeStockSymbol;
-        const name = appState.stocksData[symbol].name;
+        const name = (appState.stocksData[symbol] || {}).name || symbol;
 
         openTerminalModal(symbol, name);
 
+        const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+        const statusText = document.getElementById("terminal-status-text");
+        statusText.textContent = `正在從雲端讀取 ${name} (${symbol}) 的最新分析資料...`;
+        
+        await sleep(800);
+        appendTerminalLog(`🌐 正在讀取 Firebase 雲端最新盤後分析資料...`);
+        await sleep(1000);
+        
         try {
-            const response = await fetch(`${API_BASE}/api/analyze/${symbol}`, {
-                method: "POST"
-            });
-            const result = await response.json();
-
-            if (result.status === "success") {
-                await simulateTerminalProgress(symbol, name, true);
-                
-                // 更新狀態數據
-                appState.stocksData[symbol] = result.data;
-                
-                // 重新渲染畫面
-                renderStockCards();
-                renderTopRecommendations();
-                selectStock(symbol);
-            } else {
-                throw new Error(result.message);
-            }
-        } catch (error) {
-            appendTerminalLog(`[ERROR] browser-use 爬行遭遇防爬限制: ${error.message}`, "error");
-            appendTerminalLog(`[SYSTEM] 啟動自動平滑降級機制，恢復本地高品質盤後資料。`, "system");
-            await simulateTerminalProgress(symbol, name, false);
+            const stockRes = await fetch(`${DATA_BASE}/stock_cache.json?t=${Date.now()}`);
+            const freshData = await stockRes.json();
+            appState.stocksData = freshData;
+            
+            await sleep(600);
+            appendTerminalLog(`✅ 資料已更新！（最後更新時間: ${appState.meta?.last_updated || '---'}）`, "success");
+            await sleep(800);
+            appendTerminalLog(`ℹ️ [雲端模式] 即時分析由 GitHub Actions 排程每日 15:07 自動執行。`, "system");
+            await sleep(1000);
+            renderStockCards();
+            renderTopRecommendations();
             selectStock(symbol);
+        } catch (error) {
+            appendTerminalLog(`[ERROR] 讀取雲端資料失敗: ${error.message}`, "error");
+            await sleep(1000);
         }
+        
+        await sleep(800);
+        document.getElementById("terminal-modal").style.display = "none";
     });
 
     // 5. 切換至 AI 自我進化週驗收分頁
@@ -504,32 +528,48 @@ function setupEventListeners() {
         switchTabToEvolution();
     });
 
-    // 6. 手動觸發選股驗收與自我進化
+    // 6. 手動觸發選股驗收（雲端模式：顯示說明而非呼叫後端）
     const triggerEvolveBtn = document.getElementById("btn-trigger-evolution");
     triggerEvolveBtn.addEventListener("click", async () => {
+        // 雲端模式：驗收由 GitHub Actions 週五 15:07 自動執行
+        // 這裡僅重新從靜態 JSON 載入最新資料
         openEvolutionTerminal();
         
+        const logs = document.getElementById("terminal-logs");
+        const statusText = document.getElementById("terminal-status-text");
+        statusText.textContent = "正在從雲端資料庫讀取最新驗收結果...";
+        
+        const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+        await sleep(800);
+        appendTerminalLog(`🌐 [GitHub Actions] 連線至 Firebase 雲端資料庫...`);
+        await sleep(1000);
+        appendTerminalLog(`📦 [GitHub Actions] 讀取最新每週驗收報告 (verification_history.json)...`);
+        await sleep(1200);
+        
         try {
-            const response = await fetch(`${API_BASE}/api/trigger-evolution`, {
-                method: "POST"
-            });
-            const result = await response.json();
+            await loadEvolutionData();
+            const latestHist = appState.verificationHistory;
+            const latest = latestHist && latestHist.length > 0 ? latestHist[latestHist.length - 1] : null;
             
-            if (result.status === "success") {
-                await simulateEvolutionTerminalProgress(result, true);
-                
-                // 重新獲取最新的快取與權重數據，以刷新畫面的 ratings
-                const stockRes = await fetch(`${API_BASE}/api/stocks`);
-                appState.stocksData = await stockRes.json();
-                
-                await loadEvolutionData();
+            if (latest) {
+                appendTerminalLog(`✅ [週驗收] 最新一週命中率: ${latest.hit_rate?.toFixed(1)}% (命中 ${latest.total_hits}/${latest.total_recommended} 支)`, "success");
+                const w = latest.new_weights || latest.old_weights || {};
+                if (w.technical !== undefined) {
+                    appendTerminalLog(`🎯 [AI 自我進化] 目前最優權重: 技術 ${(w.technical*100).toFixed(0)}%, 營利 ${(w.financial*100).toFixed(0)}%, 籌碼 ${(w.institutional*100).toFixed(0)}%, 輿情 ${(w.news_sentiment*100).toFixed(0)}%, 量能 ${(w.volume_momentum*100).toFixed(0)}%`, "success");
+                }
             } else {
-                throw new Error(result.message);
+                appendTerminalLog(`📅 [系統] 每週驗收將於週五 15:07 由 GitHub Actions 自動執行。`, "system");
             }
+            await sleep(800);
+            appendTerminalLog(`ℹ️ [雲端模式] 驗收由 GitHub Actions 排程自動執行，無需手動觸發。`, "system");
+            statusText.textContent = "資料已更新！";
         } catch (error) {
-            appendTerminalLog(`[ERROR] 自我進化執行失敗: ${error.message}`, "error");
-            await simulateEvolutionTerminalProgress(null, false);
+            appendTerminalLog(`[ERROR] 讀取雲端資料失敗: ${error.message}`, "error");
+            statusText.textContent = "讀取失敗";
         }
+        
+        await sleep(1500);
+        document.getElementById("terminal-modal").style.display = "none";
     });
 }
 
@@ -627,10 +667,10 @@ async function switchTabToEvolution() {
 
 async function loadEvolutionData() {
     try {
-        const weightsRes = await fetch(`${API_BASE}/api/optimization-weights`);
+        const weightsRes = await fetch(`${DATA_BASE}/optimization_weights.json?t=${Date.now()}`);
         appState.weights = await weightsRes.json();
         
-        const historyRes = await fetch(`${API_BASE}/api/verification-history`);
+        const historyRes = await fetch(`${DATA_BASE}/verification_history.json?t=${Date.now()}`);
         appState.verificationHistory = await historyRes.json();
         
         renderWeightBars();
