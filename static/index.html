@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 盤後股票智能分析儀表板 (Antigravity 2.0)</title>
+    <meta name="description" content="基於 browser-use 與 Gemini 1.5 驅動的頂級盤後股票智能分析儀表板，支援台股、高股息 ETF 與先進技術面、基本面法說會新聞綜合研判。">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome 圖標 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 側邊導覽欄 -->
+        <aside class="sidebar-container" id="app-sidebar">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-chart-line neon-glow-text"></i>
+                <h2>Antigravity <span class="badge">2.0</span></h2>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <div class="menu-label">股票分類板塊</div>
+                <ul id="category-list">
+                    <li class="menu-item active" data-category="semiconductor_foundry" id="cat-semiconductor_foundry">
+                        <i class="fa-solid fa-industry"></i>
+                        <span>半導體製造與設備</span>
+                    </li>
+                    <li class="menu-item" data-category="ic_design" id="cat-ic_design">
+                        <i class="fa-solid fa-microchip"></i>
+                        <span>IC 設計與晶片</span>
+                    </li>
+                    <li class="menu-item" data-category="memory_storage" id="cat-memory_storage">
+                        <i class="fa-solid fa-database"></i>
+                        <span>記憶體與 AI 儲存 / HBM</span>
+                    </li>
+                    <li class="menu-item" data-category="ai_server_thermal" id="cat-ai_server_thermal">
+                        <i class="fa-solid fa-server"></i>
+                        <span>AI 伺服器與散熱</span>
+                    </li>
+                    <li class="menu-item" data-category="finance_shipping" id="cat-finance_shipping">
+                        <i class="fa-solid fa-ship"></i>
+                        <span>金融與航運巨頭</span>
+                    </li>
+                    <li class="menu-item" data-category="etf" id="cat-etf">
+                        <i class="fa-solid fa-cubes"></i>
+                        <span>人氣高息 ETF</span>
+                    </li>
+                    <li class="menu-item" data-category="green_energy_power" id="cat-green_energy_power">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>綠能與重電建設</span>
+                    </li>
+                </ul>
+                
+                <div class="menu-label" style="margin-top: 24px;">決策模型演化</div>
+                <ul>
+                    <li class="menu-item" id="menu-item-evolution">
+                        <i class="fa-solid fa-dna neon-glow-text"></i>
+                        <span>AI 自我進化與週驗收</span>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <i class="fa-solid fa-user-tie avatar"></i>
+                    <div class="user-info">
+                        <div class="username">半導體工程師 40y</div>
+                        <div class="user-desc">AI與佛學共修</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 主內容區域 -->
+        <main class="main-content">
+            <!-- 頂部 Header -->
+            <header class="main-header">
+                <div class="header-title">
+                    <h1>AI 盤後股票智能分析儀表板</h1>
+                    <p class="subtitle"><i class="fa-solid fa-clock"></i> 今日盤後數據分析時間：<span id="update-date">2026-05-27</span> | 驅動核心：browser-use Agent</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="btn-add-stock-trigger">
+                        <i class="fa-solid fa-plus"></i> 新增自選股
+                    </button>
+                </div>
+            </header>
+
+            <!-- 核心看板區 -->
+            <div class="dashboard-grid">
+                <!-- 左側：個股列表與精選 Top 3 推薦 -->
+                <section class="left-panel">
+                    <!-- Top 3 精選預測卡片 -->
+                    <div class="glass-card recommendation-box">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <i class="fa-solid fa-star neon-glow-text"></i>
+                                <h3>明日 / 一週明日之星 (Top 3 潛力上漲股)</h3>
+                            </div>
+                            <span class="pulse-dot"></span>
+                        </div>
+                        <div class="recommendations-container" id="top-recommendations">
+                            <!-- JS 動態插入 Top 3 推薦股票 -->
+                        </div>
+                    </div>
+
+                    <!-- 當前分類個股清單 -->
+                    <div class="glass-card stock-list-box">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <i class="fa-solid fa-list-ul"></i>
+                                <h3>板塊個股清單</h3>
+                            </div>
+                            <div class="search-bar">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" id="stock-search" placeholder="搜尋股票代號或名稱...">
+                            </div>
+                        </div>
+                        <div class="stock-grid" id="stock-cards-container">
+                            <!-- JS 動態渲染股票卡片 -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 右側：AI 多維度深度分析面板 -->
+                <section class="right-panel">
+                    <div class="glass-card detail-box" id="analysis-detail-panel">
+                        <!-- 當未選取任何股票時展示 -->
+                        <div class="empty-state" id="detail-empty-state">
+                            <i class="fa-solid fa-chart-pie placeholder-icon"></i>
+                            <h3>請點擊左側股票卡片</h3>
+                            <p>獲取由 browser-use 深度採集與 Gemini 分析的基本面、法人籌碼面、法說會以及盤後走勢完整報告。</p>
+                        </div>
+
+                        <!-- 股票詳細數據，JS 切換為 display: flex -->
+                        <div class="detail-content" id="detail-data-content" style="display: none;">
+                            <div class="detail-top">
+                                <div class="stock-meta">
+                                    <div class="stock-title-row">
+                                        <h2 id="detail-stock-name">台積電</h2>
+                                        <span class="stock-code-badge" id="detail-stock-symbol">2330</span>
+                                    </div>
+                                    <div class="price-row">
+                                        <span class="price" id="detail-stock-price">985.00</span>
+                                        <span class="change text-up" id="detail-stock-change">+15.00 (+1.55%)</span>
+                                    </div>
+                                    <div class="volume-row">
+                                        <span class="volume-meta"><i class="fa-solid fa-chart-simple text-info"></i> 成交量：<span id="detail-stock-volume">-- 張</span></span>
+                                        <span class="volume-meta"><i class="fa-solid fa-list-check text-neon"></i> 成交筆數：<span id="detail-stock-transactions">-- 筆</span></span>
+                                    </div>
+                                </div>
+                                <div class="ai-badge-score">
+                                    <div class="score-num" id="detail-recommendation-rating">9.5</div>
+                                    <div class="score-label">AI 推薦指數</div>
+                                </div>
+                            </div>
+
+                            <!-- 即時重新分析按鈕（亮眼霓虹） -->
+                            <button class="btn btn-glow-action" id="btn-reanalyze-stock">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> 啟動 browser-use 即時網頁採集分析
+                            </button>
+
+                            <!-- 雷達圖與多維度評分 -->
+                            <div class="analysis-visuals">
+                                <div class="chart-container">
+                                    <canvas id="stockRadarChart"></canvas>
+                                </div>
+                                <div class="radar-score-grid">
+                                    <div class="score-card">
+                                        <span class="num text-up" id="score-technical">9</span>
+                                        <span class="label">技術走勢</span>
+                                    </div>
+                                    <div class="score-card">
+                                        <span class="num text-warning" id="score-financial">10</span>
+                                        <span class="label">公司營利</span>
+                                    </div>
+                                    <div class="score-card">
+                                        <span class="num text-info" id="score-institutional">9</span>
+                                        <span class="label">法人籌碼</span>
+                                    </div>
+                                    <div class="score-card">
+                                        <span class="num text-success" id="score-news">8</span>
+                                        <span class="label">輿情情緒</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 深度分析文字板塊 -->
+                            <div class="analysis-text-sections">
+                                <!-- 公司獲利/財報 -->
+                                <div class="text-card">
+                                    <div class="text-card-header text-warning">
+                                        <i class="fa-solid fa-building-columns"></i>
+                                        <h4>公司營利與財務現況</h4>
+                                    </div>
+                                    <p id="detail-financials">...</p>
+                                </div>
+
+                                <!-- 最新新聞 -->
+                                <div class="text-card">
+                                    <div class="text-card-header text-success">
+                                        <i class="fa-solid fa-newspaper"></i>
+                                        <h4>最新重要新聞</h4>
+                                    </div>
+                                    <p class="whitespace-pre" id="detail-news">...</p>
+                                </div>
+
+                                <!-- 法說會與配息 -->
+                                <div class="text-card">
+                                    <div class="text-card-header text-info">
+                                        <i class="fa-solid fa-microphone"></i>
+                                        <h4>法說會要點與最新資訊</h4>
+                                    </div>
+                                    <p id="detail-conferences">...</p>
+                                </div>
+
+                                <!-- 明日/本週走勢預測 -->
+                                <div class="text-card highlight-card">
+                                    <div class="text-card-header text-neon">
+                                        <i class="fa-solid fa-crystal-ball"></i>
+                                        <h4>明日與本週趨勢研判</h4>
+                                    </div>
+                                    <div class="prediction-meta">
+                                        <div class="target-price-box">
+                                            <span class="label">預估區間</span>
+                                            <span class="value" id="detail-target-price">1050 - 1100 元</span>
+                                        </div>
+                                        <div class="trend-badge bullish" id="detail-trend-badge">強勢上漲</div>
+                                    </div>
+                                    <p class="prediction-reason" id="detail-prediction-reason">...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- AI 自我進化與週驗收面板 -->
+            <div class="evolution-grid" id="evolution-container" style="display: none;">
+                <!-- 左側：決策權重控制台 -->
+                <section class="left-panel">
+                    <div class="glass-card weights-box" style="height: auto;">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <i class="fa-solid fa-chart-pie neon-glow-text"></i>
+                                <h3>現役推薦決策權重 (Current Model Weights)</h3>
+                            </div>
+                            <span class="pulse-dot"></span>
+                        </div>
+                        <div class="weights-progress-container" id="active-weights-bars" style="padding: 10px 0;">
+                            <!-- JS 動態渲染權重進度條 -->
+                        </div>
+                    </div>
+
+                    <div class="glass-card controller-box" style="margin-top: 24px; height: auto;">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <i class="fa-solid fa-gears text-neon"></i>
+                                <h3>自我進化引擎控制器</h3>
+                            </div>
+                        </div>
+                        <div class="controller-content" style="padding: 16px 0;">
+                            <p class="controller-desc" style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 24px; font-size: 14px;">
+                                此模組每週五收盤後自動運行，異步抓取所有個股當週實際漲跌幅，並逐一核對每日預測之 Top 3 是否命中 Top 5 飆股。若勝率不佳，將自動啟動權重超參數 Grid Search 搜尋，演化出最佳決策權重。
+                            </p>
+                            <button class="btn btn-glow-action btn-block" id="btn-trigger-evolution" style="width: 100%;">
+                                <i class="fa-solid fa-dna"></i> 啟動週五收盤總驗收與進化
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 右側：驗收日誌歷史 -->
+                <section class="right-panel">
+                    <div class="glass-card history-box" style="height: 100%;">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <i class="fa-solid fa-clock-rotate-left"></i>
+                                <h3>週結算驗收歷史報告日誌</h3>
+                            </div>
+                        </div>
+                        <div class="history-table-container" style="margin-top: 16px; max-height: calc(100vh - 280px); overflow-y: auto;">
+                            <table class="history-table" style="width: 100%; border-collapse: collapse; text-align: left;">
+                                <thead>
+                                    <tr style="border-bottom: 1px solid var(--border-color); color: var(--text-muted); font-size: 13px;">
+                                        <th style="padding: 12px 8px;">驗收日期</th>
+                                        <th style="padding: 12px 8px; text-align: center;">總命中數</th>
+                                        <th style="padding: 12px 8px; text-align: center;">總推薦命中率</th>
+                                        <th style="padding: 12px 8px;">進化軌跡 (技術 / 營利 / 籌碼 / 情緒 / 量能)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="verification-history-rows" style="font-size: 14px; color: var(--text-secondary);">
+                                    <!-- JS 動態渲染歷史日誌 -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- 彈出視窗 1：新增自選股 Modal -->
+    <div class="modal-overlay" id="add-stock-modal" style="display: none;">
+        <div class="glass-card modal-content">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-plus-circle"></i> 新增自選股票</h3>
+                <button class="modal-close" id="btn-close-add-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="add-stock-form">
+                <div class="form-group">
+                    <label for="new-stock-symbol">股票代號 / 代碼</label>
+                    <input type="text" id="new-stock-symbol" placeholder="例如：2454 或 NVDA" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-stock-name">股票名稱</label>
+                    <input type="text" id="new-stock-name" placeholder="例如：聯發科" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-stock-category">歸屬板塊分類</label>
+                    <select id="new-stock-category" required>
+                        <option value="semiconductor_foundry">半導體製造與設備</option>
+                        <option value="ic_design">IC 設計與晶片</option>
+                        <option value="memory_storage">記憶體與 AI 儲存 / HBM</option>
+                        <option value="ai_server_thermal">AI 伺服器與散熱</option>
+                        <option value="finance_shipping">金融與航運巨頭</option>
+                        <option value="etf">人氣高息 ETF</option>
+                        <option value="green_energy_power">綠能與重電建設</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">確認新增並初始化分析</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 彈出視窗 2：browser-use 實時爬取終端監控視窗 (Terminal Modal) -->
+    <div class="modal-overlay" id="terminal-modal" style="display: none;">
+        <div class="terminal-container">
+            <div class="terminal-header">
+                <div class="terminal-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="terminal-title">browser-use Agent 實時任務監控控制台</div>
+                <div class="terminal-actions">
+                    <i class="fa-solid fa-terminal"></i>
+                </div>
+            </div>
+            <div class="terminal-body" id="terminal-logs">
+                <div class="log-line system">[SYSTEM] 初始化 browser-use 網頁爬行協定...</div>
+                <div class="log-line system">[SYSTEM] 載入 Gemini 1.5 Flash 自然語言分析引擎...</div>
+                <!-- 動態注入的 Log -->
+            </div>
+            <div class="terminal-footer">
+                <div class="status-indicator">
+                    <i class="fa-solid fa-circle-notch fa-spin text-neon"></i>
+                    <span id="terminal-status-text">AI 正在搜尋與抓取網頁中... 請勿關閉此視窗</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/app.js"></script>
+</body>
+</html>
