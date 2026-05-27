@@ -11,7 +11,7 @@
         "transactions": "22,582 筆",
         "radar": {
             "technical": 10,
-            "financial": 9,
+            "financial": 8,
             "institutional": 9,
             "news_sentiment": 9,
             "overall": 9.6
@@ -22,7 +22,7 @@
         "recommendation_rating": 9.6,
         "target_price": "2185.0 - 2530.0 元",
         "prediction_reason": "今日在量能擴大至 34,742 張 且交易筆數達 22,582 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2303": {
         "symbol": "2303",
@@ -35,19 +35,19 @@
         "volume_raw": "280,018 張",
         "transactions": "182,011 筆",
         "radar": {
-            "technical": 10,
-            "financial": 10,
-            "institutional": 10,
-            "news_sentiment": 10,
-            "overall": 10.0
+            "technical": 9,
+            "financial": 8,
+            "institutional": 8,
+            "news_sentiment": 8,
+            "overall": 8.9
         },
         "financials": "【公司營利】該股為目前『成熟製程回溫與車用OLED』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 280,018 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 10.0,
+        "recommendation_rating": 8.9,
         "target_price": "136.3 - 157.9 元",
         "prediction_reason": "今日在量能擴大至 280,018 張 且交易筆數達 182,011 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "5347": {
         "symbol": "5347",
@@ -60,19 +60,19 @@
         "volume_raw": "32,348 張",
         "transactions": "21,026 筆",
         "radar": {
-            "technical": 9,
-            "financial": 7,
-            "institutional": 8,
-            "news_sentiment": 8,
-            "overall": 8.9
+            "technical": 10,
+            "financial": 10,
+            "institutional": 10,
+            "news_sentiment": 10,
+            "overall": 10.0
         },
         "financials": "【公司營利】該股為目前『電源管理與車用元件溫和復甦』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 32,348 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 8.9,
+        "recommendation_rating": 10.0,
         "target_price": "157.7 - 182.6 元",
         "prediction_reason": "今日在量能擴大至 32,348 張 且交易筆數達 21,026 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3711": {
         "symbol": "3711",
@@ -86,7 +86,7 @@
         "transactions": "19,261 筆",
         "radar": {
             "technical": 10,
-            "financial": 9,
+            "financial": 8,
             "institutional": 8,
             "news_sentiment": 9,
             "overall": 9.5
@@ -97,7 +97,7 @@
         "recommendation_rating": 9.5,
         "target_price": "609.9 - 706.2 元",
         "prediction_reason": "今日在量能擴大至 29,633 張 且交易筆數達 19,261 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "6488": {
         "symbol": "6488",
@@ -111,7 +111,7 @@
         "transactions": "14,938 筆",
         "radar": {
             "technical": 10,
-            "financial": 8,
+            "financial": 9,
             "institutional": 8,
             "news_sentiment": 9,
             "overall": 9.5
@@ -122,7 +122,7 @@
         "recommendation_rating": 9.5,
         "target_price": "883.5 - 1023.0 元",
         "prediction_reason": "今日在量能擴大至 22,982 張 且交易筆數達 14,938 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3131": {
         "symbol": "3131",
@@ -147,7 +147,7 @@
         "recommendation_rating": 7.7,
         "target_price": "3253.8 - 3767.5 元",
         "prediction_reason": "今日在量能擴大至 417 張 且交易筆數達 270 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3680": {
         "symbol": "3680",
@@ -161,18 +161,18 @@
         "transactions": "2,685 筆",
         "radar": {
             "technical": 6,
-            "financial": 7,
+            "financial": 8,
             "institutional": 7,
             "news_sentiment": 6,
-            "overall": 5.7
+            "overall": 5.8
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 4,131 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 5.7,
+        "recommendation_rating": 5.8,
         "target_price": "529.1 - 612.7 元",
         "prediction_reason": "今日在量能擴大至 4,131 張 且交易筆數達 2,685 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3374": {
         "symbol": "3374",
@@ -197,7 +197,7 @@
         "recommendation_rating": 6.4,
         "target_price": "238.0 - 275.6 元",
         "prediction_reason": "今日在量能擴大至 11,381 張 且交易筆數達 7,397 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3532": {
         "symbol": "3532",
@@ -210,19 +210,19 @@
         "volume_raw": "10,657 張",
         "transactions": "6,927 筆",
         "radar": {
-            "technical": 6,
-            "financial": 7,
-            "institutional": 7,
-            "news_sentiment": 6,
-            "overall": 6.4
+            "technical": 5,
+            "financial": 6,
+            "institutional": 6,
+            "news_sentiment": 5,
+            "overall": 5.7
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 10,657 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 6.4,
+        "recommendation_rating": 5.7,
         "target_price": "276.0 - 319.6 元",
         "prediction_reason": "今日在量能擴大至 10,657 張 且交易筆數達 6,927 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3707": {
         "symbol": "3707",
@@ -236,18 +236,18 @@
         "transactions": "26,573 筆",
         "radar": {
             "technical": 10,
-            "financial": 10,
-            "institutional": 10,
-            "news_sentiment": 10,
-            "overall": 10.0
+            "financial": 9,
+            "institutional": 9,
+            "news_sentiment": 9,
+            "overall": 9.6
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 40,883 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 10.0,
+        "recommendation_rating": 9.6,
         "target_price": "84.8 - 98.2 元",
         "prediction_reason": "今日在量能擴大至 40,883 張 且交易筆數達 26,573 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2344": {
         "symbol": "2344",
@@ -272,7 +272,7 @@
         "recommendation_rating": 10.0,
         "target_price": "147.2 - 170.5 元",
         "prediction_reason": "今日在量能擴大至 438,817 張 且交易筆數達 285,230 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2408": {
         "symbol": "2408",
@@ -285,19 +285,19 @@
         "volume_raw": "205,762 張",
         "transactions": "133,745 筆",
         "radar": {
-            "technical": 9,
-            "financial": 8,
-            "institutional": 8,
-            "news_sentiment": 8,
-            "overall": 8.9
+            "technical": 10,
+            "financial": 9,
+            "institutional": 9,
+            "news_sentiment": 9,
+            "overall": 9.6
         },
         "financials": "【公司營利】該股為目前『南亞科DRAM晶圓廠，製程全面升級DDR5』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 205,762 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 8.9,
+        "recommendation_rating": 9.6,
         "target_price": "296.4 - 343.2 元",
         "prediction_reason": "今日在量能擴大至 205,762 張 且交易筆數達 133,745 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2449": {
         "symbol": "2449",
@@ -322,7 +322,7 @@
         "recommendation_rating": 7.4,
         "target_price": "299.7 - 347.1 元",
         "prediction_reason": "今日在量能擴大至 94,976 張 且交易筆數達 61,734 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3264": {
         "symbol": "3264",
@@ -335,19 +335,19 @@
         "volume_raw": "8,865 張",
         "transactions": "5,762 筆",
         "radar": {
-            "technical": 5,
-            "financial": 6,
-            "institutional": 6,
-            "news_sentiment": 5,
-            "overall": 5.4
+            "technical": 6,
+            "financial": 7,
+            "institutional": 7,
+            "news_sentiment": 6,
+            "overall": 6.1
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 8,865 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 5.4,
+        "recommendation_rating": 6.1,
         "target_price": "218.0 - 252.5 元",
         "prediction_reason": "今日在量能擴大至 8,865 張 且交易筆數達 5,762 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3016": {
         "symbol": "3016",
@@ -361,7 +361,7 @@
         "transactions": "9,931 筆",
         "radar": {
             "technical": 7,
-            "financial": 7,
+            "financial": 8,
             "institutional": 7,
             "news_sentiment": 8,
             "overall": 7.7
@@ -372,7 +372,7 @@
         "recommendation_rating": 7.7,
         "target_price": "119.7 - 138.6 元",
         "prediction_reason": "今日在量能擴大至 15,279 張 且交易筆數達 9,931 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "6182": {
         "symbol": "6182",
@@ -386,18 +386,18 @@
         "transactions": "136,405 筆",
         "radar": {
             "technical": 10,
-            "financial": 10,
-            "institutional": 10,
-            "news_sentiment": 10,
-            "overall": 10.0
+            "financial": 8,
+            "institutional": 9,
+            "news_sentiment": 9,
+            "overall": 9.6
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 209,855 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 10.0,
+        "recommendation_rating": 9.6,
         "target_price": "85.7 - 99.2 元",
         "prediction_reason": "今日在量能擴大至 209,855 張 且交易筆數達 136,405 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3583": {
         "symbol": "3583",
@@ -422,7 +422,7 @@
         "recommendation_rating": 5.8,
         "target_price": "832.2 - 963.6 元",
         "prediction_reason": "今日在量能擴大至 2,186 張 且交易筆數達 1,420 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3413": {
         "symbol": "3413",
@@ -436,7 +436,7 @@
         "transactions": "6,053 筆",
         "radar": {
             "technical": 6,
-            "financial": 8,
+            "financial": 7,
             "institutional": 7,
             "news_sentiment": 6,
             "overall": 6.1
@@ -447,7 +447,7 @@
         "recommendation_rating": 6.1,
         "target_price": "298.8 - 346.0 元",
         "prediction_reason": "今日在量能擴大至 9,313 張 且交易筆數達 6,053 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "6515": {
         "symbol": "6515",
@@ -472,7 +472,7 @@
         "recommendation_rating": 7.7,
         "target_price": "9305.2 - 10774.5 元",
         "prediction_reason": "今日在量能擴大至 232 張 且交易筆數達 150 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3587": {
         "symbol": "3587",
@@ -485,19 +485,19 @@
         "volume_raw": "1,778 張",
         "transactions": "1,155 筆",
         "radar": {
-            "technical": 7,
-            "financial": 8,
-            "institutional": 8,
-            "news_sentiment": 7,
-            "overall": 6.4
+            "technical": 6,
+            "financial": 7,
+            "institutional": 7,
+            "news_sentiment": 6,
+            "overall": 5.7
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 1,778 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 6.4,
+        "recommendation_rating": 5.7,
         "target_price": "314.4 - 364.1 元",
         "prediction_reason": "今日在量能擴大至 1,778 張 且交易筆數達 1,155 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2454": {
         "symbol": "2454",
@@ -510,19 +510,19 @@
         "volume_raw": "18,195 張",
         "transactions": "11,826 筆",
         "radar": {
-            "technical": 10,
-            "financial": 10,
-            "institutional": 9,
-            "news_sentiment": 10,
-            "overall": 9.3
+            "technical": 9,
+            "financial": 9,
+            "institutional": 8,
+            "news_sentiment": 9,
+            "overall": 8.7
         },
         "financials": "【公司營利】該股為目前『天璣系列手機晶片與邊緣 AI』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 18,195 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 9.3,
+        "recommendation_rating": 8.7,
         "target_price": "4408.0 - 5104.0 元",
         "prediction_reason": "今日在量能擴大至 18,195 張 且交易筆數達 11,826 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3034": {
         "symbol": "3034",
@@ -536,7 +536,7 @@
         "transactions": "4,521 筆",
         "radar": {
             "technical": 5,
-            "financial": 6,
+            "financial": 7,
             "institutional": 6,
             "news_sentiment": 5,
             "overall": 5.4
@@ -547,7 +547,7 @@
         "recommendation_rating": 5.4,
         "target_price": "460.8 - 533.5 元",
         "prediction_reason": "今日在量能擴大至 6,956 張 且交易筆數達 4,521 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2379": {
         "symbol": "2379",
@@ -572,7 +572,7 @@
         "recommendation_rating": 8.0,
         "target_price": "574.8 - 665.5 元",
         "prediction_reason": "今日在量能擴大至 6,036 張 且交易筆數達 3,923 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3443": {
         "symbol": "3443",
@@ -586,18 +586,18 @@
         "transactions": "1,770 筆",
         "radar": {
             "technical": 6,
-            "financial": 8,
+            "financial": 7,
             "institutional": 7,
             "news_sentiment": 6,
-            "overall": 5.8
+            "overall": 5.7
         },
         "financials": "【公司營利】該股為目前『AI 客製化晶片 ASIC 設計龍頭』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 2,724 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 5.8,
+        "recommendation_rating": 5.7,
         "target_price": "4845.0 - 5610.0 元",
         "prediction_reason": "今日在量能擴大至 2,724 張 且交易筆數達 1,770 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3661": {
         "symbol": "3661",
@@ -610,19 +610,19 @@
         "volume_raw": "2,519 張",
         "transactions": "1,637 筆",
         "radar": {
-            "technical": 5,
-            "financial": 6,
-            "institutional": 6,
-            "news_sentiment": 5,
-            "overall": 5.1
+            "technical": 6,
+            "financial": 7,
+            "institutional": 7,
+            "news_sentiment": 6,
+            "overall": 5.7
         },
         "financials": "【公司營利】該股為目前『高性能運算 ASIC 主力供應商』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 2,519 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 5.1,
+        "recommendation_rating": 5.7,
         "target_price": "4275.0 - 4950.0 元",
         "prediction_reason": "今日在量能擴大至 2,519 張 且交易筆數達 1,637 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3529": {
         "symbol": "3529",
@@ -636,7 +636,7 @@
         "transactions": "939 筆",
         "radar": {
             "technical": 5,
-            "financial": 7,
+            "financial": 6,
             "institutional": 6,
             "news_sentiment": 5,
             "overall": 5.1
@@ -647,7 +647,7 @@
         "recommendation_rating": 5.1,
         "target_price": "3130.2 - 3624.5 元",
         "prediction_reason": "今日在量能擴大至 1,445 張 且交易筆數達 939 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "6415": {
         "symbol": "6415",
@@ -660,19 +660,19 @@
         "volume_raw": "10,154 張",
         "transactions": "6,600 筆",
         "radar": {
-            "technical": 9,
+            "technical": 8,
             "financial": 8,
-            "institutional": 8,
-            "news_sentiment": 9,
-            "overall": 8.3
+            "institutional": 7,
+            "news_sentiment": 8,
+            "overall": 7.7
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 10,154 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 8.3,
+        "recommendation_rating": 7.7,
         "target_price": "631.8 - 731.5 元",
         "prediction_reason": "今日在量能擴大至 10,154 張 且交易筆數達 6,600 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3035": {
         "symbol": "3035",
@@ -685,19 +685,19 @@
         "volume_raw": "16,723 張",
         "transactions": "10,870 筆",
         "radar": {
-            "technical": 5,
+            "technical": 6,
             "financial": 7,
-            "institutional": 6,
-            "news_sentiment": 5,
-            "overall": 6.0
+            "institutional": 7,
+            "news_sentiment": 6,
+            "overall": 6.7
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 16,723 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 6.0,
+        "recommendation_rating": 6.7,
         "target_price": "192.4 - 222.8 元",
         "prediction_reason": "今日在量能擴大至 16,723 張 且交易筆數達 10,870 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3008": {
         "symbol": "3008",
@@ -711,18 +711,18 @@
         "transactions": "876 筆",
         "radar": {
             "technical": 6,
-            "financial": 7,
+            "financial": 8,
             "institutional": 7,
             "news_sentiment": 6,
-            "overall": 5.7
+            "overall": 5.8
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 1,348 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 5.7,
+        "recommendation_rating": 5.8,
         "target_price": "3329.8 - 3855.5 元",
         "prediction_reason": "今日在量能擴大至 1,348 張 且交易筆數達 876 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2337": {
         "symbol": "2337",
@@ -747,7 +747,7 @@
         "recommendation_rating": 7.4,
         "target_price": "147.7 - 171.1 元",
         "prediction_reason": "今日在量能擴大至 242,364 張 且交易筆數達 157,536 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2388": {
         "symbol": "2388",
@@ -772,7 +772,7 @@
         "recommendation_rating": 6.4,
         "target_price": "72.1 - 83.5 元",
         "prediction_reason": "今日在量能擴大至 12,910 張 且交易筆數達 8,391 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "6237": {
         "symbol": "6237",
@@ -786,18 +786,18 @@
         "transactions": "1,212 筆",
         "radar": {
             "technical": 6,
-            "financial": 8,
+            "financial": 7,
             "institutional": 7,
             "news_sentiment": 6,
-            "overall": 5.8
+            "overall": 5.7
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 1,866 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 5.8,
+        "recommendation_rating": 5.7,
         "target_price": "48.5 - 56.2 元",
         "prediction_reason": "今日在量能擴大至 1,866 張 且交易筆數達 1,212 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "4919": {
         "symbol": "4919",
@@ -810,19 +810,19 @@
         "volume_raw": "45,187 張",
         "transactions": "29,371 筆",
         "radar": {
-            "technical": 5,
+            "technical": 6,
             "financial": 7,
-            "institutional": 7,
-            "news_sentiment": 5,
-            "overall": 6.7
+            "institutional": 8,
+            "news_sentiment": 6,
+            "overall": 7.4
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 45,187 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 6.7,
+        "recommendation_rating": 7.4,
         "target_price": "196.2 - 227.2 元",
         "prediction_reason": "今日在量能擴大至 45,187 張 且交易筆數達 29,371 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "4961": {
         "symbol": "4961",
@@ -836,18 +836,18 @@
         "transactions": "720 筆",
         "radar": {
             "technical": 6,
-            "financial": 8,
+            "financial": 7,
             "institutional": 7,
             "news_sentiment": 6,
-            "overall": 5.8
+            "overall": 5.7
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 1,109 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 5.8,
+        "recommendation_rating": 5.7,
         "target_price": "162.9 - 188.7 元",
         "prediction_reason": "今日在量能擴大至 1,109 張 且交易筆數達 720 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3105": {
         "symbol": "3105",
@@ -861,7 +861,7 @@
         "transactions": "31,272 筆",
         "radar": {
             "technical": 6,
-            "financial": 7,
+            "financial": 8,
             "institutional": 8,
             "news_sentiment": 6,
             "overall": 7.4
@@ -872,7 +872,7 @@
         "recommendation_rating": 7.4,
         "target_price": "532.0 - 616.0 元",
         "prediction_reason": "今日在量能擴大至 48,112 張 且交易筆數達 31,272 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "8016": {
         "symbol": "8016",
@@ -897,7 +897,7 @@
         "recommendation_rating": 7.7,
         "target_price": "285.9 - 331.1 元",
         "prediction_reason": "今日在量能擴大至 4,524 張 且交易筆數達 2,940 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3545": {
         "symbol": "3545",
@@ -922,7 +922,7 @@
         "recommendation_rating": 5.7,
         "target_price": "56.3 - 65.2 元",
         "prediction_reason": "今日在量能擴大至 2,657 張 且交易筆數達 1,727 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3227": {
         "symbol": "3227",
@@ -935,31 +935,6 @@
         "volume_raw": "2,896 張",
         "transactions": "1,882 筆",
         "radar": {
-            "technical": 7,
-            "financial": 8,
-            "institutional": 8,
-            "news_sentiment": 7,
-            "overall": 6.4
-        },
-        "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
-        "news": "1. 今日成交量與熱度大幅增溫至 2,896 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
-        "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 6.4,
-        "target_price": "215.2 - 249.2 元",
-        "prediction_reason": "今日在量能擴大至 2,896 張 且交易筆數達 1,882 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
-    },
-    "6104": {
-        "symbol": "6104",
-        "name": "創惟",
-        "price": "99.00",
-        "change": "-2.50",
-        "change_percent": "-2.46%",
-        "trend": "bearish",
-        "volume": "2,290張",
-        "volume_raw": "2,290 張",
-        "transactions": "1,488 筆",
-        "radar": {
             "technical": 6,
             "financial": 7,
             "institutional": 7,
@@ -967,12 +942,37 @@
             "overall": 5.7
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
-        "news": "1. 今日成交量與熱度大幅增溫至 2,290 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
+        "news": "1. 今日成交量與熱度大幅增溫至 2,896 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
         "recommendation_rating": 5.7,
-        "target_price": "94.0 - 108.9 元",
-        "prediction_reason": "今日在量能擴大至 2,290 張 且交易筆數達 1,488 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "target_price": "215.2 - 249.2 元",
+        "prediction_reason": "今日在量能擴大至 2,896 張 且交易筆數達 1,882 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
+        "update_time": "2026-05-27 21:27 盤後分析"
+    },
+    "6104": {
+        "symbol": "6104",
+        "name": "創惟",
+        "price": "429.48",
+        "change": "+15.79",
+        "change_percent": "+3.68%",
+        "trend": "neutral",
+        "volume": "32.4萬張",
+        "volume_raw": "32,407 張",
+        "transactions": "2,684 筆",
+        "radar": {
+            "technical": 8,
+            "financial": 8,
+            "institutional": 9,
+            "news_sentiment": 9,
+            "overall": 9.1
+        },
+        "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
+        "news": "1. 今日成交量與熱度大幅增溫至 32,407 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
+        "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
+        "recommendation_rating": 9.1,
+        "target_price": "408.0 - 472.4 元",
+        "prediction_reason": "今日在量能擴大至 32,407 張 且交易筆數達 2,684 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "6202": {
         "symbol": "6202",
@@ -985,19 +985,19 @@
         "volume_raw": "5,010 張",
         "transactions": "3,256 筆",
         "radar": {
-            "technical": 6,
+            "technical": 5,
             "financial": 7,
-            "institutional": 7,
-            "news_sentiment": 6,
-            "overall": 6.1
+            "institutional": 6,
+            "news_sentiment": 5,
+            "overall": 5.4
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 5,010 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 6.1,
+        "recommendation_rating": 5.4,
         "target_price": "57.4 - 66.4 元",
         "prediction_reason": "今日在量能擴大至 5,010 張 且交易筆數達 3,256 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "8299": {
         "symbol": "8299",
@@ -1011,7 +1011,7 @@
         "transactions": "6,798 筆",
         "radar": {
             "technical": 6,
-            "financial": 8,
+            "financial": 7,
             "institutional": 7,
             "news_sentiment": 6,
             "overall": 6.4
@@ -1022,7 +1022,7 @@
         "recommendation_rating": 6.4,
         "target_price": "2356.0 - 2728.0 元",
         "prediction_reason": "今日在量能擴大至 10,460 張 且交易筆數達 6,798 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3260": {
         "symbol": "3260",
@@ -1036,18 +1036,18 @@
         "transactions": "12,674 筆",
         "radar": {
             "technical": 9,
-            "financial": 9,
+            "financial": 8,
             "institutional": 8,
             "news_sentiment": 9,
-            "overall": 8.7
+            "overall": 8.6
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 19,499 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 8.7,
+        "recommendation_rating": 8.6,
         "target_price": "391.9 - 453.8 元",
         "prediction_reason": "今日在量能擴大至 19,499 張 且交易筆數達 12,674 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "4967": {
         "symbol": "4967",
@@ -1072,7 +1072,7 @@
         "recommendation_rating": 6.4,
         "target_price": "253.6 - 293.7 元",
         "prediction_reason": "今日在量能擴大至 10,799 張 且交易筆數達 7,019 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2451": {
         "symbol": "2451",
@@ -1086,7 +1086,7 @@
         "transactions": "5,751 筆",
         "radar": {
             "technical": 9,
-            "financial": 8,
+            "financial": 9,
             "institutional": 8,
             "news_sentiment": 9,
             "overall": 8.0
@@ -1097,7 +1097,7 @@
         "recommendation_rating": 8.0,
         "target_price": "304.9 - 353.1 元",
         "prediction_reason": "今日在量能擴大至 8,848 張 且交易筆數達 5,751 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "5289": {
         "symbol": "5289",
@@ -1111,7 +1111,7 @@
         "transactions": "2,694 筆",
         "radar": {
             "technical": 9,
-            "financial": 8,
+            "financial": 9,
             "institutional": 8,
             "news_sentiment": 9,
             "overall": 7.7
@@ -1122,7 +1122,7 @@
         "recommendation_rating": 7.7,
         "target_price": "1615.0 - 1870.0 元",
         "prediction_reason": "今日在量能擴大至 4,146 張 且交易筆數達 2,694 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "6239": {
         "symbol": "6239",
@@ -1135,19 +1135,19 @@
         "volume_raw": "76,389 張",
         "transactions": "49,652 筆",
         "radar": {
-            "technical": 5,
+            "technical": 6,
             "financial": 7,
-            "institutional": 7,
-            "news_sentiment": 5,
-            "overall": 6.7
+            "institutional": 8,
+            "news_sentiment": 6,
+            "overall": 7.4
         },
         "financials": "【公司營利】該股為目前『記憶體封測龍頭，攜手台積開發 HBM 先進封裝』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 76,389 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 6.7,
+        "recommendation_rating": 7.4,
         "target_price": "323.5 - 374.6 元",
         "prediction_reason": "今日在量能擴大至 76,389 張 且交易筆數達 49,652 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "8112": {
         "symbol": "8112",
@@ -1161,18 +1161,18 @@
         "transactions": "24,135 筆",
         "radar": {
             "technical": 10,
-            "financial": 9,
-            "institutional": 10,
-            "news_sentiment": 10,
-            "overall": 10.0
+            "financial": 8,
+            "institutional": 9,
+            "news_sentiment": 9,
+            "overall": 9.6
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 37,131 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 10.0,
+        "recommendation_rating": 9.6,
         "target_price": "81.7 - 94.6 元",
         "prediction_reason": "今日在量能擴大至 37,131 張 且交易筆數達 24,135 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "5351": {
         "symbol": "5351",
@@ -1197,7 +1197,7 @@
         "recommendation_rating": 9.9,
         "target_price": "78.5 - 90.9 元",
         "prediction_reason": "今日在量能擴大至 27,149 張 且交易筆數達 17,646 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3006": {
         "symbol": "3006",
@@ -1211,7 +1211,7 @@
         "transactions": "19,880 筆",
         "radar": {
             "technical": 10,
-            "financial": 9,
+            "financial": 10,
             "institutional": 10,
             "news_sentiment": 10,
             "overall": 10.0
@@ -1222,7 +1222,7 @@
         "recommendation_rating": 10.0,
         "target_price": "228.9 - 265.1 元",
         "prediction_reason": "今日在量能擴大至 30,585 張 且交易筆數達 19,880 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3037": {
         "symbol": "3037",
@@ -1247,7 +1247,7 @@
         "recommendation_rating": 7.3,
         "target_price": "1026.0 - 1188.0 元",
         "prediction_reason": "今日在量能擴大至 27,272 張 且交易筆數達 17,726 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "6271": {
         "symbol": "6271",
@@ -1272,7 +1272,7 @@
         "recommendation_rating": 6.0,
         "target_price": "241.8 - 280.0 元",
         "prediction_reason": "今日在量能擴大至 17,949 張 且交易筆數達 11,666 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2363": {
         "symbol": "2363",
@@ -1285,19 +1285,19 @@
         "volume_raw": "26,992 張",
         "transactions": "17,544 筆",
         "radar": {
-            "technical": 6,
-            "financial": 7,
-            "institutional": 7,
-            "news_sentiment": 6,
-            "overall": 7.3
+            "technical": 5,
+            "financial": 6,
+            "institutional": 6,
+            "news_sentiment": 5,
+            "overall": 6.7
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 26,992 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 7.3,
+        "recommendation_rating": 6.7,
         "target_price": "63.5 - 73.5 元",
         "prediction_reason": "今日在量能擴大至 26,992 張 且交易筆數達 17,544 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3088": {
         "symbol": "3088",
@@ -1310,19 +1310,19 @@
         "volume_raw": "3,011 張",
         "transactions": "1,957 筆",
         "radar": {
-            "technical": 10,
-            "financial": 9,
-            "institutional": 9,
-            "news_sentiment": 10,
-            "overall": 8.3
+            "technical": 9,
+            "financial": 8,
+            "institutional": 8,
+            "news_sentiment": 9,
+            "overall": 7.7
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 3,011 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 8.3,
+        "recommendation_rating": 7.7,
         "target_price": "137.3 - 159.0 元",
         "prediction_reason": "今日在量能擴大至 3,011 張 且交易筆數達 1,957 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "1609": {
         "symbol": "1609",
@@ -1347,7 +1347,7 @@
         "recommendation_rating": 8.3,
         "target_price": "34.9 - 40.4 元",
         "prediction_reason": "今日在量能擴大至 10,638 張 且交易筆數達 6,914 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2382": {
         "symbol": "2382",
@@ -1360,19 +1360,19 @@
         "volume_raw": "43,543 張",
         "transactions": "28,303 筆",
         "radar": {
-            "technical": 6,
-            "financial": 7,
-            "institutional": 8,
-            "news_sentiment": 6,
-            "overall": 7.4
+            "technical": 7,
+            "financial": 9,
+            "institutional": 9,
+            "news_sentiment": 7,
+            "overall": 8.1
         },
         "financials": "【公司營利】該股為目前『AI 伺服器整機出貨超乎預期』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 43,543 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 7.4,
+        "recommendation_rating": 8.1,
         "target_price": "296.4 - 343.2 元",
         "prediction_reason": "今日在量能擴大至 43,543 張 且交易筆數達 28,303 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3231": {
         "symbol": "3231",
@@ -1385,19 +1385,19 @@
         "volume_raw": "37,489 張",
         "transactions": "24,368 筆",
         "radar": {
-            "technical": 5,
-            "financial": 6,
-            "institutional": 7,
-            "news_sentiment": 5,
-            "overall": 6.7
+            "technical": 6,
+            "financial": 7,
+            "institutional": 8,
+            "news_sentiment": 6,
+            "overall": 7.4
         },
         "financials": "【公司營利】該股為目前『AI 伺服器核心 GPU 基板供應』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 37,489 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 6.7,
+        "recommendation_rating": 7.4,
         "target_price": "137.8 - 159.5 元",
         "prediction_reason": "今日在量能擴大至 37,489 張 且交易筆數達 24,368 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3017": {
         "symbol": "3017",
@@ -1410,19 +1410,19 @@
         "volume_raw": "4,359 張",
         "transactions": "2,833 筆",
         "radar": {
-            "technical": 6,
-            "financial": 7,
-            "institutional": 7,
-            "news_sentiment": 6,
-            "overall": 5.7
+            "technical": 7,
+            "financial": 8,
+            "institutional": 8,
+            "news_sentiment": 7,
+            "overall": 6.4
         },
         "financials": "【公司營利】該股為目前『水冷系統 CDU 與 Cold Plate 龍頭』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 4,359 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 5.7,
+        "recommendation_rating": 6.4,
         "target_price": "2565.0 - 2970.0 元",
         "prediction_reason": "今日在量能擴大至 4,359 張 且交易筆數達 2,833 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2317": {
         "symbol": "2317",
@@ -1435,19 +1435,19 @@
         "volume_raw": "78,165 張",
         "transactions": "50,807 筆",
         "radar": {
-            "technical": 10,
-            "financial": 8,
-            "institutional": 9,
-            "news_sentiment": 9,
-            "overall": 9.6
+            "technical": 9,
+            "financial": 7,
+            "institutional": 8,
+            "news_sentiment": 8,
+            "overall": 8.9
         },
         "financials": "【公司營利】該股為目前『NVIDIA GB200 機櫃與大組裝』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 78,165 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 9.6,
+        "recommendation_rating": 8.9,
         "target_price": "250.8 - 290.4 元",
         "prediction_reason": "今日在量能擴大至 78,165 張 且交易筆數達 50,807 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2356": {
         "symbol": "2356",
@@ -1472,7 +1472,7 @@
         "recommendation_rating": 6.7,
         "target_price": "58.9 - 68.2 元",
         "prediction_reason": "今日在量能擴大至 79,661 張 且交易筆數達 51,779 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "6669": {
         "symbol": "6669",
@@ -1486,18 +1486,18 @@
         "transactions": "1,294 筆",
         "radar": {
             "technical": 6,
-            "financial": 8,
+            "financial": 7,
             "institutional": 7,
             "news_sentiment": 6,
-            "overall": 5.8
+            "overall": 5.7
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 1,992 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 5.8,
+        "recommendation_rating": 5.7,
         "target_price": "4821.2 - 5582.5 元",
         "prediction_reason": "今日在量能擴大至 1,992 張 且交易筆數達 1,294 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2301": {
         "symbol": "2301",
@@ -1511,7 +1511,7 @@
         "transactions": "37,400 筆",
         "radar": {
             "technical": 10,
-            "financial": 9,
+            "financial": 10,
             "institutional": 10,
             "news_sentiment": 10,
             "overall": 10.0
@@ -1522,7 +1522,7 @@
         "recommendation_rating": 10.0,
         "target_price": "233.7 - 270.6 元",
         "prediction_reason": "今日在量能擴大至 57,540 張 且交易筆數達 37,400 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3324": {
         "symbol": "3324",
@@ -1535,19 +1535,19 @@
         "volume_raw": "2,861 張",
         "transactions": "1,859 筆",
         "radar": {
-            "technical": 5,
+            "technical": 6,
             "financial": 7,
-            "institutional": 6,
-            "news_sentiment": 5,
-            "overall": 5.1
+            "institutional": 7,
+            "news_sentiment": 6,
+            "overall": 5.7
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 2,861 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 5.1,
+        "recommendation_rating": 5.7,
         "target_price": "983.2 - 1138.5 元",
         "prediction_reason": "今日在量能擴大至 2,861 張 且交易筆數達 1,859 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2421": {
         "symbol": "2421",
@@ -1561,7 +1561,7 @@
         "transactions": "4,633 筆",
         "radar": {
             "technical": 6,
-            "financial": 7,
+            "financial": 8,
             "institutional": 7,
             "news_sentiment": 6,
             "overall": 6.1
@@ -1572,7 +1572,7 @@
         "recommendation_rating": 6.1,
         "target_price": "153.9 - 178.2 元",
         "prediction_reason": "今日在量能擴大至 7,128 張 且交易筆數達 4,633 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3533": {
         "symbol": "3533",
@@ -1586,18 +1586,18 @@
         "transactions": "850 筆",
         "radar": {
             "technical": 6,
-            "financial": 7,
+            "financial": 8,
             "institutional": 7,
             "news_sentiment": 6,
-            "overall": 5.7
+            "overall": 5.8
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 1,309 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 5.7,
+        "recommendation_rating": 5.8,
         "target_price": "2493.8 - 2887.5 元",
         "prediction_reason": "今日在量能擴大至 1,309 張 且交易筆數達 850 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2395": {
         "symbol": "2395",
@@ -1622,7 +1622,7 @@
         "recommendation_rating": 5.8,
         "target_price": "483.5 - 559.9 元",
         "prediction_reason": "今日在量能擴大至 4,514 張 且交易筆數達 2,934 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2399": {
         "symbol": "2399",
@@ -1647,7 +1647,7 @@
         "recommendation_rating": 6.7,
         "target_price": "45.6 - 52.8 元",
         "prediction_reason": "今日在量能擴大至 16,352 張 且交易筆數達 10,628 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2376": {
         "symbol": "2376",
@@ -1660,19 +1660,19 @@
         "volume_raw": "9,013 張",
         "transactions": "5,858 筆",
         "radar": {
-            "technical": 6,
-            "financial": 7,
-            "institutional": 7,
-            "news_sentiment": 6,
-            "overall": 6.1
+            "technical": 5,
+            "financial": 6,
+            "institutional": 6,
+            "news_sentiment": 5,
+            "overall": 5.4
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 9,013 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 6.1,
+        "recommendation_rating": 5.4,
         "target_price": "315.9 - 365.8 元",
         "prediction_reason": "今日在量能擴大至 9,013 張 且交易筆數達 5,858 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2377": {
         "symbol": "2377",
@@ -1686,18 +1686,18 @@
         "transactions": "20,282 筆",
         "radar": {
             "technical": 10,
-            "financial": 8,
-            "institutional": 9,
-            "news_sentiment": 9,
-            "overall": 9.6
+            "financial": 9,
+            "institutional": 10,
+            "news_sentiment": 10,
+            "overall": 10.0
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 31,205 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 9.6,
+        "recommendation_rating": 10.0,
         "target_price": "120.2 - 139.2 元",
         "prediction_reason": "今日在量能擴大至 31,205 張 且交易筆數達 20,282 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2324": {
         "symbol": "2324",
@@ -1710,19 +1710,19 @@
         "volume_raw": "116,359 張",
         "transactions": "75,633 筆",
         "radar": {
-            "technical": 6,
+            "technical": 5,
             "financial": 7,
-            "institutional": 8,
-            "news_sentiment": 6,
-            "overall": 7.4
+            "institutional": 7,
+            "news_sentiment": 5,
+            "overall": 6.7
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 116,359 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 7.4,
+        "recommendation_rating": 6.7,
         "target_price": "31.7 - 36.7 元",
         "prediction_reason": "今日在量能擴大至 116,359 張 且交易筆數達 75,633 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2357": {
         "symbol": "2357",
@@ -1736,7 +1736,7 @@
         "transactions": "2,740 筆",
         "radar": {
             "technical": 9,
-            "financial": 8,
+            "financial": 9,
             "institutional": 8,
             "news_sentiment": 9,
             "overall": 7.7
@@ -1747,7 +1747,7 @@
         "recommendation_rating": 7.7,
         "target_price": "665.9 - 771.1 元",
         "prediction_reason": "今日在量能擴大至 4,217 張 且交易筆數達 2,740 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3005": {
         "symbol": "3005",
@@ -1772,7 +1772,7 @@
         "recommendation_rating": 5.8,
         "target_price": "97.8 - 113.3 元",
         "prediction_reason": "今日在量能擴大至 4,393 張 且交易筆數達 2,855 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3044": {
         "symbol": "3044",
@@ -1797,7 +1797,7 @@
         "recommendation_rating": 8.0,
         "target_price": "497.8 - 576.4 元",
         "prediction_reason": "今日在量能擴大至 5,538 張 且交易筆數達 3,599 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2368": {
         "symbol": "2368",
@@ -1811,7 +1811,7 @@
         "transactions": "3,690 筆",
         "radar": {
             "technical": 5,
-            "financial": 6,
+            "financial": 7,
             "institutional": 6,
             "news_sentiment": 5,
             "overall": 5.4
@@ -1822,7 +1822,7 @@
         "recommendation_rating": 5.4,
         "target_price": "1306.2 - 1512.5 元",
         "prediction_reason": "今日在量能擴大至 5,677 張 且交易筆數達 3,690 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "6230": {
         "symbol": "6230",
@@ -1847,7 +1847,7 @@
         "recommendation_rating": 5.8,
         "target_price": "130.2 - 150.7 元",
         "prediction_reason": "今日在量能擴大至 145 張 且交易筆數達 94 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2881": {
         "symbol": "2881",
@@ -1872,7 +1872,7 @@
         "recommendation_rating": 9.6,
         "target_price": "104.5 - 121.0 元",
         "prediction_reason": "今日在量能擴大至 92,833 張 且交易筆數達 60,341 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2882": {
         "symbol": "2882",
@@ -1886,18 +1886,18 @@
         "transactions": "45,424 筆",
         "radar": {
             "technical": 10,
-            "financial": 9,
-            "institutional": 9,
-            "news_sentiment": 9,
-            "overall": 9.6
+            "financial": 10,
+            "institutional": 10,
+            "news_sentiment": 10,
+            "overall": 10.0
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 69,884 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 9.6,
+        "recommendation_rating": 10.0,
         "target_price": "81.1 - 93.9 元",
         "prediction_reason": "今日在量能擴大至 69,884 張 且交易筆數達 45,424 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2891": {
         "symbol": "2891",
@@ -1911,7 +1911,7 @@
         "transactions": "42,358 筆",
         "radar": {
             "technical": 10,
-            "financial": 8,
+            "financial": 9,
             "institutional": 9,
             "news_sentiment": 9,
             "overall": 9.6
@@ -1922,7 +1922,7 @@
         "recommendation_rating": 9.6,
         "target_price": "56.2 - 65.1 元",
         "prediction_reason": "今日在量能擴大至 65,166 張 且交易筆數達 42,358 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2886": {
         "symbol": "2886",
@@ -1935,19 +1935,19 @@
         "volume_raw": "29,262 張",
         "transactions": "19,020 筆",
         "radar": {
-            "technical": 9,
-            "financial": 8,
-            "institutional": 7,
-            "news_sentiment": 8,
-            "overall": 8.9
+            "technical": 10,
+            "financial": 10,
+            "institutional": 9,
+            "news_sentiment": 10,
+            "overall": 10.0
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 29,262 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 8.9,
+        "recommendation_rating": 10.0,
         "target_price": "37.5 - 43.4 元",
         "prediction_reason": "今日在量能擴大至 29,262 張 且交易筆數達 19,020 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2603": {
         "symbol": "2603",
@@ -1960,19 +1960,19 @@
         "volume_raw": "33,933 張",
         "transactions": "22,056 筆",
         "radar": {
-            "technical": 8,
-            "financial": 9,
-            "institutional": 9,
-            "news_sentiment": 9,
-            "overall": 9.1
+            "technical": 7,
+            "financial": 8,
+            "institutional": 8,
+            "news_sentiment": 8,
+            "overall": 8.4
         },
         "financials": "【公司營利】該股為目前『紅海塞港，SCFI 現貨運價飆漲』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 33,933 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 9.1,
+        "recommendation_rating": 8.4,
         "target_price": "200.9 - 232.7 元",
         "prediction_reason": "今日在量能擴大至 33,933 張 且交易筆數達 22,056 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2609": {
         "symbol": "2609",
@@ -1987,17 +1987,17 @@
         "radar": {
             "technical": 10,
             "financial": 9,
-            "institutional": 10,
-            "news_sentiment": 10,
-            "overall": 10.0
+            "institutional": 9,
+            "news_sentiment": 9,
+            "overall": 9.6
         },
         "financials": "【公司營利】該股為目前『高現貨比重，盈餘爆發彈性極大』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 32,793 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 10.0,
+        "recommendation_rating": 9.6,
         "target_price": "50.0 - 57.9 元",
         "prediction_reason": "今日在量能擴大至 32,793 張 且交易筆數達 21,315 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2615": {
         "symbol": "2615",
@@ -2010,19 +2010,19 @@
         "volume_raw": "9,761 張",
         "transactions": "6,344 筆",
         "radar": {
-            "technical": 9,
-            "financial": 9,
-            "institutional": 8,
-            "news_sentiment": 9,
-            "overall": 8.0
+            "technical": 8,
+            "financial": 7,
+            "institutional": 7,
+            "news_sentiment": 8,
+            "overall": 7.3
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 9,761 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 8.0,
+        "recommendation_rating": 7.3,
         "target_price": "77.7 - 90.0 元",
         "prediction_reason": "今日在量能擴大至 9,761 張 且交易筆數達 6,344 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2610": {
         "symbol": "2610",
@@ -2035,19 +2035,19 @@
         "volume_raw": "49,703 張",
         "transactions": "32,306 筆",
         "radar": {
-            "technical": 6,
+            "technical": 5,
             "financial": 7,
-            "institutional": 8,
-            "news_sentiment": 6,
-            "overall": 7.4
+            "institutional": 7,
+            "news_sentiment": 5,
+            "overall": 6.7
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 49,703 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 7.4,
+        "recommendation_rating": 6.7,
         "target_price": "17.5 - 20.3 元",
         "prediction_reason": "今日在量能擴大至 49,703 張 且交易筆數達 32,306 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2618": {
         "symbol": "2618",
@@ -2060,19 +2060,19 @@
         "volume_raw": "67,313 張",
         "transactions": "43,753 筆",
         "radar": {
-            "technical": 6,
-            "financial": 8,
-            "institutional": 8,
-            "news_sentiment": 6,
-            "overall": 7.4
+            "technical": 5,
+            "financial": 6,
+            "institutional": 7,
+            "news_sentiment": 5,
+            "overall": 6.7
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 67,313 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 7.4,
+        "recommendation_rating": 6.7,
         "target_price": "33.1 - 38.3 元",
         "prediction_reason": "今日在量能擴大至 67,313 張 且交易筆數達 43,753 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2605": {
         "symbol": "2605",
@@ -2085,19 +2085,19 @@
         "volume_raw": "3,381 張",
         "transactions": "2,197 筆",
         "radar": {
-            "technical": 6,
-            "financial": 8,
-            "institutional": 7,
-            "news_sentiment": 6,
-            "overall": 5.8
+            "technical": 5,
+            "financial": 7,
+            "institutional": 6,
+            "news_sentiment": 5,
+            "overall": 5.1
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 3,381 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 5.8,
+        "recommendation_rating": 5.1,
         "target_price": "29.4 - 34.1 元",
         "prediction_reason": "今日在量能擴大至 3,381 張 且交易筆數達 2,197 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2884": {
         "symbol": "2884",
@@ -2122,7 +2122,7 @@
         "recommendation_rating": 8.4,
         "target_price": "29.6 - 34.3 元",
         "prediction_reason": "今日在量能擴大至 52,244 張 且交易筆數達 33,958 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2885": {
         "symbol": "2885",
@@ -2135,19 +2135,19 @@
         "volume_raw": "39,967 張",
         "transactions": "25,978 筆",
         "radar": {
-            "technical": 10,
-            "financial": 8,
-            "institutional": 9,
-            "news_sentiment": 9,
-            "overall": 9.6
+            "technical": 9,
+            "financial": 7,
+            "institutional": 8,
+            "news_sentiment": 8,
+            "overall": 8.9
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 39,967 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 9.6,
+        "recommendation_rating": 8.9,
         "target_price": "56.5 - 65.5 元",
         "prediction_reason": "今日在量能擴大至 39,967 張 且交易筆數達 25,978 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2892": {
         "symbol": "2892",
@@ -2172,32 +2172,32 @@
         "recommendation_rating": 7.4,
         "target_price": "26.2 - 30.4 元",
         "prediction_reason": "今日在量能擴大至 33,654 張 且交易筆數達 21,874 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2880": {
         "symbol": "2880",
         "name": "華南金",
-        "price": "29.95",
-        "change": "-0.20",
-        "change_percent": "-0.66%",
+        "price": "593.63",
+        "change": "-21.74",
+        "change_percent": "-3.66%",
         "trend": "bearish",
-        "volume": "7.8萬張",
-        "volume_raw": "78,354 張",
-        "transactions": "50,930 筆",
+        "volume": "8,055張",
+        "volume_raw": "8,055 張",
+        "transactions": "12,593 筆",
         "radar": {
             "technical": 6,
-            "financial": 8,
-            "institutional": 8,
+            "financial": 7,
+            "institutional": 7,
             "news_sentiment": 6,
-            "overall": 7.4
+            "overall": 6.1
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
-        "news": "1. 今日成交量與熱度大幅增溫至 78,354 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
+        "news": "1. 今日成交量與熱度大幅增溫至 8,055 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 7.4,
-        "target_price": "28.5 - 32.9 元",
-        "prediction_reason": "今日在量能擴大至 78,354 張 且交易筆數達 50,930 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "recommendation_rating": 6.1,
+        "target_price": "563.9 - 653.0 元",
+        "prediction_reason": "今日在量能擴大至 8,055 張 且交易筆數達 12,593 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2883": {
         "symbol": "2883",
@@ -2210,19 +2210,19 @@
         "volume_raw": "108,615 張",
         "transactions": "70,599 筆",
         "radar": {
-            "technical": 9,
-            "financial": 7,
-            "institutional": 8,
-            "news_sentiment": 8,
-            "overall": 8.9
+            "technical": 10,
+            "financial": 10,
+            "institutional": 10,
+            "news_sentiment": 10,
+            "overall": 10.0
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 108,615 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 8.9,
+        "recommendation_rating": 10.0,
         "target_price": "21.2 - 24.5 元",
         "prediction_reason": "今日在量能擴大至 108,615 張 且交易筆數達 70,599 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2887": {
         "symbol": "2887",
@@ -2247,7 +2247,7 @@
         "recommendation_rating": 7.4,
         "target_price": "22.1 - 25.6 元",
         "prediction_reason": "今日在量能擴大至 170,374 張 且交易筆數達 110,742 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2890": {
         "symbol": "2890",
@@ -2262,42 +2262,42 @@
         "radar": {
             "technical": 10,
             "financial": 9,
-            "institutional": 8,
-            "news_sentiment": 9,
-            "overall": 9.5
+            "institutional": 9,
+            "news_sentiment": 10,
+            "overall": 9.9
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 28,903 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 9.5,
+        "recommendation_rating": 9.9,
         "target_price": "28.2 - 32.6 元",
         "prediction_reason": "今日在量能擴大至 28,903 張 且交易筆數達 18,786 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2888": {
         "symbol": "2888",
         "name": "新光金",
-        "price": "40.63",
-        "change": "+0.66",
-        "change_percent": "+1.62%",
+        "price": "553.75",
+        "change": "+8.13",
+        "change_percent": "+1.47%",
         "trend": "bullish",
-        "volume": "9,240張",
-        "volume_raw": "9,240 張",
-        "transactions": "10,092 筆",
+        "volume": "2,305張",
+        "volume_raw": "2,305 張",
+        "transactions": "5,618 筆",
         "radar": {
             "technical": 8,
-            "financial": 7,
+            "financial": 8,
             "institutional": 7,
             "news_sentiment": 8,
-            "overall": 7.3
+            "overall": 7.0
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
-        "news": "1. 今日成交量與熱度大幅增溫至 9,240 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
+        "news": "1. 今日成交量與熱度大幅增溫至 2,305 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 7.3,
-        "target_price": "38.6 - 44.7 元",
-        "prediction_reason": "今日在量能擴大至 9,240 張 且交易筆數達 10,092 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "recommendation_rating": 7.0,
+        "target_price": "526.1 - 609.1 元",
+        "prediction_reason": "今日在量能擴大至 2,305 張 且交易筆數達 5,618 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2606": {
         "symbol": "2606",
@@ -2310,19 +2310,19 @@
         "volume_raw": "13,377 張",
         "transactions": "8,695 筆",
         "radar": {
-            "technical": 9,
+            "technical": 8,
             "financial": 8,
-            "institutional": 8,
-            "news_sentiment": 9,
-            "overall": 8.3
+            "institutional": 7,
+            "news_sentiment": 8,
+            "overall": 7.7
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 13,377 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 8.3,
+        "recommendation_rating": 7.7,
         "target_price": "68.9 - 79.8 元",
         "prediction_reason": "今日在量能擴大至 13,377 張 且交易筆數達 8,695 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2637": {
         "symbol": "2637",
@@ -2335,19 +2335,19 @@
         "volume_raw": "5,512 張",
         "transactions": "3,582 筆",
         "radar": {
-            "technical": 8,
-            "financial": 7,
-            "institutional": 7,
-            "news_sentiment": 8,
-            "overall": 7.3
+            "technical": 9,
+            "financial": 8,
+            "institutional": 8,
+            "news_sentiment": 9,
+            "overall": 8.0
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 5,512 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 7.3,
+        "recommendation_rating": 8.0,
         "target_price": "72.1 - 83.5 元",
         "prediction_reason": "今日在量能擴大至 5,512 張 且交易筆數達 3,582 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "0050": {
         "symbol": "0050",
@@ -2361,18 +2361,18 @@
         "transactions": "61,575 筆",
         "radar": {
             "technical": 10,
-            "financial": 9,
-            "institutional": 10,
-            "news_sentiment": 10,
-            "overall": 10.0
+            "financial": 8,
+            "institutional": 9,
+            "news_sentiment": 9,
+            "overall": 9.6
         },
         "financials": "【公司營利】該股為目前『權值三雄 AI 狂潮，被動大贏家』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 94,732 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 10.0,
+        "recommendation_rating": 9.6,
         "target_price": "97.4 - 112.8 元",
         "prediction_reason": "今日在量能擴大至 94,732 張 且交易筆數達 61,575 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "00878": {
         "symbol": "00878",
@@ -2386,18 +2386,18 @@
         "transactions": "71,711 筆",
         "radar": {
             "technical": 10,
-            "financial": 9,
-            "institutional": 9,
-            "news_sentiment": 9,
-            "overall": 9.6
+            "financial": 10,
+            "institutional": 10,
+            "news_sentiment": 10,
+            "overall": 10.0
         },
         "financials": "【公司營利】該股為目前『ESG 與高殖利率雙效防守避風港』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 110,325 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 9.6,
+        "recommendation_rating": 10.0,
         "target_price": "29.0 - 33.6 元",
         "prediction_reason": "今日在量能擴大至 110,325 張 且交易筆數達 71,711 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "00940": {
         "symbol": "00940",
@@ -2422,7 +2422,7 @@
         "recommendation_rating": 10.0,
         "target_price": "11.3 - 13.1 元",
         "prediction_reason": "今日在量能擴大至 42,016 張 且交易筆數達 27,310 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "0056": {
         "symbol": "0056",
@@ -2437,17 +2437,17 @@
         "radar": {
             "technical": 10,
             "financial": 9,
-            "institutional": 10,
-            "news_sentiment": 10,
-            "overall": 10.0
+            "institutional": 9,
+            "news_sentiment": 9,
+            "overall": 9.6
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 61,473 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 10.0,
+        "recommendation_rating": 9.6,
         "target_price": "47.2 - 54.6 元",
         "prediction_reason": "今日在量能擴大至 61,473 張 且交易筆數達 39,957 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "00919": {
         "symbol": "00919",
@@ -2460,19 +2460,19 @@
         "volume_raw": "164,980 張",
         "transactions": "107,236 筆",
         "radar": {
-            "technical": 10,
-            "financial": 8,
-            "institutional": 9,
-            "news_sentiment": 9,
-            "overall": 9.6
+            "technical": 9,
+            "financial": 7,
+            "institutional": 8,
+            "news_sentiment": 8,
+            "overall": 8.9
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 164,980 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 9.6,
+        "recommendation_rating": 8.9,
         "target_price": "27.4 - 31.7 元",
         "prediction_reason": "今日在量能擴大至 164,980 張 且交易筆數達 107,236 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "00929": {
         "symbol": "00929",
@@ -2497,7 +2497,7 @@
         "recommendation_rating": 10.0,
         "target_price": "28.5 - 33.0 元",
         "prediction_reason": "今日在量能擴大至 62,355 張 且交易筆數達 40,530 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "00713": {
         "symbol": "00713",
@@ -2511,18 +2511,18 @@
         "transactions": "12,961 筆",
         "radar": {
             "technical": 9,
-            "financial": 9,
+            "financial": 8,
             "institutional": 8,
             "news_sentiment": 9,
-            "overall": 8.7
+            "overall": 8.6
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 19,941 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 8.7,
+        "recommendation_rating": 8.6,
         "target_price": "53.2 - 61.7 元",
         "prediction_reason": "今日在量能擴大至 19,941 張 且交易筆數達 12,961 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "006208": {
         "symbol": "006208",
@@ -2535,19 +2535,19 @@
         "volume_raw": "4,825 張",
         "transactions": "3,136 筆",
         "radar": {
-            "technical": 10,
+            "technical": 9,
             "financial": 9,
-            "institutional": 9,
-            "news_sentiment": 10,
-            "overall": 8.3
+            "institutional": 8,
+            "news_sentiment": 9,
+            "overall": 7.7
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 4,825 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 8.3,
+        "recommendation_rating": 7.7,
         "target_price": "225.7 - 261.4 元",
         "prediction_reason": "今日在量能擴大至 4,825 張 且交易筆數達 3,136 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "00939": {
         "symbol": "00939",
@@ -2560,19 +2560,19 @@
         "volume_raw": "14,628 張",
         "transactions": "9,508 筆",
         "radar": {
-            "technical": 10,
-            "financial": 10,
-            "institutional": 9,
-            "news_sentiment": 10,
-            "overall": 9.0
+            "technical": 8,
+            "financial": 8,
+            "institutional": 7,
+            "news_sentiment": 8,
+            "overall": 7.7
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 14,628 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 9.0,
+        "recommendation_rating": 7.7,
         "target_price": "19.1 - 22.1 元",
         "prediction_reason": "今日在量能擴大至 14,628 張 且交易筆數達 9,508 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "00881": {
         "symbol": "00881",
@@ -2597,7 +2597,7 @@
         "recommendation_rating": 8.3,
         "target_price": "52.0 - 60.2 元",
         "prediction_reason": "今日在量能擴大至 13,681 張 且交易筆數達 8,892 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "00915": {
         "symbol": "00915",
@@ -2622,7 +2622,7 @@
         "recommendation_rating": 9.0,
         "target_price": "27.5 - 31.9 元",
         "prediction_reason": "今日在量能擴大至 13,303 張 且交易筆數達 8,647 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "00918": {
         "symbol": "00918",
@@ -2647,7 +2647,7 @@
         "recommendation_rating": 10.0,
         "target_price": "27.1 - 31.4 元",
         "prediction_reason": "今日在量能擴大至 33,099 張 且交易筆數達 21,514 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "00905": {
         "symbol": "00905",
@@ -2660,19 +2660,19 @@
         "volume_raw": "2,446 張",
         "transactions": "1,589 筆",
         "radar": {
-            "technical": 9,
+            "technical": 8,
             "financial": 8,
-            "institutional": 8,
-            "news_sentiment": 9,
-            "overall": 7.7
+            "institutional": 7,
+            "news_sentiment": 8,
+            "overall": 7.0
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 2,446 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 7.7,
+        "recommendation_rating": 7.0,
         "target_price": "25.8 - 29.8 元",
         "prediction_reason": "今日在量能擴大至 2,446 張 且交易筆數達 1,589 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "00850": {
         "symbol": "00850",
@@ -2685,19 +2685,19 @@
         "volume_raw": "943 張",
         "transactions": "613 筆",
         "radar": {
-            "technical": 9,
-            "financial": 8,
-            "institutional": 8,
-            "news_sentiment": 9,
-            "overall": 7.7
+            "technical": 10,
+            "financial": 10,
+            "institutional": 9,
+            "news_sentiment": 10,
+            "overall": 8.4
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 943 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 7.7,
+        "recommendation_rating": 8.4,
         "target_price": "84.5 - 97.8 元",
         "prediction_reason": "今日在量能擴大至 943 張 且交易筆數達 613 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "00922": {
         "symbol": "00922",
@@ -2711,7 +2711,7 @@
         "transactions": "7,479 筆",
         "radar": {
             "technical": 10,
-            "financial": 10,
+            "financial": 9,
             "institutional": 9,
             "news_sentiment": 10,
             "overall": 9.0
@@ -2722,7 +2722,7 @@
         "recommendation_rating": 9.0,
         "target_price": "37.3 - 43.2 元",
         "prediction_reason": "今日在量能擴大至 11,507 張 且交易筆數達 7,479 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "00936": {
         "symbol": "00936",
@@ -2735,19 +2735,19 @@
         "volume_raw": "5,612 張",
         "transactions": "3,647 筆",
         "radar": {
-            "technical": 7,
-            "financial": 9,
-            "institutional": 8,
-            "news_sentiment": 7,
-            "overall": 6.8
+            "technical": 5,
+            "financial": 7,
+            "institutional": 6,
+            "news_sentiment": 5,
+            "overall": 5.4
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 5,612 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 6.8,
+        "recommendation_rating": 5.4,
         "target_price": "19.2 - 22.2 元",
         "prediction_reason": "今日在量能擴大至 5,612 張 且交易筆數達 3,647 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "00692": {
         "symbol": "00692",
@@ -2761,7 +2761,7 @@
         "transactions": "1,203 筆",
         "radar": {
             "technical": 9,
-            "financial": 9,
+            "financial": 8,
             "institutional": 8,
             "news_sentiment": 9,
             "overall": 7.7
@@ -2772,7 +2772,7 @@
         "recommendation_rating": 7.7,
         "target_price": "84.6 - 98.0 元",
         "prediction_reason": "今日在量能擴大至 1,851 張 且交易筆數達 1,203 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "0052": {
         "symbol": "0052",
@@ -2785,19 +2785,19 @@
         "volume_raw": "30,547 張",
         "transactions": "19,855 筆",
         "radar": {
-            "technical": 10,
-            "financial": 9,
-            "institutional": 10,
-            "news_sentiment": 10,
-            "overall": 10.0
+            "technical": 9,
+            "financial": 8,
+            "institutional": 8,
+            "news_sentiment": 8,
+            "overall": 8.9
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 30,547 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 10.0,
+        "recommendation_rating": 8.9,
         "target_price": "57.4 - 66.5 元",
         "prediction_reason": "今日在量能擴大至 30,547 張 且交易筆數達 19,855 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "00900": {
         "symbol": "00900",
@@ -2810,19 +2810,19 @@
         "volume_raw": "13,616 張",
         "transactions": "8,850 筆",
         "radar": {
-            "technical": 9,
-            "financial": 8,
-            "institutional": 8,
-            "news_sentiment": 9,
-            "overall": 8.3
+            "technical": 10,
+            "financial": 10,
+            "institutional": 9,
+            "news_sentiment": 10,
+            "overall": 9.0
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 13,616 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 8.3,
+        "recommendation_rating": 9.0,
         "target_price": "17.6 - 20.3 元",
         "prediction_reason": "今日在量能擴大至 13,616 張 且交易筆數達 8,850 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "00944": {
         "symbol": "00944",
@@ -2847,7 +2847,7 @@
         "recommendation_rating": 7.7,
         "target_price": "19.0 - 22.1 元",
         "prediction_reason": "今日在量能擴大至 1,734 張 且交易筆數達 1,126 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "1519": {
         "symbol": "1519",
@@ -2860,19 +2860,19 @@
         "volume_raw": "6,230 張",
         "transactions": "4,049 筆",
         "radar": {
-            "technical": 10,
-            "financial": 9,
-            "institutional": 9,
-            "news_sentiment": 10,
-            "overall": 8.7
+            "technical": 9,
+            "financial": 8,
+            "institutional": 8,
+            "news_sentiment": 9,
+            "overall": 8.0
         },
         "financials": "【公司營利】該股為目前『高壓變壓器外銷美國暴利爆增』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 6,230 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 8.7,
+        "recommendation_rating": 8.0,
         "target_price": "834.1 - 965.8 元",
         "prediction_reason": "今日在量能擴大至 6,230 張 且交易筆數達 4,049 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "1503": {
         "symbol": "1503",
@@ -2886,18 +2886,18 @@
         "transactions": "13,563 筆",
         "radar": {
             "technical": 10,
-            "financial": 9,
-            "institutional": 9,
-            "news_sentiment": 10,
-            "overall": 9.9
+            "financial": 8,
+            "institutional": 8,
+            "news_sentiment": 9,
+            "overall": 9.5
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 20,867 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 9.9,
+        "recommendation_rating": 9.5,
         "target_price": "209.9 - 243.1 元",
         "prediction_reason": "今日在量能擴大至 20,867 張 且交易筆數達 13,563 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "1513": {
         "symbol": "1513",
@@ -2911,18 +2911,18 @@
         "transactions": "20,011 筆",
         "radar": {
             "technical": 10,
-            "financial": 10,
-            "institutional": 10,
-            "news_sentiment": 10,
-            "overall": 10.0
+            "financial": 9,
+            "institutional": 9,
+            "news_sentiment": 9,
+            "overall": 9.6
         },
         "financials": "【公司營利】該股為目前『台電 345KV 特高壓 GIS 絕緣龍頭』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 30,787 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 10.0,
+        "recommendation_rating": 9.6,
         "target_price": "160.5 - 185.9 元",
         "prediction_reason": "今日在量能擴大至 30,787 張 且交易筆數達 20,011 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "1504": {
         "symbol": "1504",
@@ -2936,7 +2936,7 @@
         "transactions": "16,227 筆",
         "radar": {
             "technical": 6,
-            "financial": 7,
+            "financial": 8,
             "institutional": 7,
             "news_sentiment": 6,
             "overall": 7.0
@@ -2947,7 +2947,7 @@
         "recommendation_rating": 7.0,
         "target_price": "67.3 - 77.9 元",
         "prediction_reason": "今日在量能擴大至 24,966 張 且交易筆數達 16,227 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "1514": {
         "symbol": "1514",
@@ -2972,7 +2972,7 @@
         "recommendation_rating": 8.3,
         "target_price": "118.8 - 137.5 元",
         "prediction_reason": "今日在量能擴大至 14,305 張 且交易筆數達 9,298 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "6806": {
         "symbol": "6806",
@@ -2997,7 +2997,7 @@
         "recommendation_rating": 5.8,
         "target_price": "6.4 - 7.4 元",
         "prediction_reason": "今日在量能擴大至 496 張 且交易筆數達 322 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "9941": {
         "symbol": "9941",
@@ -3010,19 +3010,19 @@
         "volume_raw": "2,497 張",
         "transactions": "1,623 筆",
         "radar": {
-            "technical": 5,
-            "financial": 6,
-            "institutional": 6,
-            "news_sentiment": 5,
-            "overall": 5.1
+            "technical": 6,
+            "financial": 8,
+            "institutional": 7,
+            "news_sentiment": 6,
+            "overall": 5.8
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 2,497 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 5.1,
+        "recommendation_rating": 5.8,
         "target_price": "68.4 - 79.2 元",
         "prediction_reason": "今日在量能擴大至 2,497 張 且交易筆數達 1,623 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3708": {
         "symbol": "3708",
@@ -3047,7 +3047,7 @@
         "recommendation_rating": 5.7,
         "target_price": "124.4 - 144.1 元",
         "prediction_reason": "今日在量能擴大至 4,428 張 且交易筆數達 2,878 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "1101": {
         "symbol": "1101",
@@ -3072,7 +3072,7 @@
         "recommendation_rating": 7.4,
         "target_price": "22.7 - 26.2 元",
         "prediction_reason": "今日在量能擴大至 29,787 張 且交易筆數達 19,361 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "2308": {
         "symbol": "2308",
@@ -3085,19 +3085,19 @@
         "volume_raw": "13,874 張",
         "transactions": "9,017 筆",
         "radar": {
-            "technical": 10,
-            "financial": 10,
-            "institutional": 9,
-            "news_sentiment": 10,
-            "overall": 9.0
+            "technical": 9,
+            "financial": 9,
+            "institutional": 8,
+            "news_sentiment": 9,
+            "overall": 8.3
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 13,874 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 9.0,
+        "recommendation_rating": 8.3,
         "target_price": "2394.0 - 2772.0 元",
         "prediction_reason": "今日在量能擴大至 13,874 張 且交易筆數達 9,017 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "1102": {
         "symbol": "1102",
@@ -3122,7 +3122,7 @@
         "recommendation_rating": 6.7,
         "target_price": "31.3 - 36.3 元",
         "prediction_reason": "今日在量能擴大至 17,412 張 且交易筆數達 11,318 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "8996": {
         "symbol": "8996",
@@ -3135,19 +3135,19 @@
         "volume_raw": "4,088 張",
         "transactions": "2,657 筆",
         "radar": {
-            "technical": 5,
-            "financial": 6,
-            "institutional": 6,
-            "news_sentiment": 5,
-            "overall": 5.1
+            "technical": 6,
+            "financial": 8,
+            "institutional": 7,
+            "news_sentiment": 6,
+            "overall": 5.8
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 4,088 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 5.1,
+        "recommendation_rating": 5.8,
         "target_price": "1154.2 - 1336.5 元",
         "prediction_reason": "今日在量能擴大至 4,088 張 且交易筆數達 2,657 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "6443": {
         "symbol": "6443",
@@ -3160,19 +3160,19 @@
         "volume_raw": "17,164 張",
         "transactions": "11,156 筆",
         "radar": {
-            "technical": 6,
+            "technical": 5,
             "financial": 7,
-            "institutional": 7,
-            "news_sentiment": 6,
-            "overall": 6.7
+            "institutional": 6,
+            "news_sentiment": 5,
+            "overall": 6.0
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 17,164 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 6.7,
+        "recommendation_rating": 6.0,
         "target_price": "39.0 - 45.2 元",
         "prediction_reason": "今日在量能擴大至 17,164 張 且交易筆數達 11,156 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "6477": {
         "symbol": "6477",
@@ -3186,18 +3186,18 @@
         "transactions": "356 筆",
         "radar": {
             "technical": 6,
-            "financial": 7,
+            "financial": 8,
             "institutional": 7,
             "news_sentiment": 6,
-            "overall": 5.7
+            "overall": 5.8
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 548 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 5.7,
+        "recommendation_rating": 5.8,
         "target_price": "32.2 - 37.3 元",
         "prediction_reason": "今日在量能擴大至 548 張 且交易筆數達 356 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "9958": {
         "symbol": "9958",
@@ -3222,7 +3222,7 @@
         "recommendation_rating": 5.8,
         "target_price": "96.9 - 112.2 元",
         "prediction_reason": "今日在量能擴大至 2,399 張 且交易筆數達 1,559 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "3712": {
         "symbol": "3712",
@@ -3236,7 +3236,7 @@
         "transactions": "667 筆",
         "radar": {
             "technical": 5,
-            "financial": 6,
+            "financial": 7,
             "institutional": 6,
             "news_sentiment": 5,
             "overall": 5.1
@@ -3247,7 +3247,7 @@
         "recommendation_rating": 5.1,
         "target_price": "15.2 - 17.7 元",
         "prediction_reason": "今日在量能擴大至 1,026 張 且交易筆數達 667 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "6869": {
         "symbol": "6869",
@@ -3272,7 +3272,7 @@
         "recommendation_rating": 7.7,
         "target_price": "79.9 - 92.5 元",
         "prediction_reason": "今日在量能擴大至 1,670 張 且交易筆數達 1,085 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "1605": {
         "symbol": "1605",
@@ -3297,7 +3297,7 @@
         "recommendation_rating": 8.9,
         "target_price": "35.6 - 41.2 元",
         "prediction_reason": "今日在量能擴大至 48,852 張 且交易筆數達 31,753 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     },
     "1608": {
         "symbol": "1608",
@@ -3310,18 +3310,18 @@
         "volume_raw": "3,216 張",
         "transactions": "2,090 筆",
         "radar": {
-            "technical": 10,
+            "technical": 9,
             "financial": 9,
-            "institutional": 9,
-            "news_sentiment": 10,
-            "overall": 8.3
+            "institutional": 8,
+            "news_sentiment": 9,
+            "overall": 7.7
         },
         "financials": "【公司營利】該股為目前『各行業優質大型骨幹企業』之重要成員。營利水準穩健成長，最新一季營收表現大超預期，毛利率結構健康，財務體質卓越。",
         "news": "1. 今日成交量與熱度大幅增溫至 3,216 張，多頭買盤力道強勁。\n2. 最新營收公告年成長率創新高，法人投信連續反手買超鎖股。\n3. 高階技術研發突破或配息利多出爐，市場信心極佳。",
         "conferences": "【法說會最新】訂單能見度佳，產能利用率高企。公司表示將擴大資本支出並深化與美系大廠的合作。董事會通過穩健的高股利發放政策。",
-        "recommendation_rating": 8.3,
+        "recommendation_rating": 7.7,
         "target_price": "32.0 - 37.0 元",
         "prediction_reason": "今日在量能擴大至 3,216 張 且交易筆數達 2,090 筆 的強力買盤挹注下，股價價漲量增。技術面最新突破，明日與本週有極高機率持續上漲。",
-        "update_time": "2026-05-27 21:22 盤後分析"
+        "update_time": "2026-05-27 21:27 盤後分析"
     }
 }
