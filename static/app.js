@@ -121,7 +121,8 @@ function switchCategory(categoryKey) {
     document.querySelector(".dashboard-grid").style.display = "grid";
     
     // 還原 Header 資訊
-    document.querySelector(".subtitle").innerHTML = `<i class="fa-solid fa-clock"></i> 今日盤後數據分析時間：<span id="update-date">2026-05-27</span> | 驅動核心：browser-use Agent`;
+    const lastUpdated = appState.meta ? (appState.meta.last_updated || appState.meta.update_date) : "2026-05-28";
+    document.querySelector(".subtitle").innerHTML = `<i class="fa-solid fa-clock"></i> 今日盤後數據分析時間：<span id="update-date">${lastUpdated}</span> | 驅動核心：browser-use Agent`;
     document.getElementById("btn-add-stock-trigger").style.display = "inline-flex";
 
     // 更新側邊欄 Active 狀態
