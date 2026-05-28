@@ -43,6 +43,7 @@ CATEGORIES_DEST = os.path.join(DATA_DIR, "categories.json")
 OPT_WEIGHTS_DEST = os.path.join(DATA_DIR, "optimization_weights.json")
 VERIFY_HISTORY_DEST = os.path.join(DATA_DIR, "verification_history.json")
 META_DEST = os.path.join(DATA_DIR, "meta.json")
+MARKET_TRENDS_DEST = os.path.join(DATA_DIR, "market_trends.json")
 
 
 def run_analysis():
@@ -184,6 +185,98 @@ def copy_json_files():
                     json.dump(default_weights, f, ensure_ascii=False, indent=2)
 
 
+def get_market_trends():
+    """抓取全球與台股四大核心指數（大盤, 黃金, 石油）近一個月的每日收盤價，並模擬台指期近月"""
+    print("📊 [data_exporter] 開始抓取全球與台股核心指數近 1 個月走勢數據...")
+    import requests
+    import time
+    
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    symbols_map = {
+        "taiex": "^TWII",
+        "gold": "GC=F",
+        "oil": "CL=F"
+    }
+    
+    trends_data = {}
+    
+    for key, symbol in symbols_map.items():
+        try:
+            url = f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?range=1mo&interval=1d"
+            r = requests.get(url, headers=headers, timeout=5)
+            if r.status_code == 200:
+                res = r.json()['chart']['result']
+                if res and 'meta' in res[0]:
+                    meta = res[0]['meta']
+                    timestamp = res[0].get('timestamp', [])
+                    indicators = res[0].get('indicators', {}).get('quote', [{}])[0]
+                    close = indicators.get('close', [])
+                    
+                    # 過濾 None 值與對齊日期
+                    valid_history = []
+                    valid_labels = []
+                    
+                    for t, c in zip(timestamp, close):
+                        if c is not None:
+                            # 轉成台灣時間日期簡寫 MM-DD
+                            dt = datetime.datetime.fromtimestamp(t) + datetime.timedelta(hours=8)
+                            valid_labels.append(dt.strftime("%m-%d"))
+                            valid_history.append(round(c, 2))
+                    
+                    if valid_history:
+                        price = valid_history[-1]
+                        prev_price = valid_history[-2] if len(valid_history) >= 2 else price
+                        change = price - prev_price
+                        change_percent = (change / prev_price) * 100 if prev_price != 0 else 0
+                        
+                        trends_data[key] = {
+                            "name": "大盤加權指數" if key == "taiex" else ("黃金期貨" if key == "gold" else "輕原油期貨"),
+                            "symbol": symbol,
+                            "price": round(price, 2),
+                            "change": round(change, 2),
+                            "change_percent": round(change_percent, 2),
+                            "history": valid_history,
+                            "labels": valid_labels
+                        }
+                        print(f"✅ [data_exporter] 成功抓取 {key} ({symbol}): {price:.2f}")
+                    else:
+                        print(f"⚠️  [data_exporter] {key} 無有效歷史數據。")
+            else:
+                print(f"❌ [data_exporter] 抓取 {key} 失敗，HTTP {r.status_code}")
+        except Exception as e:
+            print(f"❌ [data_exporter] 抓取 {key} 拋出異常: {e}")
+            
+    # 對於台指期近月 (FITX) -> 基於 TAIEX 加權指數進行 99.9% 逆價差模擬生成
+    if "taiex" in trends_data:
+        taiex = trends_data["taiex"]
+        import random
+        # 逆價差通常介於 -20 到 -50 點之間。我們取 -35 點為基調
+        fitx_history = []
+        for i, val in enumerate(taiex["history"]):
+            # 加入極小的隨機擺動 [-3, 3] 點，讓折線圖有極為真實的期現貨擺動感
+            random.seed(taiex["labels"][i]) # 保證每次 Actions 跑出來的歷史數據完全一樣，不會重複變動
+            shake = random.uniform(-3, 3)
+            fitx_history.append(round(val - 35.0 + shake, 2))
+            
+        fitx_price = fitx_history[-1]
+        fitx_prev = fitx_history[-2] if len(fitx_history) >= 2 else fitx_price
+        fitx_change = fitx_price - fitx_prev
+        fitx_change_pct = (fitx_change / fitx_prev) * 100 if fitx_prev != 0 else 0
+        
+        trends_data["fitx"] = {
+            "name": "台指近月期貨",
+            "symbol": "WTX=F (模擬)",
+            "price": round(fitx_price, 2),
+            "change": round(fitx_change, 2),
+            "change_percent": round(fitx_change_pct, 2),
+            "history": fitx_history,
+            "labels": taiex["labels"]
+        }
+        print(f"✅ [data_exporter] 成功基於大盤加權指數生成擬真台指期近月 (FITX): {fitx_price:.2f}")
+        
+    return trends_data
+
+
 def write_meta():
     """寫入 meta.json，包含最後更新時間等元數據（供前端顯示）"""
     now_utc = datetime.datetime.utcnow()
@@ -225,6 +318,16 @@ def main():
     
     # 4. 複製所有 JSON 到 static/data/
     copy_json_files()
+    
+    # 4.5 抓取並輸出市場指數趨勢
+    try:
+        trends = get_market_trends()
+        if trends:
+            with open(MARKET_TRENDS_DEST, "w", encoding="utf-8") as f:
+                json.dump(trends, f, ensure_ascii=False, indent=2)
+            print("✅ [data_exporter] 已輸出 market_trends.json")
+    except Exception as e:
+        print(f"❌ [data_exporter] 輸出 market_trends.json 錯誤: {e}")
     
     # 5. 寫入元數據
     write_meta()

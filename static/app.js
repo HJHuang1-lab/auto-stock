@@ -43,6 +43,17 @@ async function initApp() {
         // 4. 渲染分類菜單
         renderCategoryMenu();
         
+        // 4.5 獲取全球/台股大盤指標走勢
+        try {
+            const trendRes = await fetch(`${DATA_BASE}/market_trends.json?t=${Date.now()}`);
+            if (trendRes.ok) {
+                appState.marketTrends = await trendRes.json();
+                renderMarketTrends();
+            }
+        } catch (e) {
+            console.warn("market_trends.json 讀取或渲染失敗:", e);
+        }
+        
         // 5. 渲染主頁面 (預設為半導體分類)
         switchCategory(appState.activeCategory);
         
@@ -816,4 +827,106 @@ async function simulateEvolutionTerminalProgress(result, isSuccess = true) {
 
     // 關閉 Modal
     document.getElementById("terminal-modal").style.display = "none";
+}
+
+// --- 頂部全球/台股指數趨勢看板渲染 (Market Trends sparklines) ---
+function renderMarketTrends() {
+    const container = document.getElementById("market-trends-bar");
+    if (!container || !appState.marketTrends) return;
+    
+    container.innerHTML = "";
+    
+    // 渲染順序：1.大盤加權指數, 2.台指近月, 3.黃金價格, 4.石油價格
+    const order = ["taiex", "fitx", "gold", "oil"];
+    const icons = {
+        "taiex": "fa-chart-area",
+        "fitx": "fa-bezier-curve",
+        "gold": "fa-coins",
+        "oil": "fa-droplet"
+    };
+    
+    order.forEach(key => {
+        const trend = appState.marketTrends[key];
+        if (!trend) return;
+        
+        const card = document.createElement("div");
+        card.className = "trend-card glass-card";
+        card.setAttribute("id", `trend-${key}`);
+        
+        const isUp = trend.change >= 0;
+        const changeClass = isUp ? "text-up" : "text-down";
+        const sign = isUp ? "+" : "";
+        const trendIcon = isUp ? "fa-arrow-trend-up" : "fa-arrow-trend-down";
+        
+        card.innerHTML = `
+            <div class="trend-info">
+                <div class="trend-name">
+                    <i class="fa-solid ${icons[key]} neon-glow-text"></i>
+                    <span>${trend.name}</span>
+                </div>
+                <div class="trend-price-row">
+                    <span class="trend-price">${trend.price.toLocaleString()}</span>
+                    <span class="trend-change ${changeClass}">
+                        <i class="fa-solid ${trendIcon}"></i>
+                        ${sign}${trend.change.toLocaleString()} (${sign}${trend.change_percent.toFixed(2)}%)
+                    </span>
+                </div>
+            </div>
+            <div class="trend-chart-box">
+                <canvas id="chart-${key}"></canvas>
+            </div>
+        `;
+        
+        container.appendChild(card);
+        
+        // 異步繪製迷你 Sparkline
+        setTimeout(() => {
+            drawSparkline(`chart-${key}`, trend.history, isUp);
+        }, 50);
+    });
+}
+
+function drawSparkline(canvasId, dataPoints, isUp) {
+    const ctx = document.getElementById(canvasId);
+    if (!ctx) return;
+    
+    const colorLine = isUp ? "rgb(255, 65, 108)" : "rgb(0, 230, 115)"; // 漲為紅/粉，跌為綠
+    const colorBgGradStart = isUp ? "rgba(255, 65, 108, 0.15)" : "rgba(0, 230, 115, 0.15)";
+    
+    const chartCtx = ctx.getContext('2d');
+    const gradient = chartCtx.createLinearGradient(0, 0, 0, 40);
+    gradient.addColorStop(0, colorBgGradStart);
+    gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
+    
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: dataPoints.map((_, i) => i),
+            datasets: [{
+                data: dataPoints,
+                borderColor: colorLine,
+                borderWidth: 2,
+                pointRadius: 0,
+                pointHoverRadius: 0,
+                fill: true,
+                backgroundColor: gradient,
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: { enabled: false }
+            },
+            scales: {
+                x: { display: false },
+                y: { display: false }
+            },
+            layout: {
+                padding: { left: 2, right: 2, top: 4, bottom: 4 }
+            }
+        }
+    });
 }

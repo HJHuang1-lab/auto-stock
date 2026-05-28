@@ -1180,6 +1180,86 @@ body {
 }
 
 /* ==========================================
+   頂部全球與台股指數趨勢看板樣式
+   ========================================== */
+.market-trends-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 28px;
+    width: 100%;
+}
+
+.trend-card {
+    background: var(--bg-card);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-main);
+    transition: var(--transition);
+    overflow: hidden;
+    position: relative;
+}
+
+.trend-card:hover {
+    border-color: rgba(0, 242, 254, 0.2);
+    box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.4), 0 0 10px rgba(0, 242, 254, 0.05);
+    transform: translateY(-2px);
+}
+
+.trend-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 2;
+}
+
+.trend-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.trend-name i {
+    font-size: 12px;
+}
+
+.trend-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.trend-price {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -0.5px;
+}
+
+.trend-change {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.trend-chart-box {
+    width: 110px;
+    height: 40px;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+}
+
+/* ==========================================
    響應式設計 (RWD) 系統
    ========================================== */
 @media (max-width: 1024px) {
@@ -1254,6 +1334,12 @@ body {
         display: none !important; /* 行動版隱藏 footer */
     }
 
+    .market-trends-container {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px;
+        margin-bottom: 20px;
+    }
+
     /* 主內容區 */
     .main-content {
         width: 100%;
@@ -1298,6 +1384,12 @@ body {
 }
 
 @media (max-width: 576px) {
+    .market-trends-container {
+        grid-template-columns: 1fr !important;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
     .analysis-visuals {
         flex-direction: column;
         align-items: center;
