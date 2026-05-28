@@ -15,6 +15,8 @@ on:
 jobs:
   update-and-deploy:
     runs-on: ubuntu-latest   # GitHub 免費提供的 Linux 虛擬機器
+    permissions:
+      contents: write
     timeout-minutes: 30
 
     steps:
