@@ -186,7 +186,7 @@ def copy_json_files():
 
 
 def get_market_trends():
-    """抓取全球與台股四大核心指數（大盤, 黃金, 石油）近一個月的每日收盤價，並模擬台指期近月"""
+    """抓取全球與台股四大核心指數（大盤, 美元兌台幣, 黃金, 石油）近一個月的每日收盤價"""
     print("📊 [data_exporter] 開始抓取全球與台股核心指數近 1 個月走勢數據...")
     import requests
     import time
@@ -194,6 +194,7 @@ def get_market_trends():
     headers = {'User-Agent': 'Mozilla/5.0'}
     symbols_map = {
         "taiex": "^TWII",
+        "usdtwd": "USDTWD=X",
         "gold": "GC=F",
         "oil": "CL=F"
     }
@@ -216,12 +217,15 @@ def get_market_trends():
                     valid_history = []
                     valid_labels = []
                     
+                    # 決定小數點精度 (匯率 4 位，其他 2 位)
+                    precision = 4 if key == "usdtwd" else 2
+                    
                     for t, c in zip(timestamp, close):
                         if c is not None:
                             # 轉成台灣時間日期簡寫 MM-DD
                             dt = datetime.datetime.fromtimestamp(t) + datetime.timedelta(hours=8)
                             valid_labels.append(dt.strftime("%m-%d"))
-                            valid_history.append(round(c, 2))
+                            valid_history.append(round(c, precision))
                     
                     if valid_history:
                         price = valid_history[-1]
@@ -229,16 +233,25 @@ def get_market_trends():
                         change = price - prev_price
                         change_percent = (change / prev_price) * 100 if prev_price != 0 else 0
                         
+                        # 中文名稱映射
+                        names = {
+                            "taiex": "大盤加權指數",
+                            "usdtwd": "美元兌台幣",
+                            "gold": "黃金期貨",
+                            "oil": "輕原油期貨"
+                        }
+                        
                         trends_data[key] = {
-                            "name": "大盤加權指數" if key == "taiex" else ("黃金期貨" if key == "gold" else "輕原油期貨"),
+                            "name": names.get(key, key),
                             "symbol": symbol,
-                            "price": round(price, 2),
-                            "change": round(change, 2),
-                            "change_percent": round(change_percent, 2),
+                            "price": round(price, precision),
+                            "change": round(change, precision),
+                            "change_percent": round(change_percent, 2), # 百分比仍維持 2 位
                             "history": valid_history,
                             "labels": valid_labels
                         }
-                        print(f"✅ [data_exporter] 成功抓取 {key} ({symbol}): {price:.2f}")
+                        price_str = f"{price:.4f}" if key == "usdtwd" else f"{price:.2f}"
+                        print(f"✅ [data_exporter] 成功抓取 {key} ({symbol}): {price_str}")
                     else:
                         print(f"⚠️  [data_exporter] {key} 無有效歷史數據。")
             else:
@@ -246,34 +259,6 @@ def get_market_trends():
         except Exception as e:
             print(f"❌ [data_exporter] 抓取 {key} 拋出異常: {e}")
             
-    # 對於台指期近月 (FITX) -> 基於 TAIEX 加權指數進行 99.9% 逆價差模擬生成
-    if "taiex" in trends_data:
-        taiex = trends_data["taiex"]
-        import random
-        # 逆價差通常介於 -20 到 -50 點之間。我們取 -35 點為基調
-        fitx_history = []
-        for i, val in enumerate(taiex["history"]):
-            # 加入極小的隨機擺動 [-3, 3] 點，讓折線圖有極為真實的期現貨擺動感
-            random.seed(taiex["labels"][i]) # 保證每次 Actions 跑出來的歷史數據完全一樣，不會重複變動
-            shake = random.uniform(-3, 3)
-            fitx_history.append(round(val - 35.0 + shake, 2))
-            
-        fitx_price = fitx_history[-1]
-        fitx_prev = fitx_history[-2] if len(fitx_history) >= 2 else fitx_price
-        fitx_change = fitx_price - fitx_prev
-        fitx_change_pct = (fitx_change / fitx_prev) * 100 if fitx_prev != 0 else 0
-        
-        trends_data["fitx"] = {
-            "name": "台指近月期貨",
-            "symbol": "WTX=F (模擬)",
-            "price": round(fitx_price, 2),
-            "change": round(fitx_change, 2),
-            "change_percent": round(fitx_change_pct, 2),
-            "history": fitx_history,
-            "labels": taiex["labels"]
-        }
-        print(f"✅ [data_exporter] 成功基於大盤加權指數生成擬真台指期近月 (FITX): {fitx_price:.2f}")
-        
     return trends_data
 
 

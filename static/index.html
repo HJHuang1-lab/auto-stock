@@ -368,6 +368,23 @@
                 </div>
             </div>
         </div>
+    <!-- 彈出視窗 3：核心指標每日趨勢大圖 Modal -->
+    <div class="modal-overlay" id="trend-detail-modal" style="display: none;">
+        <div class="glass-card modal-content trend-modal-content" style="max-width: 800px; width: 90%;">
+            <div class="modal-header">
+                <h3 id="trend-modal-title"><i class="fa-solid fa-chart-line"></i> 指標歷史趨勢細節</h3>
+                <button class="modal-close" id="btn-close-trend-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="trend-modal-body" style="padding: 20px 0 10px 0;">
+                <div class="trend-modal-meta" style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px;">
+                    <span id="trend-modal-price" style="font-size: 32px; font-weight: 800; color: var(--text-primary); font-family: 'Outfit'; letter-spacing: -0.5px;">---</span>
+                    <span id="trend-modal-change" style="font-size: 14px; font-weight: 700;">---</span>
+                </div>
+                <div class="big-chart-container" style="height: 350px; position: relative;">
+                    <canvas id="trendDetailChart"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="/app.js?v=20260528_v2"></script>

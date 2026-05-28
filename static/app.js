@@ -534,6 +534,30 @@ function setupEventListeners() {
         document.getElementById("terminal-modal").style.display = "none";
     });
 
+    // 4.6 關閉「指標歷史趨勢」彈出視窗
+    const trendModal = document.getElementById("trend-detail-modal");
+    const closeTrendModal = document.getElementById("btn-close-trend-modal");
+    if (closeTrendModal && trendModal) {
+        closeTrendModal.addEventListener("click", () => {
+            trendModal.style.display = "none";
+            if (bigTrendChartInstance) {
+                bigTrendChartInstance.destroy();
+                bigTrendChartInstance = null;
+            }
+        });
+        
+        // 點擊 Modal 外部（遮罩層）也可關閉
+        trendModal.addEventListener("click", (e) => {
+            if (e.target === trendModal) {
+                trendModal.style.display = "none";
+                if (bigTrendChartInstance) {
+                    bigTrendChartInstance.destroy();
+                    bigTrendChartInstance = null;
+                }
+            }
+        });
+    }
+
     // 5. 切換至 AI 自我進化週驗收分頁
     const evolutionMenuItem = document.getElementById("menu-item-evolution");
     evolutionMenuItem.addEventListener("click", () => {
@@ -836,11 +860,11 @@ function renderMarketTrends() {
     
     container.innerHTML = "";
     
-    // 渲染順序：1.大盤加權指數, 2.台指近月, 3.黃金價格, 4.石油價格
-    const order = ["taiex", "fitx", "gold", "oil"];
+    // 渲染順序：1.大盤加權指數, 2.美元兌台幣, 3.黃金價格, 4.石油價格
+    const order = ["taiex", "usdtwd", "gold", "oil"];
     const icons = {
         "taiex": "fa-chart-area",
-        "fitx": "fa-bezier-curve",
+        "usdtwd": "fa-dollar-sign",
         "gold": "fa-coins",
         "oil": "fa-droplet"
     };
@@ -858,6 +882,11 @@ function renderMarketTrends() {
         const sign = isUp ? "+" : "";
         const trendIcon = isUp ? "fa-arrow-trend-up" : "fa-arrow-trend-down";
         
+        // 小數點處理 (匯率 4 位，其他千分位)
+        const isUsd = key === "usdtwd";
+        const formattedPrice = isUsd ? trend.price.toFixed(4) : trend.price.toLocaleString();
+        const formattedChange = isUsd ? trend.change.toFixed(4) : trend.change.toLocaleString();
+        
         card.innerHTML = `
             <div class="trend-info">
                 <div class="trend-name">
@@ -865,10 +894,10 @@ function renderMarketTrends() {
                     <span>${trend.name}</span>
                 </div>
                 <div class="trend-price-row">
-                    <span class="trend-price">${trend.price.toLocaleString()}</span>
+                    <span class="trend-price">${formattedPrice}</span>
                     <span class="trend-change ${changeClass}">
                         <i class="fa-solid ${trendIcon}"></i>
-                        ${sign}${trend.change.toLocaleString()} (${sign}${trend.change_percent.toFixed(2)}%)
+                        ${sign}${formattedChange} (${sign}${trend.change_percent.toFixed(2)}%)
                     </span>
                 </div>
             </div>
@@ -876,6 +905,11 @@ function renderMarketTrends() {
                 <canvas id="chart-${key}"></canvas>
             </div>
         `;
+        
+        // 綁定點擊卡片彈出大圖事件
+        card.addEventListener("click", () => {
+            openTrendDetailModal(key);
+        });
         
         container.appendChild(card);
         
@@ -926,6 +960,130 @@ function drawSparkline(canvasId, dataPoints, isUp) {
             },
             layout: {
                 padding: { left: 2, right: 2, top: 4, bottom: 4 }
+            }
+        }
+    });
+}
+
+// 全域變數以儲存大圖表 Chart 實例
+let bigTrendChartInstance = null;
+
+function openTrendDetailModal(key) {
+    const trend = appState.marketTrends[key];
+    if (!trend) return;
+    
+    const modal = document.getElementById("trend-detail-modal");
+    const modalTitle = document.getElementById("trend-modal-title");
+    const modalPrice = document.getElementById("trend-modal-price");
+    const modalChange = document.getElementById("trend-modal-change");
+    
+    if (!modal) return;
+    
+    // 設定標題與內容
+    const icons = {
+        "taiex": "fa-chart-area",
+        "usdtwd": "fa-dollar-sign",
+        "gold": "fa-coins",
+        "oil": "fa-droplet"
+    };
+    
+    modalTitle.innerHTML = `<i class="fa-solid ${icons[key] || 'fa-chart-line'} neon-glow-text"></i> ${trend.name} (${trend.symbol}) 每日趨勢詳情`;
+    
+    const isUsd = key === "usdtwd";
+    const formattedPrice = isUsd ? trend.price.toFixed(4) : trend.price.toLocaleString();
+    const formattedChange = isUsd ? trend.change.toFixed(4) : trend.change.toLocaleString();
+    const isUp = trend.change >= 0;
+    const changeClass = isUp ? "text-up" : "text-down";
+    const sign = isUp ? "+" : "";
+    
+    modalPrice.textContent = formattedPrice;
+    modalChange.className = `trend-modal-change ${changeClass}`;
+    modalChange.innerHTML = `${isUp ? '▲' : '▼'} ${sign}${formattedChange} (${sign}${trend.change_percent.toFixed(2)}%)`;
+    
+    // 開啟 Modal
+    modal.style.display = "flex";
+    
+    // 渲染大圖表
+    setTimeout(() => {
+        drawBigTrendChart(trend.labels, trend.history, isUp, key);
+    }, 100);
+}
+
+function drawBigTrendChart(labels, dataPoints, isUp, key) {
+    const canvas = document.getElementById("trendDetailChart");
+    if (!canvas) return;
+    
+    // 銷毀既有的圖表實例以防重疊與洩漏
+    if (bigTrendChartInstance) {
+        bigTrendChartInstance.destroy();
+        bigTrendChartInstance = null;
+    }
+    
+    const colorLine = isUp ? "rgb(255, 65, 108)" : "rgb(0, 230, 115)";
+    const colorBgGradStart = isUp ? "rgba(255, 65, 108, 0.12)" : "rgba(0, 230, 115, 0.12)";
+    
+    const ctx = canvas.getContext('2d');
+    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, colorBgGradStart);
+    gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
+    
+    bigTrendChartInstance = new Chart(canvas, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '每日收盤價',
+                data: dataPoints,
+                borderColor: colorLine,
+                borderWidth: 3,
+                pointBackgroundColor: colorLine,
+                pointBorderColor: "rgba(255,255,255,0.7)",
+                pointBorderWidth: 1.5,
+                pointRadius: 4,
+                pointHoverRadius: 7,
+                fill: true,
+                backgroundColor: gradient,
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    enabled: true,
+                    backgroundColor: "rgba(10, 15, 28, 0.9)",
+                    titleColor: "#fff",
+                    bodyColor: "#00f2fe",
+                    bodyFont: { weight: 'bold', size: 14 },
+                    borderColor: "rgba(0, 242, 254, 0.2)",
+                    borderWidth: 1,
+                    padding: 12,
+                    displayColors: false,
+                    callbacks: {
+                        label: function(context) {
+                            const val = context.raw;
+                            return `價格: ${key === 'usdtwd' ? val.toFixed(4) : val.toLocaleString()}`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: { color: "rgba(255, 255, 255, 0.03)" },
+                    ticks: { color: "var(--text-secondary)", font: { family: 'Outfit' } }
+                },
+                y: {
+                    grid: { color: "rgba(255, 255, 255, 0.03)" },
+                    ticks: {
+                        color: "var(--text-secondary)",
+                        font: { family: 'Outfit' },
+                        callback: function(value) {
+                            return key === 'usdtwd' ? value.toFixed(3) : value.toLocaleString();
+                        }
+                    }
+                }
             }
         }
     });

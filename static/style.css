@@ -1203,6 +1203,7 @@ body {
     transition: var(--transition);
     overflow: hidden;
     position: relative;
+    cursor: pointer;
 }
 
 .trend-card:hover {
