@@ -1178,3 +1178,170 @@ body {
     color: var(--neon-red);
     border: 1px solid var(--neon-red);
 }
+
+/* ==========================================
+   響應式設計 (RWD) 系統
+   ========================================== */
+@media (max-width: 1024px) {
+    body {
+        height: auto;
+        overflow: auto;
+    }
+
+    .app-container {
+        flex-direction: column;
+        height: auto;
+        width: 100%;
+        overflow: auto;
+    }
+
+    /* 側邊欄改為頂部水平導覽列 */
+    .sidebar-container {
+        width: 100%;
+        height: auto;
+        padding: 16px 20px;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        background: rgba(10, 15, 28, 0.95);
+        backdrop-filter: var(--glass-blur);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .sidebar-header {
+        margin-bottom: 16px;
+        justify-content: space-between;
+    }
+
+    .sidebar-menu {
+        overflow-x: auto;
+        overflow-y: hidden;
+        width: 100%;
+        margin-bottom: 0;
+        padding-right: 0;
+        scrollbar-width: none; /* Firefox */
+    }
+
+    .sidebar-menu::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }
+
+    .sidebar-menu ul {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        white-space: nowrap;
+    }
+
+    .menu-label {
+        display: none !important; /* 隱藏分類標題 */
+    }
+
+    .menu-item {
+        padding: 8px 16px;
+        margin-bottom: 0;
+        flex-shrink: 0;
+        gap: 8px;
+        border-radius: 8px;
+    }
+
+    .menu-item:hover {
+        transform: none;
+    }
+
+    .sidebar-footer {
+        display: none !important; /* 行動版隱藏 footer */
+    }
+
+    /* 主內容區 */
+    .main-content {
+        width: 100%;
+        height: auto;
+        padding: 20px 16px;
+        overflow-y: visible;
+    }
+
+    .main-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .header-actions {
+        width: 100%;
+    }
+
+    .header-actions button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* 網格改為單欄 */
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    /* Top 3 推薦卡片改為垂直排列 */
+    .recommendations-container {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    /* 演化面板改為單欄 */
+    .evolution-grid {
+        grid-template-columns: 1fr !important;
+        gap: 24px;
+    }
+}
+
+@media (max-width: 576px) {
+    .analysis-visuals {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .chart-container {
+        width: 140px;
+        height: 140px;
+    }
+
+    .radar-score-grid {
+        width: 100%;
+    }
+
+    .detail-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .ai-badge-score {
+        align-self: flex-start;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 16px;
+    }
+
+    .ai-badge-score .score-num {
+        font-size: 24px;
+        line-height: 1;
+    }
+
+    .ai-badge-score .score-label {
+        margin-top: 0;
+    }
+    
+    .main-header h1 {
+        font-size: 20px;
+    }
+    
+    .main-header .subtitle {
+        font-size: 11px;
+    }
+}
