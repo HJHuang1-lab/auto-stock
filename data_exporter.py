@@ -50,16 +50,70 @@ def run_analysis():
     print("📊 [data_exporter] 開始執行盤後資料分析...")
     
     try:
-        # 在 GitHub Actions 中，我們使用既有快取資料（stock_cache.json）
-        # 真實的 browser-use 爬取需要 GUI，雲端環境中採用 AI 模型直接生成評分
         from stock_agent import (
             DEFAULT_CATEGORIES,
             load_cached_data,
             save_cached_data,
+            get_realtime_quote,
         )
         
         cache = load_cached_data()
         print(f"✅ [data_exporter] 已載入 {len(cache)} 支股票的快取資料。")
+        
+        # 提取所有分類中出現的股票 symbol 集合
+        all_symbols = set()
+        for cat_key, stocks in DEFAULT_CATEGORIES.items():
+            for st in stocks:
+                all_symbols.add(st["symbol"])
+                
+        print(f"🔄 [data_exporter] 開始透過 Yahoo Finance API 更新 {len(all_symbols)} 支股票的今日收盤股價與量能...")
+        
+        now_tw = datetime.datetime.utcnow() + datetime.timedelta(hours=8)
+        today_date_str = now_tw.strftime("%Y-%m-%d")
+        
+        updated_count = 0
+        for i, symbol in enumerate(all_symbols):
+            try:
+                quote = get_realtime_quote(symbol)
+                if quote:
+                    if symbol not in cache:
+                        cache[symbol] = {
+                            "symbol": symbol,
+                            "name": next((st["name"] for cat in DEFAULT_CATEGORIES.values() for st in cat if st["symbol"] == symbol), symbol),
+                            "financials": "暫無公司獲利分析",
+                            "news": "暫無最新重要新聞",
+                            "conferences": "暫無最新法說會要點",
+                            "radar": {"technical": 5, "financial": 5, "institutional": 5, "news_sentiment": 5, "overall": 5.0},
+                            "recommendation_rating": 5.0,
+                            "target_price": "---",
+                            "prediction_reason": "今日無特別預測資料"
+                        }
+                    
+                    # 更新當日真實市場行情
+                    cache[symbol]["price"] = quote["price"]
+                    cache[symbol]["change"] = quote["change"]
+                    cache[symbol]["change_percent"] = quote["change_percent"]
+                    cache[symbol]["trend"] = quote["trend"]
+                    cache[symbol]["volume"] = quote["volume"]
+                    cache[symbol]["volume_raw"] = quote["volume_raw"]
+                    cache[symbol]["transactions"] = quote["transactions"]
+                    cache[symbol]["update_time"] = f"{today_date_str} 15:00 盤後分析"
+                    
+                    # 同步雷達圖技術分數
+                    if "radar" in cache[symbol]:
+                        tech_score = 10 if quote["trend"] == "bullish" else (4 if quote["trend"] == "bearish" else 6)
+                        cache[symbol]["radar"]["technical"] = tech_score
+                    
+                    updated_count += 1
+            except Exception as e:
+                print(f"⚠️ 更新個股 {symbol} 失敗: {e}")
+                
+        print(f"✅ [data_exporter] 成功更新 {updated_count}/{len(all_symbols)} 支股票的真實今日股價！")
+        
+        # 儲存更新後的快取
+        save_cached_data(cache)
+        print("💾 [data_exporter] 最新當日行情已寫入本地快取資料庫。")
+        
         return DEFAULT_CATEGORIES, cache
         
     except Exception as e:
