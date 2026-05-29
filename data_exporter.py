@@ -73,8 +73,10 @@ def run_analysis():
         today_date_str = now_tw.strftime("%Y-%m-%d")
         
         updated_count = 0
+        import time
         for i, symbol in enumerate(all_symbols):
             try:
+                time.sleep(0.1)  # 增加微小防刷延遲，保護 API 不被阻擋
                 quote = get_realtime_quote(symbol)
                 if quote:
                     if symbol not in cache:
@@ -191,7 +193,9 @@ def get_market_trends():
     import requests
     import time
     
-    headers = {'User-Agent': 'Mozilla/5.0'}
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    }
     symbols_map = {
         "taiex": "^TWII",
         "usdtwd": "USDTWD=X",

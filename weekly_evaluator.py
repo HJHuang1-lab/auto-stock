@@ -19,7 +19,9 @@ def get_weekly_return(symbol):
     獲取單隻股票 5 日 K 線關閉價格，並計算週漲跌幅。
     """
     import requests
-    headers = {'User-Agent': 'Mozilla/5.0'}
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    }
     for suffix in ['.TW', '.TWO']:
         try:
             url = f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}{suffix}?range=5d&interval=1d"
@@ -53,7 +55,7 @@ def fetch_all_weekly_returns():
             
     print(f"🚀 [週漲幅撈取] 正在啟動 ThreadPool 獲取 {len(symbols)} 隻個股的週漲幅數據...")
     returns_map = {}
-    with ThreadPoolExecutor(max_workers=45) as executor:
+    with ThreadPoolExecutor(max_workers=10) as executor:
         results = list(executor.map(get_weekly_return, symbols))
         for sym, data in results:
             if data:

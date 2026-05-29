@@ -177,7 +177,9 @@ def get_realtime_quote(symbol: str) -> dict:
     極速 Yahoo Finance API 獲取特定個股的最新收盤數據（支持 Listed .TW 與 OTC .TWO）
     """
     import requests
-    headers = {'User-Agent': 'Mozilla/5.0'}
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    }
     for suffix in ['.TW', '.TWO']:
         try:
             url = f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}{suffix}"
