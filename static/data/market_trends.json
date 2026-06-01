@@ -55,9 +55,9 @@
   "usdtwd": {
     "name": "美元兌台幣",
     "symbol": "USDTWD=X",
-    "price": 31.295,
-    "change": -0.129,
-    "change_percent": -0.41,
+    "price": 31.288,
+    "change": -0.136,
+    "change_percent": -0.43,
     "history": [
       31.569,
       31.554,
@@ -80,7 +80,7 @@
       31.4459,
       31.4659,
       31.424,
-      31.295
+      31.288
     ],
     "labels": [
       "05-01",
@@ -110,9 +110,9 @@
   "gold": {
     "name": "黃金期貨",
     "symbol": "GC=F",
-    "price": 4535.9,
-    "change": -24.6,
-    "change_percent": -0.54,
+    "price": 4529.9,
+    "change": -30.6,
+    "change_percent": -0.67,
     "history": [
       4629.9,
       4519.5,
@@ -134,7 +134,7 @@
       4447.5,
       4499.3,
       4560.5,
-      4535.9
+      4529.9
     ],
     "labels": [
       "05-01",
@@ -163,9 +163,9 @@
   "oil": {
     "name": "輕原油期貨",
     "symbol": "CL=F",
-    "price": 90.32,
-    "change": 2.96,
-    "change_percent": 3.39,
+    "price": 89.87,
+    "change": 2.51,
+    "change_percent": 2.87,
     "history": [
       101.94,
       106.42,
@@ -187,7 +187,7 @@
       88.68,
       88.9,
       87.36,
-      90.32
+      89.87
     ],
     "labels": [
       "05-01",
