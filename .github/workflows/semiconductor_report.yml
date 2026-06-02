@@ -1,0 +1,38 @@
+name: 🤖 每日早上 9 點半導體 AI Agent 良率分析報告發送
+
+on:
+  schedule:
+    # 每天早上 9:00 台灣時間 (09:00 UTC+8 = 01:00 UTC)
+    - cron: '0 1 * * *'
+  workflow_dispatch:
+    # 允許手動在 GitHub 網頁上按按鈕立即執行
+
+jobs:
+  build-and-send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      # ── Step 1：下載程式碼 ──────────────────────────────────
+      - name: ⬇️ Checkout 程式碼
+        uses: actions/checkout@v3
+
+      # ── Step 2：設定 Python ──────────────────────────────────
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      # ── Step 3：安裝相關依賴套件 ────────────────────────────
+      - name: 📦 安裝相依套件
+        run: |
+          pip install python-pptx google-genai python-dotenv
+
+      # ── Step 4：執行簡報生成與郵件發送腳本 ──────────────────
+      - name: 📊 執行報告生成與發送
+        run: python "AI agent research/generate_report.py"
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GMAIL_USER: a5170171@gmail.com
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          PYTHONIOENCODING: utf-8

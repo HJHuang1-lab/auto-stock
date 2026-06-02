@@ -9,8 +9,12 @@ import random
 if sys.platform == 'win32':
     sys.stdout.reconfigure(encoding='utf-8')
 
-from browser_use import Agent
-from langchain_google_genai import ChatGoogleGenerativeAI
+try:
+    from browser_use import Agent
+    from langchain_google_genai import ChatGoogleGenerativeAI
+except ImportError:
+    Agent = None
+    ChatGoogleGenerativeAI = None
 
 # 7 大專業分類，各分類配置 20 隻精選股票，共計 140 隻指標股
 DEFAULT_CATEGORIES = {
