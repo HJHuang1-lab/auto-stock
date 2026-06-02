@@ -71,9 +71,11 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "GitHub Actions Bot"
           git add static/data/
+          git add obsidian/ || true
           git add stock_cache.json optimization_weights.json verification_history.json || true
           git diff --staged --quiet || git commit -m "🤖 [自動更新] $(date +'%Y-%m-%d') 盤後股票 AI 分析資料"
           git push
+
 
       # ── Step 7：部署到 Firebase Hosting ─────────────────────
       - name: 🔥 Deploy to Firebase
