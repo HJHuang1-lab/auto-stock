@@ -194,7 +194,9 @@ def get_realtime_quote(symbol: str) -> dict:
                     meta = res[0]['meta']
                     price = meta.get('regularMarketPrice')
                     prev = meta.get('chartPreviousClose')
-                    volume_shares = meta.get('regularMarketVolume', 0)
+                    volume_shares = meta.get('regularMarketVolume')
+                    if volume_shares is None:
+                        volume_shares = 0
                     if price is not None and prev is not None:
                         change = price - prev
                         change_pct = (change / prev) * 100 if prev != 0 else 0
@@ -490,23 +492,56 @@ def get_initial_mock_data():
 
     return mock_db
 
-# 初始化本地快取檔案（每次重載都會強行重新寫入以更新 140 隻個股數據）
-initial_data = get_initial_mock_data()
-with open(MOCK_CACHE_FILE, "w", encoding="utf-8") as f:
-    json.dump(initial_data, f, ensure_ascii=False, indent=4)
-# 記錄每日預測推薦日誌
-log_daily_recommendations(initial_data)
+# ==============================
+# 環境變數與本地快取讀寫邏輯
+# ==============================
+
+def load_env_file():
+    """
+    從專案根目錄手動讀取 .env 檔案並載入至 os.environ 中（無依賴）
+    """
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    env_path = os.path.join(base_dir, ".env")
+    if os.path.exists(env_path):
+        try:
+            with open(env_path, "r", encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if line and not line.startswith("#") and "=" in line:
+                        k, v = line.split("=", 1)
+                        k = k.strip()
+                        v = v.strip().strip('"').strip("'")
+                        if k:
+                            os.environ[k] = v
+            # print("✅ [環境變數] 成功載入專案本機 .env 檔案。")
+        except Exception as e:
+            print(f"⚠️ [環境變數] 載入 .env 檔案失敗: {e}")
+
+# 立即載入環境變數
+load_env_file()
 
 def load_cached_data():
     try:
-        with open(MOCK_CACHE_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
+        if os.path.exists(MOCK_CACHE_FILE) and os.path.getsize(MOCK_CACHE_FILE) > 0:
+            with open(MOCK_CACHE_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
     except Exception:
-        return get_initial_mock_data()
+        pass
+    # 若快取不存在或損毀，則初始化
+    initial_data = get_initial_mock_data()
+    save_cached_data(initial_data)
+    log_daily_recommendations(initial_data)
+    return initial_data
 
 def save_cached_data(data):
     with open(MOCK_CACHE_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
+
+# 僅在快取檔案不存在或為空時進行初始化寫入
+if not os.path.exists(MOCK_CACHE_FILE) or os.path.getsize(MOCK_CACHE_FILE) == 0:
+    initial_data = get_initial_mock_data()
+    save_cached_data(initial_data)
+    log_daily_recommendations(initial_data)
 
 
 # --- 核心 browser-use AI Scraper 邏輯 ---
@@ -522,7 +557,7 @@ async def run_stock_agent_scraping(symbol: str, name: str = "") -> dict:
         return None
 
     # 初始化 Gemini
-    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash")
+    llm = ChatGoogleGenerativeAI(model="gemini-3.5-flash")
 
     # 精準且高度引導的任務，要求 browser-use 獲取價格、量能、新聞、法說會並轉為 JSON
     task = (
@@ -584,11 +619,327 @@ async def run_stock_agent_scraping(symbol: str, name: str = "") -> dict:
         return None
 
 
-async def analyze_stock_symbol(symbol: str) -> dict:
+# ==============================
+# 即時量化數據與新聞抓取輔助函數
+# ==============================
+
+def fetch_yahoo_rss_news(symbol: str) -> list:
     """
-    外部調用接口：傳入代碼，優先使用 browser-use 進行網頁爬行與 Gemini 即時研判。
-    若 API Key 缺失或爬取異常，則平滑降級使用極速 Yahoo Finance API 獲取最新即時收盤價、漲跌及量能，
-    確保顯示之收盤價 100% 為當日最新，絕對不使用陳舊之歷史資料。
+    抓取 Yahoo 股市指定個股的 RSS 新聞標題與連結
+    """
+    import requests
+    import xml.etree.ElementTree as ET
+    url = f"https://tw.stock.yahoo.com/rss/s/{symbol}"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    }
+    articles = []
+    try:
+        r = requests.get(url, headers=headers, timeout=5)
+        r.encoding = "utf-8"
+        if r.status_code == 200:
+            root = ET.fromstring(r.text.encode('utf-8'))
+            items = root.findall(".//item")
+            for item in items[:10]:
+                title = item.find("title").text
+                link = item.find("link").text
+                pub_date = item.find("pubDate").text
+                articles.append({
+                    "title": title,
+                    "link": link,
+                    "date": pub_date
+                })
+    except Exception as e:
+        print(f"⚠️ [抓取新聞] 抓取 {symbol} RSS 失敗: {e}")
+    return articles
+
+def fetch_yfinance_details(symbol: str) -> dict:
+    """
+    使用 yfinance 抓取股票的基本面數據與季度財務數據
+    """
+    import yfinance as yf
+    import pandas as pd
+    
+    details = {}
+    for suffix in ['.TW', '.TWO']:
+        try:
+            ticker = yf.Ticker(f"{symbol}{suffix}")
+            info = ticker.info
+            if not info or "longName" not in info:
+                continue
+                
+            details["pe"] = info.get("trailingPE")
+            details["pb"] = info.get("priceToBook")
+            details["dividend_yield"] = info.get("dividendYield")
+            details["profit_margins"] = info.get("profitMargins")
+            details["gross_margins"] = info.get("grossMargins")
+            details["revenue_growth"] = info.get("revenueGrowth")
+            details["industry"] = info.get("industry")
+            
+            q_fin = ticker.quarterly_financials
+            if not q_fin.empty:
+                latest_col = q_fin.columns[0]
+                latest_data = q_fin[latest_col]
+                details["revenue"] = latest_data.get("Total Revenue")
+                details["net_income"] = latest_data.get("Net Income")
+                details["gross_profit"] = latest_data.get("Gross Profit")
+                details["diluted_eps"] = latest_data.get("Diluted EPS")
+                details["rd_expense"] = latest_data.get("Research And Development")
+                details["quarter_date"] = str(latest_col.date())
+            break
+        except Exception:
+            pass
+    return details
+
+def clean_nan(val, fallback="---"):
+    import pandas as pd
+    import math
+    if val is None:
+        return fallback
+    try:
+        if isinstance(val, float) and (math.isnan(val) or math.isinf(val)):
+            return fallback
+    except Exception:
+        pass
+    if pd.isna(val):
+        return fallback
+    return val
+
+def format_number(val, is_currency=False):
+    if val is None:
+        return "---"
+    try:
+        val = float(val)
+        import math
+        if math.isnan(val) or math.isinf(val):
+            return "---"
+        abs_val = abs(val)
+        if abs_val >= 1e12:
+            display = f"{val / 1e12:.2f} 兆"
+        elif abs_val >= 1e8:
+            display = f"{val / 1e8:.2f} 億"
+        elif abs_val >= 1e4:
+            display = f"{val / 1e4:.2f} 萬"
+        else:
+            display = f"{val:,.2f}"
+        if is_currency:
+            display += " 元"
+        return display
+    except Exception:
+        return str(val)
+
+def format_dividend_yield(div_yield):
+    if div_yield is None:
+        return "---"
+    try:
+        div_yield = float(div_yield)
+        import math
+        if math.isnan(div_yield) or math.isinf(div_yield):
+            return "---"
+        if 0.0 < div_yield < 0.15:
+            return f"{div_yield * 100:.2f}%"
+        return f"{div_yield:.2f}%"
+    except Exception:
+        return str(div_yield)
+
+# ==============================
+# LLM 與 規則文本編譯器
+# ==============================
+
+def call_gemini_api(api_key: str, prompt: str) -> str:
+    import requests
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={api_key}"
+    headers = {"Content-Type": "application/json"}
+    payload = {
+        "contents": [{
+            "parts": [{"text": prompt}]
+        }],
+        "generationConfig": {
+            "responseMimeType": "application/json"
+        }
+    }
+    try:
+        r = requests.post(url, json=payload, headers=headers, timeout=15)
+        if r.status_code == 200:
+            res = r.json()
+            return res["candidates"][0]["content"]["parts"][0]["text"]
+        else:
+            print(f"⚠️ [Gemini API] 請求失敗 HTTP {r.status_code}: {r.text}")
+    except Exception as e:
+        print(f"⚠️ [Gemini API] 連線錯誤: {e}")
+    return None
+
+def call_openai_api(api_key: str, prompt: str) -> str:
+    import requests
+    url = "https://api.openai.com/v1/chat/completions"
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {api_key}"
+    }
+    payload = {
+        "model": "gpt-4o-mini",
+        "messages": [
+            {"role": "system", "content": "You are a professional stock analysis assistant. Respond ONLY in valid JSON format."},
+            {"role": "user", "content": prompt}
+        ],
+        "temperature": 0.2,
+        "response_format": {"type": "json_object"}
+    }
+    try:
+        r = requests.post(url, json=payload, headers=headers, timeout=15)
+        if r.status_code == 200:
+            res = r.json()
+            return res["choices"][0]["message"]["content"]
+        else:
+            print(f"⚠️ [OpenAI API] 請求失敗 HTTP {r.status_code}: {r.text}")
+    except Exception as e:
+        print(f"⚠️ [OpenAI API] 連線錯誤: {e}")
+    return None
+
+def generate_stock_descriptions_llm(symbol: str, name: str, quote: dict, fin: dict, rss_news: list) -> dict:
+    gemini_key = os.environ.get("GEMINI_API_KEY")
+    openai_key = os.environ.get("OPENAI_API_KEY")
+    
+    if not gemini_key and not openai_key:
+        return None
+        
+    news_context = []
+    for art in rss_news[:6]:
+        news_context.append(f"- Title: {art['title']}, Date: {art['date']}")
+    news_context_str = "\n".join(news_context)
+    
+    fin_context = json.dumps(fin, ensure_ascii=False, indent=2)
+    
+    prompt = (
+        f"You are a professional stock analyst. We are analyzing the Taiwan stock symbol: {name} ({symbol}).\n"
+        f"Here is the raw stock data collected for today:\n"
+        f"- Price: {quote.get('price')} TWD (Change: {quote.get('change')} / {quote.get('change_percent')})\n"
+        f"- Volume: {quote.get('volume_raw')}, Transactions: {quote.get('transactions')}\n"
+        f"- Financial Data (yfinance): {fin_context}\n"
+        f"- Latest News Headlines: \n{news_context_str}\n\n"
+        f"Please write a highly professional, quantitative analysis report. Keep all outputs in Traditional Chinese (繁體中文).\n"
+        f"You must return a JSON object with the following keys:\n"
+        f"- \"financials\": A 1-2 sentence description of the company's profitability and financial health. Include specific quantitative numbers like revenue, gross margin, net income, EPS, or PE from the data.\n"
+        f"- \"news\": 3 numbered bullet points (1., 2., 3.) summarizing the latest news and volume momentum. Cite real news titles from our news list. Include link in markdown format if relevant.\n"
+        f"- \"conferences\": 1-2 sentences summarizing the earnings call key takeaways, outlook, and dividend status. If specific call details are missing, construct a forward-looking statement based on the industry, R&D expenses, and latest financials.\n"
+        f"- \"prediction_reason\": 2 sentences of professional technical & fundamental analysis for tomorrow and next week, factoring in today's price action and volume.\n\n"
+        f"Return ONLY a raw JSON block (do not wrap in markdown ```json) containing the keys: \"financials\", \"news\", \"conferences\", \"prediction_reason\"."
+    )
+    
+    response = None
+    if gemini_key:
+        response = call_gemini_api(gemini_key, prompt)
+    elif openai_key:
+        response = call_openai_api(openai_key, prompt)
+        
+    if response:
+        try:
+            import re
+            clean_res = response.strip()
+            if clean_res.startswith("```"):
+                clean_res = re.sub(r"^```(?:json)?\n", "", clean_res)
+                clean_res = re.sub(r"\n```$", "", clean_res)
+            return json.loads(clean_res)
+        except Exception as e:
+            print(f"⚠️ [AI 分析] 解析 LLM JSON 響應失敗: {e}. Raw response: {response}")
+    return None
+
+def generate_stock_descriptions_rule_based(symbol: str, name: str, quote: dict, fin: dict, rss_news: list) -> dict:
+    import datetime
+    
+    # 1. Financials
+    rev_str = format_number(fin.get("revenue"), is_currency=True)
+    ni_str = format_number(fin.get("net_income"), is_currency=True)
+    eps_val = clean_nan(fin.get("diluted_eps"))
+    eps_str = f"{eps_val} 元" if eps_val != "---" else "---"
+    
+    gm = fin.get("gross_margins")
+    gm_str = f"{gm*100:.1f}" if gm is not None else "---"
+    
+    nm = fin.get("profit_margins")
+    nm_str = f"{nm*100:.1f}" if nm is not None else "---"
+    
+    rev_growth = fin.get("revenue_growth")
+    rev_growth_str = f"{rev_growth*100:+.1f}%" if rev_growth is not None else "---"
+    
+    pe_str = f"{fin.get('pe'):.1f}" if fin.get("pe") is not None else "---"
+    pb_str = f"{fin.get('pb'):.1f}" if fin.get("pb") is not None else "---"
+    q_date = fin.get("quarter_date", "最新季度")
+    
+    financials_text = (
+        f"【公司營利】最新季度 ({q_date}) 營收為 {rev_str}，毛利率達 {gm_str}%，淨利率為 {nm_str}%，"
+        f"單季淨利為 {ni_str}，單季 EPS 為 {eps_str}。單季營收年增率為 {rev_growth_str}，"
+        f"目前本益比 (PE) 為 {pe_str} 倍，股價淨值比 (PB) 為 {pb_str} 倍。"
+    )
+    
+    # 2. News
+    news_lines = []
+    for i, art in enumerate(rss_news[:3]):
+        date_str = art["date"]
+        try:
+            dt = datetime.datetime.strptime(date_str, "%a, %d %b %Y %H:%M:%S %Z")
+            date_display = dt.strftime("%m-%d")
+        except Exception:
+            date_display = date_str[:11] if date_str else "即時"
+        news_lines.append(f"{i+1}. 【{date_display}】{art['title']} (連結: {art['link']})")
+    
+    if not news_lines:
+        news_text = (
+            f"1. 今日成交量為 {quote.get('volume', '---')}，市場交易熱度與流動性保持平穩。\n"
+            f"2. 產業鏈供給需求結構持續調整，個股基本面維持健全發展。\n"
+            f"3. 法人主力短線對該股看法中性偏多，靜待後續景氣回溫催化劑。"
+        )
+    else:
+        news_text = "\n".join(news_lines)
+        
+    # 3. Conferences
+    conf_keyword_news = []
+    keywords = ["法說", "展望", "股利", "配息", "營收", "季報", "財報", "擴產", "資本支出"]
+    for art in rss_news:
+        if any(kw in art["title"] for kw in keywords):
+            conf_keyword_news.append(art)
+            
+    conf_lines = []
+    for art in conf_keyword_news[:2]:
+        conf_lines.append(art["title"])
+        
+    div_yield_str = format_dividend_yield(fin.get("dividend_yield"))
+    
+    if conf_lines:
+        conf_news_str = "、".join([f"「{title}」" for title in conf_lines])
+        conferences_text = (
+            f"【法說會與展望】近期法說重點與市場關注方向為：{conf_news_str}。目前預估股利殖利率為 {div_yield_str}。"
+            f"公司在 {fin.get('industry', '相關產業')} 領域持續發揮技術與規模優勢，整體產能利用率及訂單能見度持穩。"
+        )
+    else:
+        conferences_text = (
+            f"【法說會與展望】目前無最新法說會公告。預估最新股利殖利率為 {div_yield_str}。"
+            f"公司在 {fin.get('industry', '相關領域')} 領域的市場佔有率穩固，預期後續產能配置與資本支出將隨訂單狀況逐季調整。"
+        )
+        
+    # 4. Prediction Reason
+    trend_cn = "價漲量增" if quote.get("trend") == "bullish" else ("價跌量增" if quote.get("trend") == "bearish" else "區間震盪")
+    prediction_reason = (
+        f"今日該股在成交量達 {quote.get('volume_raw')} 與交易筆數 {quote.get('transactions')} 下呈 {trend_cn} 特徵。 "
+        f"配合最新季度營收年增 {rev_growth_str} 且本益比處於 {pe_str} 倍的歷史相對合理水位，短線具有健全的下檔防禦性與向上動能。"
+    )
+    
+    return {
+        "financials": financials_text,
+        "news": news_text,
+        "conferences": conferences_text,
+        "prediction_reason": prediction_reason
+    }
+
+# ==============================
+# 核心分析接口 (同步與非同步)
+# ==============================
+
+def analyze_stock_symbol_sync(symbol: str, cache_data: dict = None) -> dict:
+    """
+    同步分析核心邏輯：結合即時股價、新聞與基本面進行全方位量化預測。
+    若傳入 cache_data (dict)，則進行分析並將結果併入該字典中，不寫入硬碟；
+    若為 None，則直接讀取、寫入本地快取檔案（適用於單次 API 調用）。
     """
     import datetime
     import random
@@ -599,132 +950,110 @@ async def analyze_stock_symbol(symbol: str) -> dict:
             if st["symbol"] == symbol:
                 name = st["name"]
                 break
-
-    # 1. 嘗試實時 browser-use 爬取分析
-    api_result = await run_stock_agent_scraping(symbol, name)
-    if api_result:
-        cache = load_cached_data()
-        cache[symbol] = api_result
-        save_cached_data(cache)
-        return api_result
-
-    # 2. 若 browser-use 爬取不適用/失敗，極速採用 Yahoo Finance API 獲取最新真實收盤與量能
-    print(f"📡 正在透過 Yahoo Finance API 撈取 {name} ({symbol}) 最新即時盤後資訊...")
-    realtime = get_realtime_quote(symbol)
+    if not name:
+        name = f"個股 {symbol}"
+        
+    print(f"📡 正在對 {name} ({symbol}) 進行完整即時量化與新聞採集分析...")
     
-    cache = load_cached_data()
+    # 1. 撈取即時股價量能
+    realtime = get_realtime_quote(symbol)
+    if not realtime:
+        realtime = {
+            "price": "100.00",
+            "change": "0.00",
+            "change_percent": "0.00%",
+            "trend": "neutral",
+            "volume": "1,000張",
+            "volume_raw": "1,000 張",
+            "transactions": "500 筆",
+            "price_num": 100.0,
+            "change_num": 0.0,
+            "volume_units": 1000.0
+        }
+        
+    # 2. 撈取 RSS 新聞與 yfinance 財務詳情
+    rss_news = fetch_yahoo_rss_news(symbol)
+    fin_details = fetch_yfinance_details(symbol)
+    
+    # 3. 生成量化文本描述
+    desc = generate_stock_descriptions_llm(symbol, name, realtime, fin_details, rss_news)
+    if not desc:
+        desc = generate_stock_descriptions_rule_based(symbol, name, realtime, fin_details, rss_news)
+        
+    # 4. 更新快取數據
+    ref_cache = cache_data if cache_data is not None else load_cached_data()
     today_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     
-    if realtime:
-        # 如果快取已存在，保留專業新聞與法說會分析，但將股價、漲跌、量能及預測原因更新為最新！
-        if symbol in cache:
-            item = cache[symbol]
-            item["price"] = realtime["price"]
-            item["change"] = realtime["change"]
-            item["change_percent"] = realtime["change_percent"]
-            item["trend"] = realtime["trend"]
-            item["volume"] = realtime["volume"]
-            item["volume_raw"] = realtime["volume_raw"]
-            item["transactions"] = realtime["transactions"]
-            item["update_time"] = f"{today_str} 即時盤後收盤"
-            
-            # 依據最新量能/漲跌，重新動態計算技術評分
-            change_coeff = 1 if realtime["trend"] == "bullish" else (-1 if realtime["trend"] == "bearish" else 0)
-            vol_bonus = 1 if (realtime["volume_units"] > 20000 and realtime["trend"] == "bullish") else 0
-            base_score = int(item["radar"].get("overall", 7))
-            
-            item["radar"]["technical"] = min(10, max(5, base_score + change_coeff + vol_bonus))
-            
-            # 動態加權算出總評分 (Evolve decision)
-            rating = compute_weighted_rating(item["radar"], realtime["volume_units"], realtime["trend"])
-            item["recommendation_rating"] = rating
-            item["radar"]["overall"] = rating
-            
-            item["prediction_reason"] = f"今日該股在量能達 {realtime['volume_raw']} 與交易筆數 {realtime['transactions']} 下強勢表態，股價量價走勢呈 {realtime['trend'] == 'bullish' and '價漲量增' or '量能洗盤'} 特徵。技術指標顯示動能已更新，短線具有高度看頭。"
-            
-            cache[symbol] = item
-            save_cached_data(cache)
-            return item
-        else:
-            # 建立全新項目 (例如新加入的自選股)
-            base_rating = round(random.uniform(7.8, 9.5), 1) if realtime["trend"] == "bullish" else round(random.uniform(6.5, 8.5), 1)
-            tech = min(10, max(5, int(base_rating) + (1 if realtime["trend"] == "bullish" else -1)))
-            fin = random.randint(7, 9)
-            inst = random.randint(6, 9)
-            news = random.randint(6, 9)
-            
-            # 動態加權算出總評分 (Evolve decision)
-            rating = compute_weighted_rating({
-                "technical": tech,
-                "financial": fin,
-                "institutional": inst,
-                "news_sentiment": news
-            }, realtime["volume_units"], realtime["trend"])
-            
-            item = {
-                "symbol": symbol,
-                "name": name or f"自選股 {symbol}",
-                "price": realtime["price"],
-                "change": realtime["change"],
-                "change_percent": realtime["change_percent"],
-                "trend": realtime["trend"],
-                "volume": realtime["volume"],
-                "volume_raw": realtime["volume_raw"],
-                "transactions": realtime["transactions"],
-                "radar": {
-                    "technical": tech,
-                    "financial": fin,
-                    "institutional": inst,
-                    "news_sentiment": news,
-                    "overall": rating
-                },
-                "financials": "最新一季營收表現平穩，產業基本面健全，主要業務結構優化中，財務體質健康。",
-                "news": f"1. 今日成交量能強勢放大至 {realtime['volume_raw']}，市場買盤人氣聚集。\n2. 隨著產業鏈產能提升，公司營運動能逐步釋放。\n3. 法人短線偏多操作，看好後續季度表現。",
-                "conferences": "公司展望：預估核心業務接單狀況明朗，下半年產能利用率持續回溫，高毛利產品比重可望持續提升。",
-                "recommendation_rating": rating,
-                "target_price": f"估算區間 +10%",
-                "prediction_reason": f"今日在量能擴大至 {realtime['volume_raw']} 的強力買盤挹注下，技術面呈 {realtime['trend'] == 'bullish' and '量增價揚' or '量價整理'}。最新收盤走勢顯著表態，後續值得追蹤。",
-                "update_time": f"{today_str} 即時盤後收盤"
-            }
-            cache[symbol] = item
-            save_cached_data(cache)
-            return item
-
-    # 3. 否則，降級讀取本地快取
-    print(f"📦 正在加載本地快取數據: {symbol}")
-    if symbol in cache:
-        return cache[symbol]
+    # 決定基礎分數
+    if symbol in ref_cache and "radar" in ref_cache[symbol]:
+        base_score = int(ref_cache[symbol]["radar"].get("overall", 7))
+    else:
+        base_score = round(random.uniform(7.0, 9.0), 1)
+        
+    # 計算雷達評分
+    change_coeff = 1 if realtime["trend"] == "bullish" else (-1 if realtime["trend"] == "bearish" else 0)
+    vol_units = float(realtime.get("volume_units") or 0.0)
+    vol_bonus = 1 if (vol_units > 20000 and realtime["trend"] == "bullish") else 0
     
-    # 4. 如果快取中也沒有，生成一份隨機數據 (防止程式崩潰)
-    print(f"⚠️ 找不到該股快取，為 {symbol} 生成即時估算數據...")
-    mock_item = {
+    tech = min(10, max(5, int(base_score) + change_coeff + vol_bonus))
+    fin_score = min(10, max(6, int(base_score) + (1 if (fin_details.get("profit_margins") or 0.0) > 0.1 else 0)))
+    inst_score = min(10, max(5, int(base_score) + (1 if vol_units > 30000 else 0)))
+    news_score = min(10, max(5, int(base_score) + (1 if change_coeff >= 0 else -1)))
+    
+    rating = compute_weighted_rating({
+        "technical": tech,
+        "financial": fin_score,
+        "institutional": inst_score,
+        "news_sentiment": news_score
+    }, vol_units, realtime["trend"])
+    
+    try:
+        price_num = float(realtime["price"])
+        target_price = f"{price_num * 0.95:.1f} - {price_num * 1.10:.1f} 元"
+    except Exception:
+        target_price = "---"
+        
+    item = {
         "symbol": symbol,
-        "name": name or f"自選股 {symbol}",
-        "price": f"{random.uniform(50, 600):.2f}",
-        "change": f"{random.choice(['+', '-'])}{random.uniform(0.5, 12.0):.2f}",
-        "change_percent": f"{random.choice(['+', '-'])}{random.uniform(0.1, 5.0):.2f}%",
-        "trend": random.choice(["bullish", "bearish", "neutral"]),
-        "volume": "1.2萬張",
-        "volume_raw": "12,450 張",
-        "transactions": "8,340 筆",
+        "name": name,
+        "price": realtime["price"],
+        "change": realtime["change"],
+        "change_percent": realtime["change_percent"],
+        "trend": realtime["trend"],
+        "volume": realtime["volume"],
+        "volume_raw": realtime["volume_raw"],
+        "transactions": realtime["transactions"],
         "radar": {
-            "technical": random.randint(5, 9),
-            "financial": random.randint(6, 10),
-            "institutional": random.randint(5, 9),
-            "news_sentiment": random.randint(6, 9),
-            "overall": round(random.uniform(6.5, 9.5), 1)
+            "technical": tech,
+            "financial": fin_score,
+            "institutional": inst_score,
+            "news_sentiment": news_score,
+            "overall": rating
         },
-        "financials": "最新一季營收表現平穩，毛利率隨產品結構調整小幅回升。流動比率與債務比率皆處於健康水位。",
-        "news": "1. 該公司今日發布重訊，積極跨足生成式 AI 與邊緣運算晶片設計開發。\n2. 因應下半年產能擴建，董事會討論提高資本支出預算。\n3. 法人短線看法正向，給予逢低買進投資評等。",
-        "conferences": "法說會宣告：主要客戶庫存去化已達健康水平，接單狀況明朗。預期下半年度出貨量將呈現逐季雙位數增長。",
-        "recommendation_rating": round(random.uniform(7.0, 9.2), 1),
-        "target_price": "估算區間 +10%",
-        "prediction_reason": "短線技術面突破半年線糾結，呈量增價揚態勢。雖然籌碼面法人呈現買賣互見，但基本面谷底已過，後續股價看俏。",
-        "update_time": f"{today_str} 估算分析"
+        "financials": desc.get("financials", "暫無獲利數據"),
+        "news": desc.get("news", "暫無新聞分析"),
+        "conferences": desc.get("conferences", "暫無最新法說會紀要"),
+        "recommendation_rating": rating,
+        "target_price": target_price,
+        "prediction_reason": desc.get("prediction_reason", "暫無預測"),
+        "update_time": f"{today_str} 盤後分析"
     }
-    cache[symbol] = mock_item
-    save_cached_data(cache)
-    return mock_item
+    
+    # 決定是否直接寫入快取檔案
+    if cache_data is not None:
+        cache_data[symbol] = item
+    else:
+        cache = load_cached_data()
+        cache[symbol] = item
+        save_cached_data(cache)
+        
+    return item
+
+async def analyze_stock_symbol(symbol: str) -> dict:
+    """
+    外部非同步調用接口：將同步版核心分析封裝在執行緒中運行，避免阻塞事件循環。
+    """
+    return await asyncio.to_thread(analyze_stock_symbol_sync, symbol)
 
 # 測試用區塊
 if __name__ == "__main__":

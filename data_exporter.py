@@ -67,51 +67,28 @@ def run_analysis():
             for st in stocks:
                 all_symbols.add(st["symbol"])
                 
-        print(f"🔄 [data_exporter] 開始透過 Yahoo Finance API 更新 {len(all_symbols)} 支股票的今日收盤股價與量能...")
+        print(f"🔄 [data_exporter] 開始並行採集與量化分析 {len(all_symbols)} 支股票的即時數據與新聞...")
         
-        now_tw = datetime.datetime.utcnow() + datetime.timedelta(hours=8)
-        today_date_str = now_tw.strftime("%Y-%m-%d")
+        from concurrent.futures import ThreadPoolExecutor
+        from stock_agent import analyze_stock_symbol_sync, load_env_file
+        
+        # 確保環境變數已載入
+        load_env_file()
         
         updated_count = 0
-        import time
-        for i, symbol in enumerate(all_symbols):
+        def task_wrapper(symbol):
             try:
-                time.sleep(0.1)  # 增加微小防刷延遲，保護 API 不被阻擋
-                quote = get_realtime_quote(symbol)
-                if quote:
-                    if symbol not in cache:
-                        cache[symbol] = {
-                            "symbol": symbol,
-                            "name": next((st["name"] for cat in DEFAULT_CATEGORIES.values() for st in cat if st["symbol"] == symbol), symbol),
-                            "financials": "暫無公司獲利分析",
-                            "news": "暫無最新重要新聞",
-                            "conferences": "暫無最新法說會要點",
-                            "radar": {"technical": 5, "financial": 5, "institutional": 5, "news_sentiment": 5, "overall": 5.0},
-                            "recommendation_rating": 5.0,
-                            "target_price": "---",
-                            "prediction_reason": "今日無特別預測資料"
-                        }
-                    
-                    # 更新當日真實市場行情
-                    cache[symbol]["price"] = quote["price"]
-                    cache[symbol]["change"] = quote["change"]
-                    cache[symbol]["change_percent"] = quote["change_percent"]
-                    cache[symbol]["trend"] = quote["trend"]
-                    cache[symbol]["volume"] = quote["volume"]
-                    cache[symbol]["volume_raw"] = quote["volume_raw"]
-                    cache[symbol]["transactions"] = quote["transactions"]
-                    cache[symbol]["update_time"] = f"{today_date_str} 15:00 盤後分析"
-                    
-                    # 同步雷達圖技術分數
-                    if "radar" in cache[symbol]:
-                        tech_score = 10 if quote["trend"] == "bullish" else (4 if quote["trend"] == "bearish" else 6)
-                        cache[symbol]["radar"]["technical"] = tech_score
-                    
-                    updated_count += 1
+                # 傳入 cache 字典在內存中併入更新，避免併發寫入硬碟
+                return analyze_stock_symbol_sync(symbol, cache_data=cache)
             except Exception as e:
-                print(f"⚠️ 更新個股 {symbol} 失敗: {e}")
+                print(f"⚠️ [data_exporter] 並行分析個股 {symbol} 失敗: {e}")
+                return None
                 
-        print(f"✅ [data_exporter] 成功更新 {updated_count}/{len(all_symbols)} 支股票的真實今日股價！")
+        with ThreadPoolExecutor(max_workers=20) as executor:
+            results = list(executor.map(task_wrapper, list(all_symbols)))
+            
+        updated_count = len([r for r in results if r is not None])
+        print(f"✅ [data_exporter] 成功並行分析與更新 {updated_count}/{len(all_symbols)} 支股票的完整資料！")
         
         # 儲存更新後的快取
         save_cached_data(cache)
