@@ -414,7 +414,11 @@ def export_obsidian_report(categories, cache, trends):
             content.append(f"> - **公司營利**：{financials}")
             content.append(f"> - **最新新聞**：")
             # 新聞有分行，需要加上 Obsidian callout 的引導符號
-            for line in news.split("\n"):
+            if isinstance(news, list):
+                news_lines = [str(x) for x in news]
+            else:
+                news_lines = str(news).split("\n")
+            for line in news_lines:
                 if line.strip():
                     content.append(f">   {line}")
             content.append(f"> - **法說要點**：{conf}")

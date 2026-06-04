@@ -748,6 +748,8 @@ def format_dividend_yield(div_yield):
 
 def call_gemini_api(api_key: str, prompt: str) -> str:
     import requests
+    import time
+    import random
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={api_key}"
     headers = {"Content-Type": "application/json"}
     payload = {
@@ -758,15 +760,29 @@ def call_gemini_api(api_key: str, prompt: str) -> str:
             "responseMimeType": "application/json"
         }
     }
-    try:
-        r = requests.post(url, json=payload, headers=headers, timeout=15)
-        if r.status_code == 200:
-            res = r.json()
-            return res["candidates"][0]["content"]["parts"][0]["text"]
-        else:
-            print(f"⚠️ [Gemini API] 請求失敗 HTTP {r.status_code}: {r.text}")
-    except Exception as e:
-        print(f"⚠️ [Gemini API] 連線錯誤: {e}")
+    max_retries = 5
+    for attempt in range(max_retries):
+        try:
+            r = requests.post(url, json=payload, headers=headers, timeout=25)
+            if r.status_code == 200:
+                res = r.json()
+                return res["candidates"][0]["content"]["parts"][0]["text"]
+            elif r.status_code == 429:
+                # 遇到 429 Rate Limit 時，進行指數退避與隨機抖動
+                sleep_time = (2 ** attempt) + random.uniform(1.5, 4.0)
+                print(f"⚠️ [Gemini API] 觸及速率限制 (429)，將於 {sleep_time:.2f} 秒後重試... (第 {attempt+1}/{max_retries} 次)")
+                time.sleep(sleep_time)
+            else:
+                print(f"⚠️ [Gemini API] 請求失敗 HTTP {r.status_code}: {r.text}")
+                if r.status_code in [500, 502, 503, 504]:
+                    sleep_time = (2 ** attempt) + random.uniform(1.5, 4.0)
+                    time.sleep(sleep_time)
+                else:
+                    break
+        except Exception as e:
+            print(f"⚠️ [Gemini API] 連線錯誤 (第 {attempt+1}/{max_retries} 次): {e}")
+            sleep_time = (2 ** attempt) + random.uniform(1.5, 4.0)
+            time.sleep(sleep_time)
     return None
 
 def call_openai_api(api_key: str, prompt: str) -> str:
@@ -796,6 +812,60 @@ def call_openai_api(api_key: str, prompt: str) -> str:
         print(f"⚠️ [OpenAI API] 連線錯誤: {e}")
     return None
 
+def fetch_news_article_content(url: str) -> str:
+    """
+    抓取新聞連結網頁，並使用正則表達式解析提取出主要中文段落內容作為摘要。
+    """
+    import requests
+    import re
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    }
+    try:
+        r = requests.get(url, headers=headers, timeout=5)
+        if r.status_code == 200:
+            html = r.text
+            paragraphs = re.findall(r'<p[^>]*>(.*?)</p>', html, re.DOTALL)
+            text_list = []
+            for p in paragraphs:
+                p_clean = re.sub(r'<[^>]+>', '', p)
+                p_clean = p_clean.replace("&nbsp;", " ").replace("&amp;", "&").replace("&quot;", '"').replace("&lt;", "<").replace("&gt;", ">")
+                p_clean = p_clean.strip()
+                if p_clean and re.search(r'[\u4e00-\u9fff]', p_clean):
+                    if any(x in p_clean for x in ["延伸閱讀", "關鍵字", "Yahoo奇摩", "隱私權", "瀏覽器"]):
+                        continue
+                    text_list.append(p_clean)
+            content = "\n".join(text_list[:4])
+            return content[:800]
+    except Exception:
+        pass
+    return ""
+
+def extract_brief_summary(text: str, max_sentences=2) -> str:
+    """
+    從文章內容中提取前幾句中文作為摘要/結論。
+    """
+    import re
+    if not text:
+        return ""
+    sentences = re.split(r'([。！？」\n])', text)
+    result = []
+    current = ""
+    for s in sentences:
+        if s in ["。", "！", "？", "」", "\n"]:
+            current += s
+            result.append(current.strip())
+            current = ""
+            if len(result) >= max_sentences:
+                break
+        else:
+            current += s
+    if current and len(result) < max_sentences:
+        result.append(current.strip())
+    summary = "".join(result)
+    summary = re.sub(r'^\s+', '', summary)
+    return summary
+
 def generate_stock_descriptions_llm(symbol: str, name: str, quote: dict, fin: dict, rss_news: list) -> dict:
     gemini_key = os.environ.get("GEMINI_API_KEY")
     openai_key = os.environ.get("OPENAI_API_KEY")
@@ -804,8 +874,15 @@ def generate_stock_descriptions_llm(symbol: str, name: str, quote: dict, fin: di
         return None
         
     news_context = []
-    for art in rss_news[:6]:
-        news_context.append(f"- Title: {art['title']}, Date: {art['date']}")
+    for art in rss_news[:3]:
+        content = fetch_news_article_content(art['link'])
+        brief = extract_brief_summary(content, max_sentences=2)
+        news_context.append(
+            f"- Title: {art['title']}\n"
+            f"  Date: {art['date']}\n"
+            f"  URL: {art['link']}\n"
+            f"  Content Brief: {brief or '無詳細內容'}"
+        )
     news_context_str = "\n".join(news_context)
     
     fin_context = json.dumps(fin, ensure_ascii=False, indent=2)
@@ -816,11 +893,11 @@ def generate_stock_descriptions_llm(symbol: str, name: str, quote: dict, fin: di
         f"- Price: {quote.get('price')} TWD (Change: {quote.get('change')} / {quote.get('change_percent')})\n"
         f"- Volume: {quote.get('volume_raw')}, Transactions: {quote.get('transactions')}\n"
         f"- Financial Data (yfinance): {fin_context}\n"
-        f"- Latest News Headlines: \n{news_context_str}\n\n"
+        f"- Latest News Content: \n{news_context_str}\n\n"
         f"Please write a highly professional, quantitative analysis report. Keep all outputs in Traditional Chinese (繁體中文).\n"
         f"You must return a JSON object with the following keys:\n"
         f"- \"financials\": A 1-2 sentence description of the company's profitability and financial health. Include specific quantitative numbers like revenue, gross margin, net income, EPS, or PE from the data.\n"
-        f"- \"news\": 3 numbered bullet points (1., 2., 3.) summarizing the latest news and volume momentum. Cite real news titles from our news list. Include link in markdown format if relevant.\n"
+        f"- \"news\": 3 numbered bullet points (1., 2., 3.) summarizing the latest news, drawing conclusions from their content, and commenting on volume momentum. Do not just output the title and link, write a clear conclusion/summary first, followed by the markdown link. Cite real news titles and content from our news list. Format example: \"1. 【新聞結論/摘要】(新聞標題) ([新聞連結](URL))\"\n"
         f"- \"conferences\": 1-2 sentences summarizing the earnings call key takeaways, outlook, and dividend status. If specific call details are missing, construct a forward-looking statement based on the industry, R&D expenses, and latest financials.\n"
         f"- \"prediction_reason\": 2 sentences of professional technical & fundamental analysis for tomorrow and next week, factoring in today's price action and volume.\n\n"
         f"Return ONLY a raw JSON block (do not wrap in markdown ```json) containing the keys: \"financials\", \"news\", \"conferences\", \"prediction_reason\"."
@@ -881,7 +958,15 @@ def generate_stock_descriptions_rule_based(symbol: str, name: str, quote: dict, 
             date_display = dt.strftime("%m-%d")
         except Exception:
             date_display = date_str[:11] if date_str else "即時"
-        news_lines.append(f"{i+1}. 【{date_display}】{art['title']} (連結: {art['link']})")
+        
+        # 抓取新聞網頁內文並提取前兩句作為結論/摘要
+        content = fetch_news_article_content(art['link'])
+        brief = extract_brief_summary(content, max_sentences=2)
+        
+        if brief:
+            news_lines.append(f"{i+1}. 【{date_display}】{art['title']}：{brief} (連結: {art['link']})")
+        else:
+            news_lines.append(f"{i+1}. 【{date_display}】{art['title']} (連結: {art['link']})")
     
     if not news_lines:
         news_text = (
