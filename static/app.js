@@ -346,7 +346,16 @@ function selectStock(symbol) {
     
     // 新聞格式化預處理
     const newsEl = document.getElementById("detail-news");
-    newsEl.textContent = data.news;
+    if (data.news) {
+        let formattedNews = data.news;
+        // 替換 markdown [連結文字](URL)
+        formattedNews = formattedNews.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="news-link">$1</a>');
+        // 替換 plain (連結: URL)
+        formattedNews = formattedNews.replace(/\(連結:\s*(https?:\/\/[^\s\)]+)\)/g, '(<a href="$1" target="_blank" class="news-link">新聞連結</a>)');
+        newsEl.innerHTML = formattedNews;
+    } else {
+        newsEl.textContent = "暫無新聞分析";
+    }
 
     document.getElementById("detail-conferences").textContent = data.conferences;
     document.getElementById("detail-target-price").textContent = data.target_price;
