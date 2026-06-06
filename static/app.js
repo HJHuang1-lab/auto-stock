@@ -4,7 +4,8 @@ let appState = {
     stocksData: {},        // 所有股票的詳細分析資料 (Symbol -> Detail Object)
     activeCategory: "semiconductor_foundry",
     activeStockSymbol: null,
-    radarChartInstance: null
+    radarChartInstance: null,
+    detailTrendChartInstance: null
 };
 
 // 靜態 JSON 資料路徑（GitHub Actions 每日自動更新，部署至 Firebase）
@@ -376,6 +377,9 @@ function selectStock(symbol) {
 
     // 4. 繪製雷達圖
     renderRadarChart(data.radar);
+
+    // 5. 繪製個股收盤價走勢圖
+    renderDetailTrendChart(data.history, isUp, data.name, symbol);
 }
 
 function renderRadarChart(radarData) {
@@ -436,6 +440,103 @@ function renderRadarChart(radarData) {
                     },
                     min: 0,
                     max: 10
+                }
+            }
+        }
+    });
+}
+
+function renderDetailTrendChart(history, isUp, name, symbol) {
+    const canvas = document.getElementById("detailTrendChart");
+    if (!canvas) return;
+    
+    // 如果已有圖表實例，先銷毀它，防止疊加 Bug
+    if (appState.detailTrendChartInstance) {
+        appState.detailTrendChartInstance.destroy();
+        appState.detailTrendChartInstance = null;
+    }
+
+    if (!history || history.length === 0) {
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = "14px 'Noto Sans TC'";
+        ctx.fillStyle = "rgba(255,255,255,0.4)";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("暫無歷史股價資料", canvas.width / 2, canvas.height / 2);
+        return;
+    }
+
+    const labels = history.map(h => h.date);
+    const prices = history.map(h => h.price);
+
+    const colorLine = isUp ? "rgb(255, 65, 108)" : "rgb(0, 230, 115)";
+    const colorBgGradStart = isUp ? "rgba(255, 65, 108, 0.12)" : "rgba(0, 230, 115, 0.12)";
+    
+    const ctx = canvas.getContext('2d');
+    const gradient = ctx.createLinearGradient(0, 0, 0, 200);
+    gradient.addColorStop(0, colorBgGradStart);
+    gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
+
+    appState.detailTrendChartInstance = new Chart(canvas, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '收盤價',
+                data: prices,
+                borderColor: colorLine,
+                borderWidth: 2.5,
+                pointBackgroundColor: colorLine,
+                pointBorderColor: "rgba(255,255,255,0.7)",
+                pointBorderWidth: 1,
+                pointRadius: history.length > 30 ? 1.5 : 2.5,
+                pointHoverRadius: 5,
+                fill: true,
+                backgroundColor: gradient,
+                tension: 0.2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    enabled: true,
+                    backgroundColor: "rgba(10, 15, 28, 0.9)",
+                    titleColor: "#fff",
+                    bodyColor: "#00f2fe",
+                    bodyFont: { weight: 'bold', size: 13 },
+                    borderColor: "rgba(0, 242, 254, 0.2)",
+                    borderWidth: 1,
+                    padding: 8,
+                    displayColors: false,
+                    callbacks: {
+                        label: function(context) {
+                            return `收盤價: ${context.raw.toLocaleString()} 元`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: { color: "rgba(255, 255, 255, 0.03)" },
+                    ticks: { 
+                        color: "rgba(255, 255, 255, 0.5)", 
+                        font: { size: 10, family: 'Outfit' },
+                        maxTicksLimit: 6
+                    }
+                },
+                y: {
+                    grid: { color: "rgba(255, 255, 255, 0.03)" },
+                    ticks: {
+                        color: "rgba(255, 255, 255, 0.5)",
+                        font: { size: 10, family: 'Outfit' },
+                        callback: function(value) {
+                            return value.toLocaleString();
+                        }
+                    }
                 }
             }
         }
@@ -869,10 +970,11 @@ function renderMarketTrends() {
     
     container.innerHTML = "";
     
-    // 渲染順序：1.大盤加權指數, 2.美元兌台幣, 3.黃金價格, 4.石油價格
-    const order = ["taiex", "usdtwd", "gold", "oil"];
+    // 渲染順序：1.大盤加權指數, 2.台指期貨近, 3.美元兌台幣, 4.黃金價格, 5.石油價格
+    const order = ["taiex", "taiex_night", "usdtwd", "gold", "oil"];
     const icons = {
         "taiex": "fa-chart-area",
+        "taiex_night": "fa-moon",
         "usdtwd": "fa-dollar-sign",
         "gold": "fa-coins",
         "oil": "fa-droplet"
@@ -991,6 +1093,7 @@ function openTrendDetailModal(key) {
     // 設定標題與內容
     const icons = {
         "taiex": "fa-chart-area",
+        "taiex_night": "fa-moon",
         "usdtwd": "fa-dollar-sign",
         "gold": "fa-coins",
         "oil": "fa-droplet"

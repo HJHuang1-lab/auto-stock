@@ -1017,6 +1017,28 @@ def generate_stock_descriptions_rule_based(symbol: str, name: str, quote: dict, 
     }
 
 # ==============================
+def fetch_yfinance_history_list(symbol: str) -> list:
+    """
+    從 yfinance 獲取指定股票過去一個月的歷史收盤價格
+    """
+    import yfinance as yf
+    history_list = []
+    for suffix in ['.TW', '.TWO']:
+        try:
+            ticker = yf.Ticker(f"{symbol}{suffix}")
+            hist = ticker.history(period="1mo")
+            if not hist.empty:
+                for idx, row in hist.iterrows():
+                    history_list.append({
+                        "date": idx.strftime('%Y-%m-%d'),
+                        "price": round(float(row['Close']), 2)
+                    })
+                break
+        except Exception:
+            pass
+    return history_list
+
+# ==============================
 # 核心分析接口 (同步與非同步)
 # ==============================
 
@@ -1071,6 +1093,31 @@ def analyze_stock_symbol_sync(symbol: str, cache_data: dict = None) -> dict:
             cached_item["volume"] = realtime["volume"]
             cached_item["volume_raw"] = realtime["volume_raw"]
             cached_item["transactions"] = realtime["transactions"]
+            
+            # 更新每日歷史價格
+            try:
+                today_date_str = datetime.datetime.now().strftime("%Y-%m-%d")
+                current_price = float(realtime["price"])
+                history_list = cached_item.get("history", [])
+                if not history_list:
+                    history_list = fetch_yfinance_history_list(symbol)
+                
+                if history_list:
+                    if history_list[-1]["date"] != today_date_str:
+                        history_list.append({
+                            "date": today_date_str,
+                            "price": current_price
+                        })
+                    else:
+                        history_list[-1]["price"] = current_price
+                else:
+                    history_list = [{"date": today_date_str, "price": current_price}]
+                
+                if len(history_list) > 60:
+                    history_list = history_list[-60:]
+                cached_item["history"] = history_list
+            except Exception as e:
+                print(f"⚠️ [歷史快取] 更新 {symbol} 歷史失敗: {e}")
             
             # 重新計算評分與雷達走勢 (僅技術走勢與量能動能隨今日即時行情波動)
             vol_units = float(realtime.get("volume_units") or 0.0)
@@ -1177,6 +1224,27 @@ def analyze_stock_symbol_sync(symbol: str, cache_data: dict = None) -> dict:
     except Exception:
         target_price = "---"
         
+    # 建立歷史價格
+    history_list = []
+    try:
+        today_date_str = datetime.datetime.now().strftime("%Y-%m-%d")
+        current_price = float(realtime["price"])
+        history_list = fetch_yfinance_history_list(symbol)
+        if history_list:
+            if history_list[-1]["date"] != today_date_str:
+                history_list.append({
+                    "date": today_date_str,
+                    "price": current_price
+                })
+            else:
+                history_list[-1]["price"] = current_price
+        else:
+            history_list = [{"date": today_date_str, "price": current_price}]
+        if len(history_list) > 60:
+            history_list = history_list[-60:]
+    except Exception as e:
+        print(f"⚠️ [歷史快取] 新增 {symbol} 歷史失敗: {e}")
+        
     item = {
         "symbol": symbol,
         "name": name,
@@ -1187,6 +1255,7 @@ def analyze_stock_symbol_sync(symbol: str, cache_data: dict = None) -> dict:
         "volume": realtime["volume"],
         "volume_raw": realtime["volume_raw"],
         "transactions": realtime["transactions"],
+        "history": history_list,
         "radar": {
             "technical": tech,
             "financial": fin_score,

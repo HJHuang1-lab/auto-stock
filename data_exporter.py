@@ -164,8 +164,69 @@ def copy_json_files():
                     json.dump(default_weights, f, ensure_ascii=False, indent=2)
 
 
+def scrape_wtx_night():
+    """抓取台指期貨近 (WTX&) 即時夜盤/日盤報價"""
+    print("📊 [data_exporter] 正在從 Yahoo 奇摩股市抓取台指期貨近 (WTX&) 即時數據...")
+    import requests
+    from bs4 import BeautifulSoup
+    import re
+    
+    url = "https://tw.stock.yahoo.com/quote/WTX%26"
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    }
+    
+    try:
+        r = requests.get(url, headers=headers, timeout=10)
+        if r.status_code != 200:
+            print(f"❌ [data_exporter] 抓取 WTX& 失敗，HTTP {r.status_code}")
+            return None
+            
+        soup = BeautifulSoup(r.text, 'html.parser')
+        container = soup.find('div', class_=lambda x: x and 'Ai(fe)' in x and 'Mb(4px)' in x)
+        if not container:
+            print("❌ [data_exporter] 找不到 WTX& 價格 container")
+            return None
+            
+        spans = container.find_all('span', recursive=False)
+        if len(spans) < 3:
+            print(f"❌ [data_exporter] WTX& container 中的 span 數量少於 3 ({len(spans)})")
+            return None
+            
+        price_text = spans[0].get_text(strip=True).replace(',', '')
+        price = float(price_text)
+        
+        change_text = spans[1].get_text(strip=True).replace(',', '')
+        change = float(change_text)
+        
+        pct_text = spans[2].get_text(strip=True)
+        pct_match = re.search(r'([\d\.]+)', pct_text)
+        pct = float(pct_match.group(1)) if pct_match else 0.0
+        
+        # 決定正負號
+        is_down = False
+        for span in spans:
+            classes = span.get('class', [])
+            if any('down' in c.lower() for c in classes):
+                is_down = True
+                break
+                
+        if is_down:
+            change = -change
+            pct = -pct
+            
+        return {
+            "price": price,
+            "change": change,
+            "change_percent": pct
+        }
+    except Exception as e:
+        print(f"❌ [data_exporter] 抓取 WTX& 拋出異常: {e}")
+        return None
+
+
 def get_market_trends():
-    """抓取全球與台股四大核心指數（大盤, 美元兌台幣, 黃金, 石油）近一個月的每日收盤價"""
+    """抓取全球與台股核心指數近一個月的每日收盤價，並加入台指期近夜盤數據"""
     print("📊 [data_exporter] 開始抓取全球與台股核心指數近 1 個月走勢數據...")
     import requests
     import time
@@ -240,6 +301,29 @@ def get_market_trends():
         except Exception as e:
             print(f"❌ [data_exporter] 抓取 {key} 拋出異常: {e}")
             
+    # 抓取台指期貨近 (WTX&) 夜盤數據，並將大盤歷史走勢等比縮放作為其歷史
+    wtx_data = scrape_wtx_night()
+    if wtx_data and "taiex" in trends_data:
+        try:
+            taiex_ref = trends_data["taiex"]
+            if taiex_ref["history"]:
+                last_taiex_price = taiex_ref["history"][-1]
+                scale_factor = wtx_data["price"] / last_taiex_price if last_taiex_price != 0 else 1.0
+                history_scaled = [round(val * scale_factor, 2) for val in taiex_ref["history"]]
+                
+                trends_data["taiex_night"] = {
+                    "name": "台指期貨近",
+                    "symbol": "WTX&",
+                    "price": wtx_data["price"],
+                    "change": wtx_data["change"],
+                    "change_percent": wtx_data["change_percent"],
+                    "history": history_scaled,
+                    "labels": taiex_ref["labels"]
+                }
+                print(f"✅ [data_exporter] 成功產出 taiex_night (WTX&): {wtx_data['price']}")
+        except Exception as e:
+            print(f"❌ [data_exporter] 處理 WTX& 歷史走勢縮放時發生錯誤: {e}")
+            
     return trends_data
 
 
@@ -284,7 +368,7 @@ def export_obsidian_report(categories, cache, trends):
     
     # 3. 提取市場指數數據填入屬性
     if trends:
-        for key in ["taiex", "usdtwd", "gold", "oil"]:
+        for key in ["taiex", "taiex_night", "usdtwd", "gold", "oil"]:
             if key in trends:
                 p = trends[key]["price"]
                 c = trends[key]["change"]
@@ -310,7 +394,7 @@ def export_obsidian_report(categories, cache, trends):
     content.append("| :--- | :--- | :--- | :--- | :--- |")
     
     if trends:
-        for key in ["taiex", "usdtwd", "gold", "oil"]:
+        for key in ["taiex", "taiex_night", "usdtwd", "gold", "oil"]:
             if key in trends:
                 t = trends[key]
                 p = t["price"]

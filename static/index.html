@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="/style.css?v=20260528_v5">
+    <link rel="stylesheet" href="/style.css?v=20260606_v1">
 </head>
 <body>
     <div class="app-container">
@@ -196,6 +196,17 @@
 
                             <!-- 深度分析文字板塊 -->
                             <div class="analysis-text-sections">
+                                <!-- 個股收盤價歷史走勢圖 -->
+                                <div class="text-card">
+                                    <div class="text-card-header text-neon">
+                                        <i class="fa-solid fa-chart-line"></i>
+                                        <h4>個股收盤價走勢圖</h4>
+                                    </div>
+                                    <div class="detail-chart-container" style="height: 220px; position: relative; margin-top: 4px; width: 100%;">
+                                        <canvas id="detailTrendChart"></canvas>
+                                    </div>
+                                </div>
+
                                 <!-- 公司獲利/財報 -->
                                 <div class="text-card">
                                     <div class="text-card-header text-warning">
@@ -388,6 +399,6 @@
         </div>
     </div>
 
-    <script src="/app.js?v=20260528_v5"></script>
+    <script src="/app.js?v=20260606_v1"></script>
 </body>
 </html>
