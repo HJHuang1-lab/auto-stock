@@ -557,7 +557,7 @@ async def run_stock_agent_scraping(symbol: str, name: str = "") -> dict:
         return None
 
     # 初始化 Gemini
-    llm = ChatGoogleGenerativeAI(model="gemini-3.5-flash")
+    llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash")
 
     # 精準且高度引導的任務，要求 browser-use 獲取價格、量能、新聞、法說會並轉為 JSON
     task = (
@@ -750,7 +750,7 @@ def call_gemini_api(api_key: str, prompt: str) -> str:
     import requests
     import time
     import random
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={api_key}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={api_key}"
     headers = {"Content-Type": "application/json"}
     payload = {
         "contents": [{
@@ -1038,6 +1038,85 @@ def analyze_stock_symbol_sync(symbol: str, cache_data: dict = None) -> dict:
     if not name:
         name = f"個股 {symbol}"
         
+    # 檢查今天是否已經進行過完整的 AI 分析，若有則跳過 LLM 呼叫並直接復用快取
+    ref_cache = cache_data if cache_data is not None else load_cached_data()
+    today_date = datetime.datetime.now().strftime("%Y-%m-%d")
+    
+    if ref_cache and symbol in ref_cache:
+        cached_item = ref_cache[symbol]
+        update_time = cached_item.get("update_time", "")
+        # 確認今天日期在更新時間內，且已包含 financials 與 news 欄位
+        if today_date in update_time and cached_item.get("financials") and cached_item.get("news"):
+            print(f"📦 [快取命中] {name} ({symbol}) 今日已進行過 AI 分析，跳過重複調用 Gemini API。正在更新即時股價...")
+            realtime = get_realtime_quote(symbol)
+            if not realtime:
+                realtime = {
+                    "price": cached_item.get("price", "100.00"),
+                    "change": cached_item.get("change", "0.00"),
+                    "change_percent": cached_item.get("change_percent", "0.00%"),
+                    "trend": cached_item.get("trend", "neutral"),
+                    "volume": cached_item.get("volume", "1,000張"),
+                    "volume_raw": cached_item.get("volume_raw", "1,000 張"),
+                    "transactions": cached_item.get("transactions", "500 筆"),
+                    "price_num": float(cached_item.get("price", "100.00")),
+                    "change_num": 0.0,
+                    "volume_units": 1000.0
+                }
+            
+            # 更新最新收盤與量能
+            cached_item["price"] = realtime["price"]
+            cached_item["change"] = realtime["change"]
+            cached_item["change_percent"] = realtime["change_percent"]
+            cached_item["trend"] = realtime["trend"]
+            cached_item["volume"] = realtime["volume"]
+            cached_item["volume_raw"] = realtime["volume_raw"]
+            cached_item["transactions"] = realtime["transactions"]
+            
+            # 重新計算評分與雷達走勢 (僅技術走勢與量能動能隨今日即時行情波動)
+            vol_units = float(realtime.get("volume_units") or 0.0)
+            vol_bonus = 1 if (vol_units > 20000 and realtime["trend"] == "bullish") else 0
+            change_coeff = 1 if realtime["trend"] == "bullish" else (-1 if realtime["trend"] == "bearish" else 0)
+            
+            old_radar = cached_item.get("radar", {})
+            tech = min(10, max(5, int(old_radar.get("overall", 7)) + change_coeff + vol_bonus))
+            fin_score = old_radar.get("financial", 7)
+            inst_score = min(10, max(5, int(old_radar.get("overall", 7)) + (1 if vol_units > 30000 else 0)))
+            news_score = min(10, max(5, int(old_radar.get("overall", 7)) + (1 if change_coeff >= 0 else -1)))
+            
+            rating = compute_weighted_rating({
+                "technical": tech,
+                "financial": fin_score,
+                "institutional": inst_score,
+                "news_sentiment": news_score
+            }, vol_units, realtime["trend"])
+            
+            cached_item["radar"] = {
+                "technical": tech,
+                "financial": fin_score,
+                "institutional": inst_score,
+                "news_sentiment": news_score,
+                "overall": rating
+            }
+            cached_item["recommendation_rating"] = rating
+            
+            try:
+                price_num = float(realtime["price"])
+                cached_item["target_price"] = f"{price_num * 0.95:.1f} - {price_num * 1.10:.1f} 元"
+            except Exception:
+                pass
+                
+            today_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+            cached_item["update_time"] = f"{today_str} 盤後分析"
+            
+            if cache_data is not None:
+                cache_data[symbol] = cached_item
+            else:
+                cache = load_cached_data()
+                cache[symbol] = cached_item
+                save_cached_data(cache)
+                
+            return cached_item
+
     print(f"📡 正在對 {name} ({symbol}) 進行完整即時量化與新聞採集分析...")
     
     # 1. 撈取即時股價量能

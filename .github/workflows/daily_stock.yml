@@ -39,30 +39,7 @@ jobs:
         run: python data_exporter.py
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          PYTHONIOENCODING: utf-8
-
-      # ── Step 5：週五額外驗收 ────────────────────────────────
-      - name: 📅 週五驗收 (如果今天是週五或手動強制)
-        run: |
-          DAY=$(date +%u)
-          FORCE="${{ github.event.inputs.force_weekly }}"
-          if [ "$DAY" = "5" ] || [ "$FORCE" = "true" ]; then
-            echo "📅 今天是週五！執行週驗收 + AI 自我進化..."
-            python -c "
-          import sys
-          sys.stdout.reconfigure(encoding='utf-8')
-          try:
-              from weekly_evaluator import run_weekly_verification_and_optimize
-              result = run_weekly_verification_and_optimize()
-              print(f'✅ 週驗收完成！命中率: {result.get(\"hit_rate\", \"N/A\")}%')
-          except Exception as e:
-              print(f'⚠️ 週驗收錯誤（不影響部署）: {e}')
-          "
-            python data_exporter.py
-          else
-            echo "📌 今天是星期 $DAY，非週五，跳過週驗收。"
-          fi
-        env:
+          FORCE_WEEKLY: ${{ github.event.inputs.force_weekly }}
           PYTHONIOENCODING: utf-8
 
       # ── Step 6：提交更新後的 JSON 回 repo ────────────────────

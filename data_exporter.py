@@ -471,7 +471,7 @@ def export_obsidian_report(categories, cache, trends):
 def main():
     now = datetime.datetime.utcnow() + datetime.timedelta(hours=8)  # 台灣時間
     weekday = now.weekday()  # 0=周一, 4=週五
-    is_friday = (weekday == 4)
+    is_friday = (weekday == 4) or (os.environ.get("FORCE_WEEKLY") == "true")
     
     print("=" * 60)
     print(f"🚀 [data_exporter] 開始執行 | 台灣時間: {now.strftime('%Y-%m-%d %H:%M')} {'(週五)' if is_friday else ''}")
