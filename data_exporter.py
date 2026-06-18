@@ -84,7 +84,11 @@ def run_analysis():
                 print(f"⚠️ [data_exporter] 並行分析個股 {symbol} 失敗: {e}")
                 return None
                 
-        with ThreadPoolExecutor(max_workers=20) as executor:
+        # 讀取環境變數設定的並行執行緒數量，若無設定，預設使用 4 以避免 Free Tier 的 15 RPM 限制
+        max_workers_env = os.environ.get("MAX_ANALYSIS_WORKERS", "").strip()
+        max_workers = int(max_workers_env) if max_workers_env.isdigit() else 4
+        print(f"⚙️ [data_exporter] 啟動 ThreadPoolExecutor (max_workers={max_workers})...")
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
             results = list(executor.map(task_wrapper, list(all_symbols)))
             
         updated_count = len([r for r in results if r is not None])

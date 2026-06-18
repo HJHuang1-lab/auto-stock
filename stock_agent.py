@@ -867,6 +867,20 @@ def extract_brief_summary(text: str, max_sentences=2) -> str:
     return summary
 
 def generate_stock_descriptions_llm(symbol: str, name: str, quote: dict, fin: dict, rss_news: list) -> dict:
+    # 檢查是否完全停用個股的 AI 分析
+    disable_stock_llm = os.environ.get("DISABLE_STOCK_LLM", "false").lower() == "true"
+    if disable_stock_llm:
+        print(f"ℹ️ [AI 分析] 已設定停用個股 AI 分析，跳過 {name} ({symbol}) 的 Gemini API 呼叫。")
+        return None
+
+    # 檢查是否只對特定的核心股票進行 AI 分析
+    llm_symbols_str = os.environ.get("LLM_STOCK_SYMBOLS", "").strip()
+    if llm_symbols_str:
+        allowed_symbols = [s.strip() for s in llm_symbols_str.split(",") if s.strip()]
+        if symbol not in allowed_symbols:
+            # print(f"ℹ️ [AI 分析] {name} ({symbol}) 不在核心股票名單中，跳過 Gemini API 呼叫。")
+            return None
+
     gemini_key = os.environ.get("GEMINI_API_KEY")
     openai_key = os.environ.get("OPENAI_API_KEY")
     
