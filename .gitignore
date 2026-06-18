@@ -16,3 +16,6 @@ Thumbs.db
 
 # Firebase 暫存目錄
 .firebase/
+
+# 獨立的 Git 倉庫目錄，不納入此倉庫追蹤
+AI agent research/
