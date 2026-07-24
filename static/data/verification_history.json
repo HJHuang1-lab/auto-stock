@@ -1,287 +1,5 @@
 [
     {
-        "date": "2026-05-30",
-        "hit_rate": 76.2,
-        "total_hits": 16,
-        "total_recommended": 21,
-        "old_weights": {
-            "technical": 0.25,
-            "financial": 0.02,
-            "institutional": 0.03,
-            "news_sentiment": 0.38,
-            "volume_momentum": 0.32
-        },
-        "new_weights": {
-            "technical": 0.28,
-            "financial": 0.2,
-            "institutional": 0.0,
-            "news_sentiment": 0.42,
-            "volume_momentum": 0.1
-        },
-        "results": {
-            "semiconductor_foundry": {
-                "recommended": [
-                    "2330",
-                    "2303",
-                    "3707"
-                ],
-                "actual_top5": [
-                    {
-                        "symbol": "6182",
-                        "name": "合晶",
-                        "weekly_return": "29.56%"
-                    },
-                    {
-                        "symbol": "6488",
-                        "name": "環球晶",
-                        "weekly_return": "28.81%"
-                    },
-                    {
-                        "symbol": "2344",
-                        "name": "華邦電",
-                        "weekly_return": "22.96%"
-                    },
-                    {
-                        "symbol": "3131",
-                        "name": "弘塑",
-                        "weekly_return": "18.15%"
-                    },
-                    {
-                        "symbol": "2408",
-                        "name": "南亞科",
-                        "weekly_return": "17.23%"
-                    }
-                ],
-                "hits": [],
-                "hit_rate": 0.0
-            },
-            "ic_design": {
-                "recommended": [
-                    "2337",
-                    "2388",
-                    "4919"
-                ],
-                "actual_top5": [
-                    {
-                        "symbol": "2337",
-                        "name": "旺宏",
-                        "weekly_return": "9.18%"
-                    },
-                    {
-                        "symbol": "8016",
-                        "name": "矽創",
-                        "weekly_return": "5.15%"
-                    },
-                    {
-                        "symbol": "2454",
-                        "name": "聯發科",
-                        "weekly_return": "1.53%"
-                    },
-                    {
-                        "symbol": "2379",
-                        "name": "瑞昱",
-                        "weekly_return": "-0.51%"
-                    },
-                    {
-                        "symbol": "4961",
-                        "name": "天鈺",
-                        "weekly_return": "-1.71%"
-                    }
-                ],
-                "hits": [
-                    "2337"
-                ],
-                "hit_rate": 33.3
-            },
-            "memory_storage": {
-                "recommended": [
-                    "5351",
-                    "3006",
-                    "3264"
-                ],
-                "actual_top5": [
-                    {
-                        "symbol": "2344",
-                        "name": "華邦電",
-                        "weekly_return": "22.96%"
-                    },
-                    {
-                        "symbol": "6239",
-                        "name": "力成",
-                        "weekly_return": "21.86%"
-                    },
-                    {
-                        "symbol": "2408",
-                        "name": "南亞科",
-                        "weekly_return": "17.23%"
-                    },
-                    {
-                        "symbol": "2337",
-                        "name": "旺宏",
-                        "weekly_return": "9.18%"
-                    },
-                    {
-                        "symbol": "1609",
-                        "name": "大亞",
-                        "weekly_return": "9.03%"
-                    }
-                ],
-                "hits": [],
-                "hit_rate": 0.0
-            },
-            "ai_server_thermal": {
-                "recommended": [
-                    "2382",
-                    "3231",
-                    "2376"
-                ],
-                "actual_top5": [
-                    {
-                        "symbol": "2317",
-                        "name": "鴻海",
-                        "weekly_return": "10.73%"
-                    },
-                    {
-                        "symbol": "2376",
-                        "name": "技嘉",
-                        "weekly_return": "9.96%"
-                    },
-                    {
-                        "symbol": "2356",
-                        "name": "英業達",
-                        "weekly_return": "7.34%"
-                    },
-                    {
-                        "symbol": "2357",
-                        "name": "華碩",
-                        "weekly_return": "7.33%"
-                    },
-                    {
-                        "symbol": "2382",
-                        "name": "廣達",
-                        "weekly_return": "7.11%"
-                    }
-                ],
-                "hits": [
-                    "2382",
-                    "2376"
-                ],
-                "hit_rate": 66.7
-            },
-            "finance_shipping": {
-                "recommended": [
-                    "2882",
-                    "2603",
-                    "2618"
-                ],
-                "actual_top5": [
-                    {
-                        "symbol": "2881",
-                        "name": "富邦金",
-                        "weekly_return": "12.59%"
-                    },
-                    {
-                        "symbol": "2885",
-                        "name": "元大金",
-                        "weekly_return": "6.24%"
-                    },
-                    {
-                        "symbol": "2891",
-                        "name": "中信金",
-                        "weekly_return": "5.58%"
-                    },
-                    {
-                        "symbol": "2882",
-                        "name": "國泰金",
-                        "weekly_return": "5.15%"
-                    },
-                    {
-                        "symbol": "2883",
-                        "name": "開發金",
-                        "weekly_return": "3.93%"
-                    }
-                ],
-                "hits": [
-                    "2882"
-                ],
-                "hit_rate": 33.3
-            },
-            "etf": {
-                "recommended": [
-                    "00940",
-                    "0056",
-                    "0052"
-                ],
-                "actual_top5": [
-                    {
-                        "symbol": "00919",
-                        "name": "群益台灣精選高息",
-                        "weekly_return": "3.42%"
-                    },
-                    {
-                        "symbol": "00915",
-                        "name": "凱基優選高股息30",
-                        "weekly_return": "2.87%"
-                    },
-                    {
-                        "symbol": "00939",
-                        "name": "統一台灣高息動能",
-                        "weekly_return": "2.43%"
-                    },
-                    {
-                        "symbol": "00944",
-                        "name": "野村臺灣趨勢高股息",
-                        "weekly_return": "2.16%"
-                    },
-                    {
-                        "symbol": "00929",
-                        "name": "復華台灣科技優息",
-                        "weekly_return": "2.08%"
-                    }
-                ],
-                "hits": [],
-                "hit_rate": 0.0
-            },
-            "green_energy_power": {
-                "recommended": [
-                    "1101",
-                    "1102",
-                    "1605"
-                ],
-                "actual_top5": [
-                    {
-                        "symbol": "3712",
-                        "name": "永崴投控",
-                        "weekly_return": "14.06%"
-                    },
-                    {
-                        "symbol": "1609",
-                        "name": "大亞",
-                        "weekly_return": "9.03%"
-                    },
-                    {
-                        "symbol": "1503",
-                        "name": "士電",
-                        "weekly_return": "8.68%"
-                    },
-                    {
-                        "symbol": "2308",
-                        "name": "台達電",
-                        "weekly_return": "6.77%"
-                    },
-                    {
-                        "symbol": "1519",
-                        "name": "華城",
-                        "weekly_return": "5.30%"
-                    }
-                ],
-                "hits": [],
-                "hit_rate": 0.0
-            }
-        },
-        "target_met": true
-    },
-    {
         "date": "2026-06-05",
         "hit_rate": 95.2,
         "total_hits": 20,
@@ -2851,6 +2569,285 @@
                     "9941"
                 ],
                 "hit_rate": 33.3
+            }
+        },
+        "target_met": true
+    },
+    {
+        "date": "2026-07-24",
+        "hit_rate": 76.2,
+        "total_hits": 16,
+        "total_recommended": 21,
+        "old_weights": {
+            "technical": 0.52,
+            "financial": 0.16,
+            "institutional": 0.01,
+            "news_sentiment": 0.27,
+            "volume_momentum": 0.04
+        },
+        "new_weights": {
+            "technical": 0.52,
+            "financial": 0.16,
+            "institutional": 0.01,
+            "news_sentiment": 0.27,
+            "volume_momentum": 0.04
+        },
+        "results": {
+            "semiconductor_foundry": {
+                "recommended": [
+                    "2344",
+                    "2408",
+                    "3131"
+                ],
+                "actual_top5": [
+                    {
+                        "symbol": "3264",
+                        "name": "欣銓",
+                        "weekly_return": "6.08%"
+                    },
+                    {
+                        "symbol": "3374",
+                        "name": "精材",
+                        "weekly_return": "5.64%"
+                    },
+                    {
+                        "symbol": "2408",
+                        "name": "南亞科",
+                        "weekly_return": "5.25%"
+                    },
+                    {
+                        "symbol": "3680",
+                        "name": "家登",
+                        "weekly_return": "5.14%"
+                    },
+                    {
+                        "symbol": "3587",
+                        "name": "閎康",
+                        "weekly_return": "5.09%"
+                    }
+                ],
+                "hits": [
+                    "2408"
+                ],
+                "hit_rate": 33.3
+            },
+            "ic_design": {
+                "recommended": [
+                    "3034",
+                    "2388",
+                    "2379"
+                ],
+                "actual_top5": [
+                    {
+                        "symbol": "2454",
+                        "name": "聯發科",
+                        "weekly_return": "12.28%"
+                    },
+                    {
+                        "symbol": "3034",
+                        "name": "聯詠",
+                        "weekly_return": "10.70%"
+                    },
+                    {
+                        "symbol": "3227",
+                        "name": "原相",
+                        "weekly_return": "10.14%"
+                    },
+                    {
+                        "symbol": "6415",
+                        "name": "矽力*-KY",
+                        "weekly_return": "9.36%"
+                    },
+                    {
+                        "symbol": "3105",
+                        "name": "穩懋",
+                        "weekly_return": "8.93%"
+                    }
+                ],
+                "hits": [
+                    "3034"
+                ],
+                "hit_rate": 33.3
+            },
+            "memory_storage": {
+                "recommended": [
+                    "8112",
+                    "5351",
+                    "3006"
+                ],
+                "actual_top5": [
+                    {
+                        "symbol": "2451",
+                        "name": "創見",
+                        "weekly_return": "19.46%"
+                    },
+                    {
+                        "symbol": "3088",
+                        "name": "艾訊",
+                        "weekly_return": "19.44%"
+                    },
+                    {
+                        "symbol": "5289",
+                        "name": "宜鼎",
+                        "weekly_return": "12.76%"
+                    },
+                    {
+                        "symbol": "3037",
+                        "name": "欣興",
+                        "weekly_return": "11.87%"
+                    },
+                    {
+                        "symbol": "3260",
+                        "name": "威剛",
+                        "weekly_return": "9.90%"
+                    }
+                ],
+                "hits": [],
+                "hit_rate": 0.0
+            },
+            "ai_server_thermal": {
+                "recommended": [
+                    "2382",
+                    "2324",
+                    "2376"
+                ],
+                "actual_top5": [
+                    {
+                        "symbol": "3231",
+                        "name": "緯創",
+                        "weekly_return": "24.74%"
+                    },
+                    {
+                        "symbol": "6669",
+                        "name": "緯穎",
+                        "weekly_return": "22.31%"
+                    },
+                    {
+                        "symbol": "2356",
+                        "name": "英業達",
+                        "weekly_return": "12.76%"
+                    },
+                    {
+                        "symbol": "2395",
+                        "name": "研華",
+                        "weekly_return": "12.60%"
+                    },
+                    {
+                        "symbol": "2357",
+                        "name": "華碩",
+                        "weekly_return": "12.06%"
+                    }
+                ],
+                "hits": [],
+                "hit_rate": 0.0
+            },
+            "finance_shipping": {
+                "recommended": [
+                    "2881",
+                    "2884",
+                    "2880"
+                ],
+                "actual_top5": [
+                    {
+                        "symbol": "2615",
+                        "name": "萬海",
+                        "weekly_return": "8.07%"
+                    },
+                    {
+                        "symbol": "2637",
+                        "name": "慧洋-KY",
+                        "weekly_return": "5.94%"
+                    },
+                    {
+                        "symbol": "2605",
+                        "name": "新興",
+                        "weekly_return": "5.38%"
+                    },
+                    {
+                        "symbol": "2603",
+                        "name": "長榮",
+                        "weekly_return": "5.10%"
+                    },
+                    {
+                        "symbol": "2609",
+                        "name": "陽明",
+                        "weekly_return": "5.10%"
+                    }
+                ],
+                "hits": [],
+                "hit_rate": 0.0
+            },
+            "etf": {
+                "recommended": [
+                    "00940",
+                    "0056",
+                    "00929"
+                ],
+                "actual_top5": [
+                    {
+                        "symbol": "00936",
+                        "name": "台新臺灣永續高息",
+                        "weekly_return": "5.28%"
+                    },
+                    {
+                        "symbol": "00918",
+                        "name": "大華優利高填息30",
+                        "weekly_return": "5.11%"
+                    },
+                    {
+                        "symbol": "00881",
+                        "name": "國泰台灣5G+",
+                        "weekly_return": "4.71%"
+                    },
+                    {
+                        "symbol": "00905",
+                        "name": "特選臺灣產業龍頭",
+                        "weekly_return": "4.37%"
+                    },
+                    {
+                        "symbol": "00922",
+                        "name": "國泰台灣領袖50",
+                        "weekly_return": "4.08%"
+                    }
+                ],
+                "hits": [],
+                "hit_rate": 0.0
+            },
+            "green_energy_power": {
+                "recommended": [
+                    "1503",
+                    "9941",
+                    "6443"
+                ],
+                "actual_top5": [
+                    {
+                        "symbol": "3712",
+                        "name": "永崴投控",
+                        "weekly_return": "11.01%"
+                    },
+                    {
+                        "symbol": "2308",
+                        "name": "台達電",
+                        "weekly_return": "4.69%"
+                    },
+                    {
+                        "symbol": "1519",
+                        "name": "華城",
+                        "weekly_return": "4.34%"
+                    },
+                    {
+                        "symbol": "3708",
+                        "name": "上緯投控",
+                        "weekly_return": "3.63%"
+                    },
+                    {
+                        "symbol": "8996",
+                        "name": "高力",
+                        "weekly_return": "3.50%"
+                    }
+                ],
+                "hits": [],
+                "hit_rate": 0.0
             }
         },
         "target_met": true
