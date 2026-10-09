@@ -1,7 +1,7 @@
 {
-    "technical": 0.62,
+    "technical": 0.55,
     "financial": 0.0,
-    "institutional": 0.0,
-    "news_sentiment": 0.37,
-    "volume_momentum": 0.01
+    "institutional": 0.01,
+    "news_sentiment": 0.2,
+    "volume_momentum": 0.24
 }
