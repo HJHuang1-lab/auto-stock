@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="/style.css?v=20260606_v1">
+    <link rel="stylesheet" href="/style.css?v=20261127_v2">
 </head>
 <body>
     <div class="app-container">
@@ -257,9 +257,9 @@
 
             <!-- AI 自我進化與週驗收面板 -->
             <div class="evolution-grid" id="evolution-container" style="display: none;">
-                <!-- 左側：決策權重控制台 -->
-                <section class="left-panel">
-                    <div class="glass-card weights-box" style="height: auto;">
+                <!-- 左側：決策權重控制台與選股邏輯說明 -->
+                <section class="left-panel evolution-left-panel">
+                    <div class="glass-card weights-box" style="height: auto; flex-shrink: 0;">
                         <div class="card-header">
                             <div class="card-title">
                                 <i class="fa-solid fa-chart-pie neon-glow-text"></i>
@@ -267,24 +267,68 @@
                             </div>
                             <span class="pulse-dot"></span>
                         </div>
-                        <div class="weights-progress-container" id="active-weights-bars" style="padding: 10px 0;">
+                        <div class="weights-progress-container" id="active-weights-bars" style="padding: 16px 24px 8px 24px;">
                             <!-- JS 動態渲染權重進度條 -->
                         </div>
                     </div>
 
-                    <div class="glass-card controller-box" style="margin-top: 24px; height: auto;">
+                    <!-- 新增：選股方式與命中判定機制說明卡 -->
+                    <div class="glass-card methodology-box" style="height: auto; flex-shrink: 0;">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <i class="fa-solid fa-compass-drafting text-warning"></i>
+                                <h3>AI 是用什麼方式選出這 21 隻股票並驗收命中？</h3>
+                            </div>
+                        </div>
+                        <div class="methodology-content">
+                            <div class="method-step">
+                                <span class="step-badge">1</span>
+                                <div>
+                                    <strong>140 支核心股票池</strong>
+                                    <p>涵蓋半導體、IC 設計、記憶體/HBM、AI 伺服器、金控航運、高息 ETF、綠能重電等 <strong>7 大板塊 × 各 20 支指標股</strong>。</p>
+                                </div>
+                            </div>
+                            <div class="method-step">
+                                <span class="step-badge">2</span>
+                                <div>
+                                    <strong>五維度動態加權評分選股 (每板塊取 Top 3 = 共 21 支)</strong>
+                                    <p>依當週決策權重計算各股總分，每板塊選出最高分前 3 名：</p>
+                                    <div class="formula-code-box">
+                                        S = 技術×W<sub>技</sub> + 營利×W<sub>營</sub> + 籌碼×W<sub>籌</sub> + 輿情×W<sub>輿</sub> + 量能×W<sub>量</sub>
+                                    </div>
+                                    <p class="method-subnote">＊前四維 (1~10分) 由 AI 解析盤後技術面、財報、法人買賣超與新聞情緒；量能動能於「成交量 &gt; 2萬張且看漲」給滿分 10 分，其餘依 <code>min(10, max(5, 張數/5000 + 5))</code> 計分。</p>
+                                </div>
+                            </div>
+                            <div class="method-step">
+                                <span class="step-badge">3</span>
+                                <div>
+                                    <strong>週五收盤命中判定標準 (Top 3 對決實際漲幅 Top 5)</strong>
+                                    <p>每週五收盤抓取 Yahoo Finance 5 日 K 線計算實際週漲跌幅。若選出的板塊 <strong>Top 3 推薦股</strong> 進入該板塊當週 <strong>實際週漲幅前 5 名 (Actual Top 5)</strong>，即判定為 <span class="text-success" style="font-weight:700;">「命中 ✅」</span>。</p>
+                                </div>
+                            </div>
+                            <div class="method-step">
+                                <span class="step-badge">4</span>
+                                <div>
+                                    <strong>特徵反饋校準與雙階段 Grid Search 進化</strong>
+                                    <p>系統針對當週強弱勢股進行特徵反饋校準，並以粗粒度 (5%) → 細粒度鄰域 (1%) 網格搜尋演化出達標 (&ge;70%) 之最佳權重。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card controller-box" style="height: auto; flex-shrink: 0;">
                         <div class="card-header">
                             <div class="card-title">
                                 <i class="fa-solid fa-gears text-neon"></i>
                                 <h3>自我進化引擎控制器</h3>
                             </div>
                         </div>
-                        <div class="controller-content" style="padding: 16px 0;">
-                            <p class="controller-desc" style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 24px; font-size: 14px;">
-                                此模組每週五收盤後自動運行，異步抓取所有個股當週實際漲跌幅，並逐一核對每日預測之 Top 3 是否命中 Top 5 飆股。若勝率不佳，將自動啟動權重超參數 Grid Search 搜尋，演化出最佳決策權重。
+                        <div class="controller-content" style="padding: 16px 24px 20px 24px;">
+                            <p class="controller-desc" style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px; font-size: 13px;">
+                                每週五 15:07 由 GitHub Actions 自動執行收盤驗收與權重演化，點擊下方按鈕可同步最新雲端驗收報告。
                             </p>
                             <button class="btn btn-glow-action btn-block" id="btn-trigger-evolution" style="width: 100%;">
-                                <i class="fa-solid fa-dna"></i> 啟動週五收盤總驗收與進化
+                                <i class="fa-solid fa-dna"></i> 同步最新週五收盤總驗收與進化結果
                             </button>
                         </div>
                     </div>
@@ -292,21 +336,25 @@
 
                 <!-- 右側：驗收日誌歷史 -->
                 <section class="right-panel">
-                    <div class="glass-card history-box" style="height: 100%;">
+                    <div class="glass-card history-box" style="height: 100%; display: flex; flex-direction: column;">
                         <div class="card-header">
                             <div class="card-title">
                                 <i class="fa-solid fa-clock-rotate-left"></i>
                                 <h3>週結算驗收歷史報告日誌</h3>
                             </div>
+                            <div class="evolution-click-hint">
+                                <i class="fa-solid fa-hand-pointer"></i> 點擊「總命中數」或任一列，即可確認命中股票清單與選股算式
+                            </div>
                         </div>
-                        <div class="history-table-container" style="margin-top: 16px; max-height: calc(100vh - 280px); overflow-y: auto;">
+                        <div class="history-table-container" style="padding: 0 20px 20px 20px; margin-top: 8px; flex-grow: 1; overflow-y: auto;">
                             <table class="history-table" style="width: 100%; border-collapse: collapse; text-align: left;">
                                 <thead>
                                     <tr style="border-bottom: 1px solid var(--border-color); color: var(--text-muted); font-size: 13px;">
                                         <th style="padding: 12px 8px;">驗收日期</th>
-                                        <th style="padding: 12px 8px; text-align: center;">總命中數</th>
+                                        <th style="padding: 12px 8px; text-align: center;">總命中數 (點擊確認)</th>
                                         <th style="padding: 12px 8px; text-align: center;">總推薦命中率</th>
-                                        <th style="padding: 12px 8px;">進化軌跡 (技術 / 營利 / 籌碼 / 情緒 / 量能)</th>
+                                        <th style="padding: 12px 8px;">採用決策權重 (技術 / 營利 / 籌碼 / 輿情 / 量能)</th>
+                                        <th style="padding: 12px 8px; text-align: right;">明細確認</th>
                                     </tr>
                                 </thead>
                                 <tbody id="verification-history-rows" style="font-size: 14px; color: var(--text-secondary);">
@@ -399,6 +447,22 @@
         </div>
     </div>
 
-    <script src="/app.js?v=20260606_v1"></script>
+    <!-- 彈出視窗 4：每週驗收命中股票清單與選股算式確認 Modal -->
+    <div class="modal-overlay" id="weekly-hit-modal" style="display: none;">
+        <div class="glass-card modal-content weekly-modal-content">
+            <div class="modal-header weekly-modal-header">
+                <div>
+                    <h3 id="weekly-modal-title"><i class="fa-solid fa-bullseye neon-glow-text"></i> 週驗收命中股票明細與選股依據</h3>
+                    <p id="weekly-modal-subtitle" class="weekly-modal-sub">點擊下方任一命中股票膠囊或板塊推薦列，即可展開該股當週五維度加權算式驗算</p>
+                </div>
+                <button class="modal-close" id="btn-close-weekly-modal" title="關閉視窗"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="weekly-modal-body" id="weekly-modal-body">
+                <!-- JS 動態注入當週 KPI、命中股票總覽膠囊、個股算式驗算器與 7 大板塊對照表 -->
+            </div>
+        </div>
+    </div>
+
+    <script src="/app.js?v=20261127_v2"></script>
 </body>
 </html>

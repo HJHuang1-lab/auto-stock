@@ -674,6 +674,25 @@ function setupEventListeners() {
         switchTabToEvolution();
     });
 
+    // 5.5 關閉「週驗收命中股票明細」Modal
+    const weeklyModal = document.getElementById("weekly-hit-modal");
+    const closeWeeklyModal = document.getElementById("btn-close-weekly-modal");
+    if (weeklyModal && closeWeeklyModal) {
+        closeWeeklyModal.addEventListener("click", () => {
+            weeklyModal.style.display = "none";
+        });
+        weeklyModal.addEventListener("click", (e) => {
+            if (e.target === weeklyModal) {
+                weeklyModal.style.display = "none";
+            }
+        });
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && weeklyModal.style.display === "flex") {
+                weeklyModal.style.display = "none";
+            }
+        });
+    }
+
     // 6. 手動觸發選股驗收（雲端模式：顯示說明而非呼叫後端）
     const triggerEvolveBtn = document.getElementById("btn-trigger-evolution");
     triggerEvolveBtn.addEventListener("click", async () => {
@@ -857,20 +876,126 @@ function renderWeightBars() {
     });
 }
 
+const EVOLUTION_CAT_META = {
+    "semiconductor_foundry": { name: "半導體製造與設備", short: "半導體", icon: "fa-industry" },
+    "ic_design": { name: "IC 設計與晶片", short: "IC設計", icon: "fa-microchip" },
+    "memory_storage": { name: "記憶體與 AI 儲存 / HBM", short: "記憶體", icon: "fa-database" },
+    "ai_server_thermal": { name: "AI 伺服器與散熱", short: "AI伺服器", icon: "fa-server" },
+    "finance_shipping": { name: "金融與航運巨頭", short: "金融航運", icon: "fa-ship" },
+    "etf": { name: "人氣高息 ETF", short: "高息ETF", icon: "fa-cubes" },
+    "green_energy_power": { name: "綠能與重電建設", short: "綠能重電", icon: "fa-bolt" }
+};
+
+function getStockNameBySymbol(symbol) {
+    if (appState.stocksData && appState.stocksData[symbol]?.name) {
+        return appState.stocksData[symbol].name;
+    }
+    for (const stocks of Object.values(appState.categories || {})) {
+        const found = stocks.find(s => s.symbol === symbol);
+        if (found) return found.name;
+    }
+    return symbol;
+}
+
+function normalizeWeeklyRecord(item) {
+    // 確保新舊格式皆能解析出完整命中清單與五維度分數明細
+    const w = item.new_weights || item.old_weights || {
+        technical: 0.35, financial: 0.25, institutional: 0.20, news_sentiment: 0.10, volume_momentum: 0.10
+    };
+    const sectorOrder = Object.keys(EVOLUTION_CAT_META);
+    const sectors = [];
+    const hitList = [];
+
+    sectorOrder.forEach(catKey => {
+        const rawCat = (item.results && item.results[catKey]) ? item.results[catKey] : null;
+        if (!rawCat) return;
+        const meta = EVOLUTION_CAT_META[catKey] || { name: catKey, short: catKey, icon: "fa-chart-simple" };
+        const actualTop5 = (rawCat.actual_top5 || []).map((x, idx) => ({
+            rank: x.rank || (idx + 1),
+            symbol: x.symbol,
+            name: x.name || getStockNameBySymbol(x.symbol),
+            weekly_return: x.weekly_return || "---",
+            is_hit: x.is_hit !== undefined ? x.is_hit : (rawCat.recommended || []).includes(x.symbol)
+        }));
+        const top5Map = {};
+        actualTop5.forEach(x => { top5Map[x.symbol] = x; });
+
+        let recDetails = rawCat.recommended_details;
+        if (!recDetails || recDetails.length === 0) {
+            recDetails = (rawCat.recommended || []).map((sym, idx) => {
+                const stCache = (appState.stocksData || {})[sym] || {};
+                const r = stCache.radar || { technical: 7, financial: 7, institutional: 7, news_sentiment: 7 };
+                const scores = {
+                    technical: r.technical || 7,
+                    financial: r.financial || 7,
+                    institutional: r.institutional || 7,
+                    news_sentiment: r.news_sentiment || 7,
+                    volume_momentum: 8
+                };
+                const ws = (
+                    w.technical * scores.technical +
+                    w.financial * scores.financial +
+                    w.institutional * scores.institutional +
+                    w.news_sentiment * scores.news_sentiment +
+                    w.volume_momentum * scores.volume_momentum
+                );
+                const hitInfo = top5Map[sym];
+                return {
+                    pick_rank: idx + 1,
+                    symbol: sym,
+                    name: getStockNameBySymbol(sym),
+                    weighted_score: Number(ws.toFixed(2)),
+                    scores,
+                    volume: stCache.volume || "---",
+                    weekly_return: hitInfo ? hitInfo.weekly_return : "---",
+                    is_hit: Boolean(hitInfo),
+                    actual_rank: hitInfo ? hitInfo.rank : null
+                };
+            });
+        }
+
+        recDetails.forEach(d => {
+            if (d.is_hit) {
+                hitList.push({
+                    ...d,
+                    category: catKey,
+                    category_name: meta.name,
+                    category_short: meta.short
+                });
+            }
+        });
+
+        sectors.push({
+            category: catKey,
+            name: meta.name,
+            short: meta.short,
+            icon: meta.icon,
+            recommended_details: recDetails,
+            actual_top5: actualTop5,
+            hit_count: recDetails.filter(d => d.is_hit).length,
+            total_count: recDetails.length
+        });
+    });
+
+    return { weights: w, sectors, hitList };
+}
+
 function renderVerificationHistory() {
     const tbody = document.getElementById("verification-history-rows");
     tbody.innerHTML = "";
     
     if (!appState.verificationHistory || appState.verificationHistory.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 40px; font-size: 14px;">尚無收盤驗收歷史紀錄。將於每週五 15:30 收盤後自動產出與演化優化！</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 40px; font-size: 14px;">尚無收盤驗收歷史紀錄。將於每週五 15:07 收盤後自動產出與演化優化！</td></tr>`;
         return;
     }
     
     // 按日期倒序排列
     const sortedHistory = [...appState.verificationHistory].reverse();
     
-    sortedHistory.forEach(item => {
+    sortedHistory.forEach((item) => {
         const tr = document.createElement("tr");
+        tr.className = "history-row-clickable";
+        tr.title = `點擊查看 ${item.date} 命中的 ${item.total_hits} 隻股票清單與選股評分依據`;
         
         // 評估命中率等級 (配合用戶 >= 70% 命中率硬性規定)
         let badgeClass = "danger";
@@ -894,16 +1019,320 @@ function renderVerificationHistory() {
         `;
         
         tr.innerHTML = `
-            <td style="padding: 16px 8px; font-weight: 600;">${item.date} <span class="text-neon" style="font-size: 11px; margin-left: 4px;">收盤驗收</span></td>
-            <td style="padding: 16px 8px; text-align: center; font-weight: 700; color: var(--text-primary);">${item.total_hits} / ${item.total_recommended}</td>
+            <td style="padding: 16px 8px; font-weight: 600; white-space: nowrap;">
+                ${item.date}
+                <span class="text-neon" style="font-size: 11px; margin-left: 4px;">收盤驗收</span>
+            </td>
             <td style="padding: 16px 8px; text-align: center;">
+                <button type="button" class="hit-count-trigger" aria-label="查看 ${item.date} 命中股票清單">
+                    <i class="fa-solid fa-bullseye"></i>
+                    <span>${item.total_hits} / ${item.total_recommended} 支</span>
+                </button>
+            </td>
+            <td style="padding: 16px 8px; text-align: center; white-space: nowrap;">
                 <span class="hit-rate-badge ${badgeClass}">${item.hit_rate.toFixed(1)}% (${targetMetText})</span>
             </td>
             <td style="padding: 16px 8px; line-height: 2;">${wStr}</td>
+            <td style="padding: 16px 8px; text-align: right;">
+                <button type="button" class="btn-inspect-week">
+                    <i class="fa-solid fa-magnifying-glass-chart"></i> 點擊確認
+                </button>
+            </td>
         `;
+        
+        tr.addEventListener("click", () => {
+            openWeeklyHitModal(item);
+        });
         
         tbody.appendChild(tr);
     });
+}
+
+function openWeeklyHitModal(item) {
+    const modal = document.getElementById("weekly-hit-modal");
+    const titleEl = document.getElementById("weekly-modal-title");
+    const bodyEl = document.getElementById("weekly-modal-body");
+    if (!modal || !bodyEl) return;
+
+    const parsed = normalizeWeeklyRecord(item);
+    const w = parsed.weights;
+    const hitList = parsed.hitList;
+
+    // 計算不重複個股數（部分指標股同時跨足半導體與記憶體等雙板塊）
+    const uniqueSymbols = new Set(hitList.map(h => h.symbol));
+    const crossSectorNote = uniqueSymbols.size < hitList.length
+        ? `（涵蓋 ${uniqueSymbols.size} 檔不重複個股，其中 ${hitList.length - uniqueSymbols.size} 檔跨雙板塊同時命中）`
+        : `（共 ${uniqueSymbols.size} 檔個股命中當週板塊漲幅前 5 名）`;
+
+    titleEl.innerHTML = `<i class="fa-solid fa-bullseye neon-glow-text"></i> ${item.date} 週驗收命中確認報告 — 命中 ${item.total_hits} / ${item.total_recommended} 支`;
+
+    const badgeClass = item.hit_rate >= 70 ? "text-success" : (item.hit_rate >= 50 ? "text-warning" : "text-up");
+    const formulaText = `S = ${(w.technical*100).toFixed(0)}%×技術 + ${(w.financial*100).toFixed(0)}%×營利 + ${(w.institutional*100).toFixed(0)}%×籌碼 + ${(w.news_sentiment*100).toFixed(0)}%×輿情 + ${(w.volume_momentum*100).toFixed(0)}%×量能`;
+
+    bodyEl.innerHTML = `
+        <!-- 1. 頂部 KPI 摘要卡 -->
+        <div class="weekly-kpi-strip">
+            <div class="weekly-kpi-card">
+                <span class="kpi-label">週驗收結算日</span>
+                <span class="kpi-value">${item.date}</span>
+            </div>
+            <div class="weekly-kpi-card">
+                <span class="kpi-label">板塊推薦總命中數</span>
+                <span class="kpi-value text-neon">${item.total_hits} / ${item.total_recommended} 支</span>
+            </div>
+            <div class="weekly-kpi-card">
+                <span class="kpi-label">當週總推薦命中率</span>
+                <span class="kpi-value ${badgeClass}">${item.hit_rate.toFixed(1)}% ${item.hit_rate >= 70 ? '✅' : ''}</span>
+            </div>
+            <div class="weekly-kpi-card">
+                <span class="kpi-label">選股池規模與門檻</span>
+                <span class="kpi-value" style="font-size: 15px; margin-top: 3px;">140 選 21 ➔ 進漲幅 Top 5</span>
+            </div>
+        </div>
+
+        <!-- 2. 當週選股加權公式橫幅 -->
+        <div class="weekly-formula-banner">
+            <div>
+                <strong style="color: var(--text-primary);"><i class="fa-solid fa-calculator text-warning"></i> 本週 AI 選股加權評分式：</strong>
+                <span class="formula-expr">${formulaText}</span>
+            </div>
+            <span style="font-size: 12px; color: var(--text-secondary);">每板塊 20 股取最高分 Top 3 推薦</span>
+        </div>
+
+        <!-- 3. 本週命中股票總覽膠囊區 -->
+        <div class="hit-chips-section">
+            <div class="hit-chips-header">
+                <h4><i class="fa-solid fa-circle-check text-success"></i> 本週命中的 ${hitList.length} 支推薦股票清單 <span style="font-size: 12px; font-weight: 500; color: var(--text-secondary);">${crossSectorNote}</span></h4>
+                <span style="font-size: 11.5px; color: var(--neon-cyan);"><i class="fa-solid fa-hand-pointer"></i> 點擊任一股票確認五維度選股算式</span>
+            </div>
+            <div class="hit-chips-grid" id="weekly-hit-chips-container"></div>
+        </div>
+
+        <!-- 4. 個股五維度評分驗算面板 -->
+        <div class="stock-math-inspector" id="weekly-stock-inspector" style="display: none;"></div>
+
+        <!-- 5. 板塊篩選切換與 7 大板塊對照卡 -->
+        <div class="weekly-filter-bar">
+            <h4 style="font-size: 15px; color: var(--text-primary);"><i class="fa-solid fa-layer-group text-neon"></i> 七大產業板塊：AI 精選 Top 3 對照 實際週漲幅 Top 5</h4>
+            <div class="filter-btn-group">
+                <button type="button" class="weekly-filter-btn active" data-filter="all">全部板塊明細 (21支)</button>
+                <button type="button" class="weekly-filter-btn" data-filter="hits-only">僅顯示命中推薦 (${hitList.length}支)</button>
+            </div>
+        </div>
+        <div class="weekly-sectors-grid" id="weekly-sectors-container"></div>
+    `;
+
+    const chipsContainer = document.getElementById("weekly-hit-chips-container");
+    const inspectorEl = document.getElementById("weekly-stock-inspector");
+    const sectorsContainer = document.getElementById("weekly-sectors-container");
+
+    function renderInspector(stockDetail, catKey, catName) {
+        if (!stockDetail || !inspectorEl) return;
+        inspectorEl.style.display = "flex";
+        const sc = stockDetail.scores || { technical: 7, financial: 7, institutional: 7, news_sentiment: 7, volume_momentum: 8 };
+        const tVal = (sc.technical * w.technical).toFixed(2);
+        const fVal = (sc.financial * w.financial).toFixed(2);
+        const iVal = (sc.institutional * w.institutional).toFixed(2);
+        const nVal = (sc.news_sentiment * w.news_sentiment).toFixed(2);
+        const vVal = (sc.volume_momentum * w.volume_momentum).toFixed(2);
+
+        const hitBadge = stockDetail.is_hit
+            ? `<span class="mini-hit-tag" style="font-size: 12px; padding: 4px 10px;">✅ 命中當週板塊漲幅第 ${stockDetail.actual_rank} 名 (${stockDetail.weekly_return})</span>`
+            : `<span class="mini-miss-tag" style="font-size: 12px; padding: 4px 10px;">未進當週板塊漲幅前 5 名 (週漲跌: ${stockDetail.weekly_return || '---'})</span>`;
+
+        inspectorEl.innerHTML = `
+            <div class="inspector-top">
+                <div class="inspector-title">
+                    <span class="stock-code-badge" style="color: var(--neon-cyan); border: 1px solid rgba(0,242,254,0.3);">${catName} · 推薦 NO.${stockDetail.pick_rank}</span>
+                    <h4>${stockDetail.name} (${stockDetail.symbol}) 選股評分驗算</h4>
+                    ${hitBadge}
+                </div>
+                <button type="button" class="btn btn-primary" id="btn-jump-to-stock" style="padding: 7px 14px; font-size: 12px;">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> 查看個股深度報告
+                </button>
+            </div>
+            <div class="inspector-math-grid">
+                <div class="math-term-box">
+                    <span class="term-name">① 技術走勢</span>
+                    <span class="term-calc">${sc.technical} 分 × ${(w.technical*100).toFixed(0)}%</span>
+                    <span class="term-val">+${tVal}</span>
+                </div>
+                <div class="math-term-box">
+                    <span class="term-name">② 公司營利</span>
+                    <span class="term-calc">${sc.financial} 分 × ${(w.financial*100).toFixed(0)}%</span>
+                    <span class="term-val">+${fVal}</span>
+                </div>
+                <div class="math-term-box">
+                    <span class="term-name">③ 法人籌碼</span>
+                    <span class="term-calc">${sc.institutional} 分 × ${(w.institutional*100).toFixed(0)}%</span>
+                    <span class="term-val">+${iVal}</span>
+                </div>
+                <div class="math-term-box">
+                    <span class="term-name">④ 輿情情緒</span>
+                    <span class="term-calc">${sc.news_sentiment} 分 × ${(w.news_sentiment*100).toFixed(0)}%</span>
+                    <span class="term-val">+${nVal}</span>
+                </div>
+                <div class="math-term-box">
+                    <span class="term-name">⑤ 量能動能 (${stockDetail.volume || '---'})</span>
+                    <span class="term-calc">${sc.volume_momentum} 分 × ${(w.volume_momentum*100).toFixed(0)}%</span>
+                    <span class="term-val">+${vVal}</span>
+                </div>
+                <div class="math-term-box total">
+                    <span class="term-name">加權總評分 S</span>
+                    <span class="term-calc">板塊排名前 3 入選</span>
+                    <span class="term-val">${Number(stockDetail.weighted_score).toFixed(2)} 分</span>
+                </div>
+            </div>
+        `;
+
+        const jumpBtn = document.getElementById("btn-jump-to-stock");
+        if (jumpBtn) {
+            jumpBtn.addEventListener("click", () => {
+                modal.style.display = "none";
+                const targetCat = (appState.categories && appState.categories[catKey]) ? catKey : Object.keys(appState.categories || {}).find(c =>
+                    (appState.categories[c] || []).some(s => s.symbol === stockDetail.symbol)
+                );
+                if (targetCat) {
+                    switchCategory(targetCat);
+                    selectStock(stockDetail.symbol);
+                }
+            });
+        }
+    }
+
+    // 渲染上方命中股票膠囊按鈕
+    if (hitList.length === 0) {
+        chipsContainer.innerHTML = `<span style="color: var(--text-muted); font-size: 13px;">本週無命中標的</span>`;
+    } else {
+        hitList.forEach((h, idx) => {
+            const chip = document.createElement("button");
+            chip.type = "button";
+            chip.className = `hit-stock-chip ${idx === 0 ? 'selected' : ''}`;
+            const retSign = h.weekly_return && !h.weekly_return.startsWith("-") && !h.weekly_return.startsWith("+") && h.weekly_return !== "---" ? "+" : "";
+            chip.innerHTML = `
+                <span class="chip-cat">${h.category_short}</span>
+                <span class="chip-sym">${h.symbol}</span>
+                <span class="chip-name">${h.name}</span>
+                <span class="chip-ret">${retSign}${h.weekly_return}</span>
+                <span style="font-size: 10.5px; color: var(--neon-green);">#${h.actual_rank}</span>
+            `;
+            chip.addEventListener("click", () => {
+                chipsContainer.querySelectorAll(".hit-stock-chip").forEach(c => c.classList.remove("selected"));
+                chip.classList.add("selected");
+                renderInspector(h, h.category, h.category_name);
+            });
+            chipsContainer.appendChild(chip);
+        });
+        // 預設展開第一支命中股的五維度選股算式，讓使用者打開即見完整選股依據
+        renderInspector(hitList[0], hitList[0].category, hitList[0].category_name);
+    }
+
+    function renderSectors(filterMode = "all") {
+        sectorsContainer.innerHTML = "";
+        parsed.sectors.forEach(sec => {
+            const picksToShow = filterMode === "hits-only"
+                ? sec.recommended_details.filter(d => d.is_hit)
+                : sec.recommended_details;
+
+            if (filterMode === "hits-only" && picksToShow.length === 0) return;
+
+            const card = document.createElement("div");
+            card.className = "sector-verify-card";
+            const secRate = ((sec.hit_count / Math.max(1, sec.total_count)) * 100).toFixed(0);
+            const secBadgeCls = sec.hit_count >= 2 ? "success" : (sec.hit_count === 1 ? "warning" : "danger");
+
+            const picksHtml = picksToShow.map((p, idx) => {
+                const sc = p.scores || {};
+                const retSign = p.weekly_return && !p.weekly_return.startsWith("-") && !p.weekly_return.startsWith("+") && p.weekly_return !== "---" ? "+" : "";
+                const retCls = p.weekly_return && p.weekly_return.startsWith("-") ? "text-down" : "text-up";
+                return `
+                    <div class="pick-item-row ${p.is_hit ? 'is-hit' : ''}" data-pick-idx="${idx}">
+                        <div>
+                            <div style="font-weight: 700; color: var(--text-primary);">
+                                <span style="color: var(--neon-gold); margin-right: 4px;">NO.${p.pick_rank}</span>
+                                ${p.name} <span style="color: var(--text-muted); font-size: 11px;">(${p.symbol})</span>
+                            </div>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">
+                                加權 <strong style="color: var(--neon-cyan);">${Number(p.weighted_score).toFixed(2)}</strong> 分
+                                ｜技${sc.technical ?? '-'} 營${sc.financial ?? '-'} 籌${sc.institutional ?? '-'} 輿${sc.news_sentiment ?? '-'} 量${sc.volume_momentum ?? '-'}
+                            </div>
+                        </div>
+                        <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 3px;">
+                            ${p.is_hit
+                                ? `<span class="mini-hit-tag">✅ 命中 #${p.actual_rank}</span>`
+                                : `<span class="mini-miss-tag">未進前 5</span>`}
+                            <span class="${retCls}" style="font-size: 11.5px; font-weight: 700;">${p.weekly_return !== '---' ? retSign + p.weekly_return : '---'}</span>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+
+            const top5Html = sec.actual_top5.map(t => {
+                const retSign = t.weekly_return && !t.weekly_return.startsWith("-") && !t.weekly_return.startsWith("+") ? "+" : "";
+                const retCls = t.weekly_return && t.weekly_return.startsWith("-") ? "text-down" : "text-up";
+                return `
+                    <div class="top5-item-row ${t.is_hit ? 'is-hit' : ''}">
+                        <div>
+                            <span style="color: var(--text-muted); font-weight: 700; margin-right: 4px;">#${t.rank}</span>
+                            <strong style="color: var(--text-primary);">${t.name}</strong>
+                            <span style="color: var(--text-muted); font-size: 11px;">(${t.symbol})</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            ${t.is_hit ? `<span class="mini-hit-tag">🎯 命中</span>` : ''}
+                            <span class="${retCls}" style="font-weight: 800;">${retSign}${t.weekly_return}</span>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+
+            card.innerHTML = `
+                <div class="sector-verify-header">
+                    <h5><i class="fa-solid ${sec.icon} text-neon"></i> ${sec.name}</h5>
+                    <span class="hit-rate-badge ${secBadgeCls}" style="font-size: 11.5px; padding: 3px 10px;">
+                        命中 ${sec.hit_count} / ${sec.total_count} (${secRate}%)
+                    </span>
+                </div>
+                <div class="sector-columns">
+                    <div>
+                        <div class="sector-col-title"><i class="fa-solid fa-robot text-neon"></i> AI 加權選出 Top 3（點擊可驗算）</div>
+                        ${picksHtml}
+                    </div>
+                    <div>
+                        <div class="sector-col-title"><i class="fa-solid fa-fire text-up"></i> 當週實際漲幅 Top 5</div>
+                        ${top5Html}
+                    </div>
+                </div>
+            `;
+
+            card.querySelectorAll(".pick-item-row").forEach((rowEl) => {
+                const idx = Number(rowEl.getAttribute("data-pick-idx"));
+                const pickData = picksToShow[idx];
+                rowEl.addEventListener("click", () => {
+                    chipsContainer.querySelectorAll(".hit-stock-chip").forEach(c => {
+                        const isMatch = c.querySelector(".chip-sym")?.textContent === pickData.symbol &&
+                                        c.querySelector(".chip-cat")?.textContent === sec.short;
+                        c.classList.toggle("selected", Boolean(isMatch));
+                    });
+                    renderInspector(pickData, sec.category, sec.name);
+                    inspectorEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                });
+            });
+
+            sectorsContainer.appendChild(card);
+        });
+    }
+
+    renderSectors("all");
+
+    bodyEl.querySelectorAll(".weekly-filter-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            bodyEl.querySelectorAll(".weekly-filter-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            renderSectors(btn.getAttribute("data-filter"));
+        });
+    });
+
+    modal.style.display = "flex";
 }
 
 function openEvolutionTerminal() {

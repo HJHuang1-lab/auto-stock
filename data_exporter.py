@@ -56,6 +56,7 @@ def run_analysis():
             load_cached_data,
             save_cached_data,
             get_realtime_quote,
+            log_daily_recommendations,
         )
         
         cache = load_cached_data()
@@ -94,9 +95,10 @@ def run_analysis():
         updated_count = len([r for r in results if r is not None])
         print(f"✅ [data_exporter] 成功並行分析與更新 {updated_count}/{len(all_symbols)} 支股票的完整資料！")
         
-        # 儲存更新後的快取
+        # 儲存更新後的快取與當日各板塊 Top 3 推薦日誌
         save_cached_data(cache)
-        print("💾 [data_exporter] 最新當日行情已寫入本地快取資料庫。")
+        log_daily_recommendations(cache)
+        print("💾 [data_exporter] 最新當日行情與推薦日誌已寫入本地資料庫。")
         
         return DEFAULT_CATEGORIES, cache
         
@@ -572,6 +574,11 @@ def main():
     if is_friday:
         print("\n📅 [data_exporter] 今天是週五，啟動每週驗收...")
         run_weekly_evaluation()
+        try:
+            from stock_agent import load_cached_data
+            cache = load_cached_data()
+        except Exception:
+            pass
     
     # 3. 輸出分類資料
     export_categories(categories)
