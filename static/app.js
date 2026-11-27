@@ -4,6 +4,7 @@ let appState = {
     stocksData: {},        // 所有股票的詳細分析資料 (Symbol -> Detail Object)
     activeCategory: "semiconductor_foundry",
     activeStockSymbol: null,
+    sortBy: "rating",      // 'rating' | 'volume'
     radarChartInstance: null,
     detailTrendChartInstance: null
 };
@@ -93,6 +94,7 @@ function renderCategoryMenu() {
         "ic_design": "fa-microchip",
         "memory_storage": "fa-database",
         "ai_server_thermal": "fa-server",
+        "cpo_networking": "fa-network-wired",
         "finance_shipping": "fa-ship",
         "etf": "fa-cubes",
         "green_energy_power": "fa-bolt"
@@ -103,9 +105,10 @@ function renderCategoryMenu() {
         "ic_design": "IC 設計與晶片",
         "memory_storage": "記憶體與 AI 儲存 / HBM",
         "ai_server_thermal": "AI 伺服器與散熱",
+        "cpo_networking": "光通訊 CPO 與網通光電",
         "finance_shipping": "金融與航運巨頭",
-        "etf": "人氣高息 ETF",
-        "green_energy_power": "綠能與重電建設"
+        "etf": "人氣高息與市值 ETF",
+        "green_energy_power": "綠能重電與傳產熱門"
     };
 
     Object.keys(appState.categories).forEach(catKey => {
@@ -113,10 +116,12 @@ function renderCategoryMenu() {
         li.className = `menu-item ${catKey === appState.activeCategory ? 'active' : ''}`;
         li.setAttribute("data-category", catKey);
         li.setAttribute("id", `cat-${catKey}`);
+        const count = (appState.categories[catKey] || []).length;
         
         li.innerHTML = `
             <i class="fa-solid ${catIcons[catKey] || 'fa-chart-simple'}"></i>
             <span>${catNames[catKey] || catKey}</span>
+            <span class="menu-count-pill">${count}</span>
         `;
         
         li.addEventListener("click", () => switchCategory(catKey));
@@ -134,7 +139,8 @@ function switchCategory(categoryKey) {
     
     // 還原 Header 資訊
     const lastUpdated = appState.meta ? (appState.meta.last_updated || appState.meta.update_date) : "2026-05-28";
-    document.querySelector(".subtitle").innerHTML = `<i class="fa-solid fa-clock"></i> 今日盤後數據分析時間：<span id="update-date">${lastUpdated}</span> | 驅動核心：browser-use Agent`;
+    const poolSize = getTotalUniquePoolCount();
+    document.querySelector(".subtitle").innerHTML = `<i class="fa-solid fa-clock"></i> 今日盤後數據分析時間：<span id="update-date">${lastUpdated}</span> | 熱門股漏斗池：<span>${poolSize} 檔</span> | 驅動核心：TWSE/TPEx + AI 漏斗引擎`;
     document.getElementById("btn-add-stock-trigger").style.display = "inline-flex";
 
     // 更新側邊欄 Active 狀態
@@ -154,25 +160,73 @@ function switchCategory(categoryKey) {
     selectDefaultStock();
 }
 
+function parseVolumeNum(volStr) {
+    if (!volStr) return 0;
+    const s = String(volStr).trim().replace(/,/g, "");
+    if (s.includes("萬")) {
+        return (parseFloat(s.replace(/萬張|萬/g, "")) || 0) * 10000;
+    }
+    return parseFloat(s.replace(/張/g, "")) || 0;
+}
+
+function getTotalUniquePoolCount() {
+    const set = new Set();
+    Object.values(appState.categories || {}).forEach(arr => {
+        (arr || []).forEach(s => set.add(s.symbol));
+    });
+    return set.size || appState.meta?.pool_size || 0;
+}
+
 function renderStockCards(filterQuery = "") {
     const container = document.getElementById("stock-cards-container");
     container.innerHTML = "";
     
+    const q = filterQuery.trim().toLowerCase();
+    const totalPool = getTotalUniquePoolCount();
     const categoryStocks = appState.categories[appState.activeCategory] || [];
     
-    // 過濾搜尋字串
-    const filtered = categoryStocks.filter(st => {
-        const nameMatch = st.name.toLowerCase().includes(filterQuery.toLowerCase());
-        const codeMatch = st.symbol.toLowerCase().includes(filterQuery.toLowerCase());
-        return nameMatch || codeMatch;
+    let sourceList = [];
+    if (q) {
+        // 全池跨板塊搜尋 400+ 熱門股（以代號去重）
+        const seen = new Set();
+        Object.entries(appState.categories || {}).forEach(([catKey, arr]) => {
+            (arr || []).forEach(st => {
+                if (seen.has(st.symbol)) return;
+                const nameMatch = st.name.toLowerCase().includes(q);
+                const codeMatch = st.symbol.toLowerCase().includes(q);
+                if (nameMatch || codeMatch) {
+                    seen.add(st.symbol);
+                    sourceList.push({ ...st, _catKey: catKey });
+                }
+            });
+        });
+    } else {
+        sourceList = categoryStocks.map(st => ({ ...st, _catKey: appState.activeCategory }));
+    }
+
+    // 排序：依評分或依當日成交張數
+    sourceList.sort((a, b) => {
+        const da = appState.stocksData[a.symbol] || {};
+        const db = appState.stocksData[b.symbol] || {};
+        if (appState.sortBy === "volume") {
+            return parseVolumeNum(db.volume) - parseVolumeNum(da.volume);
+        }
+        return (db.recommendation_rating || 0) - (da.recommendation_rating || 0);
     });
 
-    if (filtered.length === 0) {
-        container.innerHTML = `<div class="empty-state" style="grid-column: span 3;">無符合搜尋的股票</div>`;
+    const badgeEl = document.getElementById("pool-count-badge");
+    if (badgeEl) {
+        badgeEl.textContent = q
+            ? `全池搜尋命中 ${sourceList.length} / ${totalPool} 檔`
+            : `本板塊 ${categoryStocks.length} 檔 · 全池 ${totalPool} 檔`;
+    }
+
+    if (sourceList.length === 0) {
+        container.innerHTML = `<div class="empty-state" style="grid-column: span 3;">全池 ${totalPool} 檔熱門股中無符合「${filterQuery}」之標的</div>`;
         return;
     }
 
-    filtered.forEach(st => {
+    sourceList.forEach(st => {
         const symbol = st.symbol;
         const data = appState.stocksData[symbol] || {
             price: "---",
@@ -186,16 +240,17 @@ function renderStockCards(filterQuery = "") {
         card.className = `stock-card ${symbol === appState.activeStockSymbol ? 'active' : ''}`;
         card.setAttribute("data-symbol", symbol);
         
-        const isUp = !data.change.includes("-");
+        const isUp = !String(data.change || "").includes("-");
         const changeClass = data.change === "---" ? "" : (isUp ? "text-up" : "text-down");
         const trendIcon = data.trend === "bullish" ? '<i class="fa-solid fa-arrow-trend-up text-up"></i>' : 
                           (data.trend === "bearish" ? '<i class="fa-solid fa-arrow-trend-down text-down"></i>' : 
                           '<i class="fa-solid fa-right-left text-secondary"></i>');
+        const catShort = q && EVOLUTION_CAT_META[st._catKey] ? `<span class="stock-card-code" style="color:var(--neon-cyan); margin-right:4px;">${EVOLUTION_CAT_META[st._catKey].short}</span>` : "";
 
         card.innerHTML = `
             <div class="stock-card-top">
                 <span class="stock-card-name">${st.name}</span>
-                <span class="stock-card-code">${symbol}</span>
+                <div>${catShort}<span class="stock-card-code">${symbol}</span></div>
             </div>
             <div class="stock-card-middle">
                 <span class="stock-card-price">${data.price}</span>
@@ -332,9 +387,21 @@ function selectStock(symbol) {
 
     document.getElementById("detail-recommendation-rating").textContent = data.recommendation_rating;
     
-    // 填寫成交量與成交筆數
+    // 填寫成交量、成交筆數與官方三大法人買賣超
     document.getElementById("detail-stock-volume").textContent = data.volume || "-- 張";
     document.getElementById("detail-stock-transactions").textContent = data.transactions || "-- 筆";
+    const instEl = document.getElementById("detail-stock-inst");
+    if (instEl) {
+        if (data.inst_net_lots !== undefined && data.inst_net_lots !== null) {
+            const lots = Number(data.inst_net_lots);
+            const sign = lots > 0 ? "+" : "";
+            instEl.textContent = `${sign}${lots.toLocaleString()} 張`;
+            instEl.className = lots > 0 ? "text-up" : (lots < 0 ? "text-down" : "");
+        } else {
+            instEl.textContent = "-- 張";
+            instEl.className = "";
+        }
+    }
     
     // 填寫多維度評分
     document.getElementById("score-technical").textContent = data.radar.technical;
@@ -546,11 +613,28 @@ function renderDetailTrendChart(history, isUp, name, symbol) {
 // --- 事件處理與非同步交互 (Events & Async) ---
 
 function setupEventListeners() {
-    // 1. 股票搜尋功能
+    // 1. 股票搜尋與排序切換功能
     const searchInput = document.getElementById("stock-search");
     searchInput.addEventListener("input", (e) => {
         renderStockCards(e.target.value);
     });
+
+    const sortRatingBtn = document.getElementById("btn-sort-rating");
+    const sortVolumeBtn = document.getElementById("btn-sort-volume");
+    if (sortRatingBtn && sortVolumeBtn) {
+        sortRatingBtn.addEventListener("click", () => {
+            appState.sortBy = "rating";
+            sortRatingBtn.classList.add("active");
+            sortVolumeBtn.classList.remove("active");
+            renderStockCards(searchInput.value);
+        });
+        sortVolumeBtn.addEventListener("click", () => {
+            appState.sortBy = "volume";
+            sortVolumeBtn.classList.add("active");
+            sortRatingBtn.classList.remove("active");
+            renderStockCards(searchInput.value);
+        });
+    }
 
     // 2. 開啟/關閉「新增自選股」彈出視窗
     const addTrigger = document.getElementById("btn-add-stock-trigger");
@@ -881,9 +965,10 @@ const EVOLUTION_CAT_META = {
     "ic_design": { name: "IC 設計與晶片", short: "IC設計", icon: "fa-microchip" },
     "memory_storage": { name: "記憶體與 AI 儲存 / HBM", short: "記憶體", icon: "fa-database" },
     "ai_server_thermal": { name: "AI 伺服器與散熱", short: "AI伺服器", icon: "fa-server" },
+    "cpo_networking": { name: "光通訊 CPO 與網通光電", short: "CPO光電", icon: "fa-network-wired" },
     "finance_shipping": { name: "金融與航運巨頭", short: "金融航運", icon: "fa-ship" },
-    "etf": { name: "人氣高息 ETF", short: "高息ETF", icon: "fa-cubes" },
-    "green_energy_power": { name: "綠能與重電建設", short: "綠能重電", icon: "fa-bolt" }
+    "etf": { name: "人氣高息與市值 ETF", short: "高息ETF", icon: "fa-cubes" },
+    "green_energy_power": { name: "綠能重電與傳產熱門", short: "綠能傳產", icon: "fa-bolt" }
 };
 
 function getStockNameBySymbol(symbol) {
@@ -1086,7 +1171,7 @@ function openWeeklyHitModal(item) {
             </div>
             <div class="weekly-kpi-card">
                 <span class="kpi-label">選股池規模與門檻</span>
-                <span class="kpi-value" style="font-size: 15px; margin-top: 3px;">140 選 21 ➔ 進漲幅 Top 5</span>
+                <span class="kpi-value" style="font-size: 14.5px; margin-top: 3px;">${item.total_recommended >= 24 ? 'Top 400 選 ' + item.total_recommended : '140 選 ' + item.total_recommended} ➔ 漲幅 Top 5</span>
             </div>
         </div>
 

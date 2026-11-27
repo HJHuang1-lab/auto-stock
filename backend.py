@@ -14,6 +14,7 @@ import uvicorn
 # 引入核心 Agent 模組
 from stock_agent import (
     DEFAULT_CATEGORIES, 
+    load_active_categories,
     load_cached_data, 
     save_cached_data, 
     analyze_stock_symbol
@@ -70,9 +71,9 @@ def get_js():
 @app.get("/api/categories")
 def get_categories():
     """
-    獲取預設股票分類
+    獲取當前活躍股票分類（支援 Top 400 動態熱門股池）
     """
-    return DEFAULT_CATEGORIES
+    return load_active_categories()
 
 @app.get("/api/stocks")
 def get_all_stocks_data():

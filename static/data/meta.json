@@ -1,7 +1,9 @@
 {
-  "last_updated": "2026-11-27 01:43",
-  "last_updated_utc": "2026-11-26T17:43:14Z",
+  "last_updated": "2026-11-27 23:16",
+  "last_updated_utc": "2026-11-27T15:16:34Z",
   "update_date": "2026-11-27",
-  "data_source": "GitHub Actions 自動排程",
+  "pool_size": 400,
+  "sector_count": 8,
+  "data_source": "TWSE/TPEx 官方公開總表 + AI 三層漏斗引擎",
   "next_update": "下一個工作日 15:07"
 }

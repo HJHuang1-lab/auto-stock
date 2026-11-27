@@ -231,6 +231,22 @@ def get_realtime_quote(symbol: str) -> dict:
 
 WEIGHTS_FILE = "optimization_weights.json"
 RECOMMENDATIONS_LOG_FILE = "recommendations_log.json"
+DYNAMIC_CATEGORIES_FILE = "dynamic_categories.json"
+
+def load_active_categories():
+    """
+    優先載入由 TWSE/TPEx 熱門股漏斗產出的動態分類池 (約 400 檔)，
+    若尚未生成則平滑回退至預設 140 檔核心指標股。
+    """
+    try:
+        if os.path.exists(DYNAMIC_CATEGORIES_FILE) and os.path.getsize(DYNAMIC_CATEGORIES_FILE) > 0:
+            with open(DYNAMIC_CATEGORIES_FILE, "r", encoding="utf-8") as f:
+                cats = json.load(f)
+                if isinstance(cats, dict) and len(cats) > 0:
+                    return cats
+    except Exception:
+        pass
+    return DEFAULT_CATEGORIES
 
 def load_recommendation_weights():
     try:
@@ -268,18 +284,20 @@ def compute_weighted_rating(radar_data, volume_units, trend):
     )
     return round(min(10.0, max(1.0, weighted_score)), 1)
 
-def log_daily_recommendations(cache_data=None):
+def log_daily_recommendations(cache_data=None, categories=None):
     """
     將當天各板塊的 Top 3 推薦股票代號持久化寫入 recommendations_log.json
     """
     if cache_data is None:
         cache_data = load_cached_data()
+    if categories is None:
+        categories = load_active_categories()
         
     import datetime
     today = datetime.datetime.now().strftime("%Y-%m-%d")
     
     daily_recoms = {}
-    for cat, stocks in DEFAULT_CATEGORIES.items():
+    for cat, stocks in categories.items():
         sorted_stocks = []
         for st in stocks:
             symbol = st["symbol"]
@@ -535,7 +553,7 @@ def load_cached_data():
 
 def save_cached_data(data):
     with open(MOCK_CACHE_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=4)
+        json.dump(data, f, ensure_ascii=False, indent=2)
 
 # 僅在快取檔案不存在或為空時進行初始化寫入
 if not os.path.exists(MOCK_CACHE_FILE) or os.path.getsize(MOCK_CACHE_FILE) == 0:

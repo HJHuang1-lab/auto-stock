@@ -47,60 +47,46 @@ MARKET_TRENDS_DEST = os.path.join(DATA_DIR, "market_trends.json")
 
 
 def run_analysis():
-    """執行所有股票的盤後分析（GitHub Actions 環境中以快取模式執行）"""
-    print("📊 [data_exporter] 開始執行盤後資料分析...")
+    """執行 TWSE/TPEx 免金鑰 Top 400 熱門股三層漏斗盤後分析"""
+    print("📊 [data_exporter] 啟動免金鑰 TWSE/TPEx 熱門股三層漏斗分析引擎...")
     
     try:
         from stock_agent import (
             DEFAULT_CATEGORIES,
             load_cached_data,
             save_cached_data,
-            get_realtime_quote,
+            compute_weighted_rating,
+            fetch_yahoo_rss_news,
+            call_gemini_api,
+            load_env_file,
             log_daily_recommendations,
         )
-        
-        cache = load_cached_data()
-        print(f"✅ [data_exporter] 已載入 {len(cache)} 支股票的快取資料。")
-        
-        # 提取所有分類中出現的股票 symbol 集合
-        all_symbols = set()
-        for cat_key, stocks in DEFAULT_CATEGORIES.items():
-            for st in stocks:
-                all_symbols.add(st["symbol"])
-                
-        print(f"🔄 [data_exporter] 開始並行採集與量化分析 {len(all_symbols)} 支股票的即時數據與新聞...")
-        
-        from concurrent.futures import ThreadPoolExecutor
-        from stock_agent import analyze_stock_symbol_sync, load_env_file
+        from market_funnel import run_top_hot_funnel_pipeline
         
         # 確保環境變數已載入
         load_env_file()
         
-        updated_count = 0
-        def task_wrapper(symbol):
-            try:
-                # 傳入 cache 字典在內存中併入更新，避免併發寫入硬碟
-                return analyze_stock_symbol_sync(symbol, cache_data=cache)
-            except Exception as e:
-                print(f"⚠️ [data_exporter] 並行分析個股 {symbol} 失敗: {e}")
-                return None
-                
-        # 讀取環境變數設定的並行執行緒數量，若無設定，預設使用 4 以避免 Free Tier 的 15 RPM 限制
-        max_workers_env = os.environ.get("MAX_ANALYSIS_WORKERS", "").strip()
-        max_workers = int(max_workers_env) if max_workers_env.isdigit() else 4
-        print(f"⚙️ [data_exporter] 啟動 ThreadPoolExecutor (max_workers={max_workers})...")
-        with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            results = list(executor.map(task_wrapper, list(all_symbols)))
-            
-        updated_count = len([r for r in results if r is not None])
-        print(f"✅ [data_exporter] 成功並行分析與更新 {updated_count}/{len(all_symbols)} 支股票的完整資料！")
+        cache = load_cached_data()
+        print(f"✅ [data_exporter] 已載入 {len(cache)} 支既有股票快取資料。")
         
-        # 儲存更新後的快取與當日各板塊 Top 3 推薦日誌
+        pool_size_env = os.environ.get("HOT_POOL_SIZE", "400").strip()
+        target_pool_size = int(pool_size_env) if pool_size_env.isdigit() else 400
+        
+        dynamic_categories, cache = run_top_hot_funnel_pipeline(
+            default_categories=DEFAULT_CATEGORIES,
+            cache=cache,
+            compute_weighted_rating_fn=compute_weighted_rating,
+            fetch_rss_fn=fetch_yahoo_rss_news,
+            call_gemini_fn=call_gemini_api,
+            target_pool_size=target_pool_size,
+        )
+        
+        # 儲存更新後的快取與當日各板塊 Top 3 推薦日誌（供週五收盤總驗收使用）
         save_cached_data(cache)
-        log_daily_recommendations(cache)
-        print("💾 [data_exporter] 最新當日行情與推薦日誌已寫入本地資料庫。")
+        log_daily_recommendations(cache, dynamic_categories)
+        print("💾 [data_exporter] Top 400 熱門股行情、三大法人籌碼與每日推薦日誌已寫入本地資料庫。")
         
-        return DEFAULT_CATEGORIES, cache
+        return dynamic_categories, cache
         
     except Exception as e:
         print(f"❌ [data_exporter] 分析執行錯誤: {e}")
@@ -333,17 +319,24 @@ def get_market_trends():
     return trends_data
 
 
-def write_meta():
-    """寫入 meta.json，包含最後更新時間等元數據（供前端顯示）"""
+def write_meta(categories=None):
+    """寫入 meta.json，包含最後更新時間與熱門股池規模等元數據（供前端顯示）"""
     now_utc = datetime.datetime.utcnow()
     # 轉換為台灣時間（UTC+8）
     now_tw = now_utc + datetime.timedelta(hours=8)
+    unique_syms = set()
+    if categories:
+        for st_list in categories.values():
+            for st in st_list:
+                unique_syms.add(st["symbol"])
     
     meta = {
         "last_updated": now_tw.strftime("%Y-%m-%d %H:%M"),
         "last_updated_utc": now_utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
         "update_date": now_tw.strftime("%Y-%m-%d"),
-        "data_source": "GitHub Actions 自動排程",
+        "pool_size": len(unique_syms) if unique_syms else 400,
+        "sector_count": len(categories) if categories else 8,
+        "data_source": "TWSE/TPEx 官方公開總表 + AI 三層漏斗引擎",
         "next_update": "下一個工作日 15:07"
     }
     
@@ -598,7 +591,7 @@ def main():
         print(f"❌ [data_exporter] 輸出 market_trends.json 錯誤: {e}")
     
     # 5. 寫入元數據
-    write_meta()
+    write_meta(categories)
     
     # 6. 導出為 Obsidian 筆記
     try:

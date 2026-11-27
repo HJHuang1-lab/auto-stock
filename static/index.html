@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="/style.css?v=20261127_v2">
+    <link rel="stylesheet" href="/style.css?v=20261127_v3">
 </head>
 <body>
     <div class="app-container">
@@ -42,6 +42,10 @@
                     <li class="menu-item" data-category="ai_server_thermal" id="cat-ai_server_thermal">
                         <i class="fa-solid fa-server"></i>
                         <span>AI 伺服器與散熱</span>
+                    </li>
+                    <li class="menu-item" data-category="cpo_networking" id="cat-cpo_networking">
+                        <i class="fa-solid fa-network-wired"></i>
+                        <span>光通訊 CPO 與網通光電</span>
                     </li>
                     <li class="menu-item" data-category="finance_shipping" id="cat-finance_shipping">
                         <i class="fa-solid fa-ship"></i>
@@ -118,11 +122,17 @@
                         <div class="card-header">
                             <div class="card-title">
                                 <i class="fa-solid fa-list-ul"></i>
-                                <h3>板塊個股清單</h3>
+                                <h3>板塊個股清單 <span id="pool-count-badge" class="pool-count-badge">載入中...</span></h3>
                             </div>
-                            <div class="search-bar">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                <input type="text" id="stock-search" placeholder="搜尋股票代號或名稱...">
+                            <div class="list-controls-group">
+                                <div class="sort-pill-group">
+                                    <button type="button" class="sort-pill active" id="btn-sort-rating" title="依 AI 五維度加權評分排序">🔥 評分</button>
+                                    <button type="button" class="sort-pill" id="btn-sort-volume" title="依當日成交張數排序">📊 量能</button>
+                                </div>
+                                <div class="search-bar">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <input type="text" id="stock-search" placeholder="全池搜尋 400+ 熱門股代號或名稱...">
+                                </div>
                             </div>
                         </div>
                         <div class="stock-grid" id="stock-cards-container">
@@ -156,6 +166,7 @@
                                     <div class="volume-row">
                                         <span class="volume-meta"><i class="fa-solid fa-chart-simple text-info"></i> 成交量：<span id="detail-stock-volume">-- 張</span></span>
                                         <span class="volume-meta"><i class="fa-solid fa-list-check text-neon"></i> 成交筆數：<span id="detail-stock-transactions">-- 筆</span></span>
+                                        <span class="volume-meta" id="detail-inst-wrap"><i class="fa-solid fa-building-shield text-warning"></i> 三大法人：<span id="detail-stock-inst">-- 張</span></span>
                                     </div>
                                 </div>
                                 <div class="ai-badge-score">
@@ -277,26 +288,26 @@
                         <div class="card-header">
                             <div class="card-title">
                                 <i class="fa-solid fa-compass-drafting text-warning"></i>
-                                <h3>AI 是用什麼方式選出這 21 隻股票並驗收命中？</h3>
+                                <h3>AI 三層漏斗選股方式與命中判定機制</h3>
                             </div>
                         </div>
                         <div class="methodology-content">
                             <div class="method-step">
                                 <span class="step-badge">1</span>
                                 <div>
-                                    <strong>140 支核心股票池</strong>
-                                    <p>涵蓋半導體、IC 設計、記憶體/HBM、AI 伺服器、金控航運、高息 ETF、綠能重電等 <strong>7 大板塊 × 各 20 支指標股</strong>。</p>
+                                    <strong>TWSE / TPEx 免金鑰 Top 400 熱門股漏斗池</strong>
+                                    <p>每日收盤透過證交所與櫃買中心官方公開總表掃描全市場 ~2,200 檔標的，鎖定<strong>成交量與成交值前 400 大高流動性熱門股</strong>，歸入 <strong>8 大核心產業板塊</strong>（自動相容早期 140 股 / 7 板塊歷史紀錄）。</p>
                                 </div>
                             </div>
                             <div class="method-step">
                                 <span class="step-badge">2</span>
                                 <div>
-                                    <strong>五維度動態加權評分選股 (每板塊取 Top 3 = 共 21 支)</strong>
-                                    <p>依當週決策權重計算各股總分，每板塊選出最高分前 3 名：</p>
+                                    <strong>五維度動態加權評分選股 (每板塊取 Top 3 = 共 24 支)</strong>
+                                    <p>融合官方三大法人買賣超張數、PE/PB/殖利率與價量動能計算總分，每板塊精選前 3 名：</p>
                                     <div class="formula-code-box">
                                         S = 技術×W<sub>技</sub> + 營利×W<sub>營</sub> + 籌碼×W<sub>籌</sub> + 輿情×W<sub>輿</sub> + 量能×W<sub>量</sub>
                                     </div>
-                                    <p class="method-subnote">＊前四維 (1~10分) 由 AI 解析盤後技術面、財報、法人買賣超與新聞情緒；量能動能於「成交量 &gt; 2萬張且看漲」給滿分 10 分，其餘依 <code>min(10, max(5, 張數/5000 + 5))</code> 計分。</p>
+                                    <p class="method-subnote">＊僅各板塊 Top 5 領頭羊觸發批次 Gemini 深度新聞研判（省下 94% Token）；量能於「成交量 &gt; 2萬張且看漲」給 10 分，其餘依 <code>min(10, max(5, 張數/5000 + 5))</code> 計分。</p>
                                 </div>
                             </div>
                             <div class="method-step">
@@ -391,6 +402,7 @@
                         <option value="ic_design">IC 設計與晶片</option>
                         <option value="memory_storage">記憶體與 AI 儲存 / HBM</option>
                         <option value="ai_server_thermal">AI 伺服器與散熱</option>
+                        <option value="cpo_networking">光通訊 CPO 與網通光電</option>
                         <option value="finance_shipping">金融與航運巨頭</option>
                         <option value="etf">人氣高息 ETF</option>
                         <option value="green_energy_power">綠能與重電建設</option>
@@ -463,6 +475,6 @@
         </div>
     </div>
 
-    <script src="/app.js?v=20261127_v2"></script>
+    <script src="/app.js?v=20261127_v3"></script>
 </body>
 </html>
