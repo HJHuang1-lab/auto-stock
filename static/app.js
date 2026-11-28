@@ -1484,11 +1484,12 @@ function renderMarketTrends() {
     
     container.innerHTML = "";
     
-    // 渲染順序：1.大盤加權指數, 2.台指期貨近, 3.美元兌台幣, 4.黃金價格, 5.石油價格
-    const order = ["taiex", "taiex_night", "usdtwd", "gold", "oil"];
+    // 渲染順序：1.大盤加權指數, 2.台指期貨近, 3.美股大盤(S&P500), 4.美元兌台幣, 5.黃金價格, 6.石油價格
+    const order = ["taiex", "taiex_night", "us_market", "usdtwd", "gold", "oil"];
     const icons = {
         "taiex": "fa-chart-area",
         "taiex_night": "fa-moon",
+        "us_market": "fa-flag-usa",
         "usdtwd": "fa-dollar-sign",
         "gold": "fa-coins",
         "oil": "fa-droplet"
@@ -1608,6 +1609,7 @@ function openTrendDetailModal(key) {
     const icons = {
         "taiex": "fa-chart-area",
         "taiex_night": "fa-moon",
+        "us_market": "fa-flag-usa",
         "usdtwd": "fa-dollar-sign",
         "gold": "fa-coins",
         "oil": "fa-droplet"

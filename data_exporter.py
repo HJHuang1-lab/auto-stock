@@ -228,6 +228,7 @@ def get_market_trends():
     }
     symbols_map = {
         "taiex": "^TWII",
+        "us_market": "^GSPC",
         "usdtwd": "USDTWD=X",
         "gold": "GC=F",
         "oil": "CL=F"
@@ -256,8 +257,8 @@ def get_market_trends():
                     
                     for t, c in zip(timestamp, close):
                         if c is not None:
-                            # 轉成台灣時間日期簡寫 MM-DD
-                            dt = datetime.datetime.fromtimestamp(t) + datetime.timedelta(hours=8)
+                            # 統一以 UTC+8 台灣時間轉換日期簡寫 MM-DD
+                            dt = datetime.datetime.utcfromtimestamp(t) + datetime.timedelta(hours=8)
                             valid_labels.append(dt.strftime("%m-%d"))
                             valid_history.append(round(c, precision))
                     
@@ -270,6 +271,7 @@ def get_market_trends():
                         # 中文名稱映射
                         names = {
                             "taiex": "大盤加權指數",
+                            "us_market": "美股大盤 (S&P500)",
                             "usdtwd": "美元兌台幣",
                             "gold": "黃金期貨",
                             "oil": "輕原油期貨"
@@ -367,7 +369,7 @@ def export_obsidian_report(categories, cache, trends):
     
     # 3. 提取市場指數數據填入屬性
     if trends:
-        for key in ["taiex", "taiex_night", "usdtwd", "gold", "oil"]:
+        for key in ["taiex", "taiex_night", "us_market", "usdtwd", "gold", "oil"]:
             if key in trends:
                 p = trends[key]["price"]
                 c = trends[key]["change"]
@@ -393,7 +395,7 @@ def export_obsidian_report(categories, cache, trends):
     content.append("| :--- | :--- | :--- | :--- | :--- |")
     
     if trends:
-        for key in ["taiex", "taiex_night", "usdtwd", "gold", "oil"]:
+        for key in ["taiex", "taiex_night", "us_market", "usdtwd", "gold", "oil"]:
             if key in trends:
                 t = trends[key]
                 p = t["price"]
