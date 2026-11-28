@@ -255,12 +255,13 @@ def get_market_trends():
                     # 決定小數點精度 (匯率 4 位，其他 2 位)
                     precision = 4 if key == "usdtwd" else 2
                     
+                    import math
                     for t, c in zip(timestamp, close):
-                        if c is not None:
+                        if c is not None and not (isinstance(c, float) and (math.isnan(c) or math.isinf(c))):
                             # 統一以 UTC+8 台灣時間轉換日期簡寫 MM-DD
                             dt = datetime.datetime.utcfromtimestamp(t) + datetime.timedelta(hours=8)
                             valid_labels.append(dt.strftime("%m-%d"))
-                            valid_history.append(round(c, precision))
+                            valid_history.append(round(float(c), precision))
                     
                     if valid_history:
                         price = valid_history[-1]

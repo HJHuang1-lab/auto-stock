@@ -551,9 +551,20 @@ def load_cached_data():
     log_daily_recommendations(initial_data)
     return initial_data
 
+def _sanitize_json_obj(obj):
+    import math
+    if isinstance(obj, float):
+        return None if (math.isnan(obj) or math.isinf(obj)) else obj
+    if isinstance(obj, dict):
+        return {k: _sanitize_json_obj(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_sanitize_json_obj(v) for v in obj]
+    return obj
+
 def save_cached_data(data):
+    clean_data = _sanitize_json_obj(data)
     with open(MOCK_CACHE_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+        json.dump(clean_data, f, ensure_ascii=False, indent=2, allow_nan=False)
 
 # 僅在快取檔案不存在或為空時進行初始化寫入
 if not os.path.exists(MOCK_CACHE_FILE) or os.path.getsize(MOCK_CACHE_FILE) == 0:

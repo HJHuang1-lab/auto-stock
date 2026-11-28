@@ -57,15 +57,18 @@ CPO_OPTICAL_KEYWORDS = (
 
 
 def _safe_float(val, default=None):
+    import math
     if val is None:
         return default
     if isinstance(val, (int, float)):
-        return float(val)
+        f = float(val)
+        return default if (math.isnan(f) or math.isinf(f)) else f
     s = str(val).strip().replace(",", "").replace("+", "").replace("%", "")
-    if not s or s in ("---", "--", "-", "N/A", "nan", "None"):
+    if not s or s in ("---", "--", "-", "N/A", "nan", "NaN", "None", "inf", "-inf"):
         return default
     try:
-        return float(s)
+        f = float(s)
+        return default if (math.isnan(f) or math.isinf(f)) else f
     except Exception:
         return default
 
@@ -573,9 +576,10 @@ def fetch_short_history_yahoo(symbol: str, market: str = "TWSE") -> list:
                     closes = res[0].get("indicators", {}).get("quote", [{}])[0].get("close", [])
                     hist = []
                     for t, c in zip(ts_list, closes):
-                        if c is not None:
+                        cf = _safe_float(c)
+                        if cf is not None and cf > 0:
                             dt = (datetime.datetime.utcfromtimestamp(t) + datetime.timedelta(hours=8)).strftime("%Y-%m-%d")
-                            hist.append({"date": dt, "price": round(float(c), 2)})
+                            hist.append({"date": dt, "price": round(cf, 2)})
                     if hist:
                         return hist[-30:]
         except Exception:
